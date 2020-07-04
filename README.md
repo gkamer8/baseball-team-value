@@ -25,3 +25,7 @@ The work done in winter 2019-20 was done in Python.
 **ws_result_and_WAR.py**: If run as main, displays graphs of the relationship between winning the world series and regular season war among teams that make it to the divisional round.
 
 **wl_percentage_and_division_or_wc.py**: If run as main, takes a while to display functions turning wins into playoff / division-win odds.
+
+### Presentation
+
+The presentation folder contains a work in progress of the latex and figures that will eventually describe the project.
