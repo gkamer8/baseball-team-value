@@ -6,6 +6,8 @@ This project is an effort to describe a baseball team's value in terms of discou
 
 ### Data
 
+**total.csv**: Consolidation of data for each team in each season
+
 **Batting and Pitching Folder**: Team data (including team stats and results) since 2000 (going farther back introduces problems with the expansion era and different playoff systems) are located in the Batting and Pitching folders. 
 
 **Playoffs**: The Playoffs folder contains a CSV with the results of every playoff round since 2012, the first year of the WC game format.
