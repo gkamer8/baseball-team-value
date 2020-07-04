@@ -12,3 +12,6 @@ This project is an effort to describe a baseball team's value in terms of discou
 
 **war_wl.py**: If run as main, displays graphs of the relationship between WAR and W/L%. Contains get_war_wl_regr(), which returns an sklearn regression object for the relationship between WAR and W/L%. Contains get_war_wl_resids(), which returns a list of residuals.
 
+**ws_result_and_WAR.py**: If run as main, displays graphs of the relationship between winning the world series and regular season war among teams that make it to the divisional round.
+
+**wl_percentage_and_division_or_wc.py**: If run as main, takes a while to display functions turning wins into playoff / division-win odds.
