@@ -136,9 +136,9 @@ def load_data():
 
     return master
 
-
 # From a line of team data with name and year, return boolean of whether team won division
 def won_division(team_data):
+    data = load_data()
 
     if team_data['wl'] >= .66:
         return True
@@ -153,9 +153,10 @@ def won_division(team_data):
 
     return max(other_records) <= team_data['wl']
 
-
 # From a line of team data with name and year, return boolean of whether team made the playoffs
 def made_playoffs(team_data):
+    data = load_data()
+    
     if won_division(team_data):
         return True
     other_records = []
