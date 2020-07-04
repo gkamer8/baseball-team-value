@@ -1,0 +1,15 @@
+This is a summary of the MLB rules that this project is operating under.
+
+Roster
+
+A team has only 25 men on the active roster (this will change to 26 in 2020), but contributions throughout a season can come from anyone on the 40 man roster. The 40 man roster need not contain 40 players, and many on the 40 man will not play in the majors.
+
+Salary
+
+Most teams do not exceed the luxury tax threshold, which is set at 208m for 2020 and 210m for 2021. Offending teams pay a tax on excess payrolls, and the rate increases each year that a team goes over. The precise taxes are always in flux, and the details are available here: http://m.mlb.com/glossary/transactions/competitive-balance-tax
+
+Player control
+
+The first three years of a player's MLB service (need a minimum amount of service time in that year - many players play their first year without going over the threshold) require that a time pay only the MLB minimum salary (around $563,500, but this changes). The next three years, teams must go to arbitration to set salaries for their player. After the full six years, players are free to become free agents. Teams may at any time sign contracts with the players that go through arbitration and smooth out their salaries well into free agency. Teams may defer compensation.
+
+
