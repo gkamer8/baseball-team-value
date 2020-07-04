@@ -1,4 +1,4 @@
-from data import *
+from data import load_data
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn import linear_model
