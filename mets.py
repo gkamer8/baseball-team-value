@@ -4,7 +4,7 @@ class Team:
 
     """
 
-    A team has:
+    A team has, for variables:
     1. name (string) | Name of MLB team
     2. division (int) | MLB division - 6 total
     3. league (string - NL or AL) | MLB league
@@ -12,8 +12,7 @@ class Team:
         a) player (Player object) | Player of the contract
         b) salaries (list of ints) | Dollar figures of salary for each year
     5. prospects (list of Prospect objects) | Farm system
-    6. num_champs (int) | Number of WS wins during run
-    7. records (list of dictionaries with -) | Season outcomes
+    6. records (list of dictionaries with -) | Season outcomes
         a) wins (int)
         b) losses (int)
         c) div_place (int)
@@ -21,11 +20,15 @@ class Team:
 
     """
     
-    def __init__(self, name, division, league):
+    def __init__(self, name, division, league, contracts, prospects):
         self.name = name
         self.division = division
         self.league = league
 
+        self.contracts = contracts
+        self.prospects = prospects
+
+        self.records = []
 
 class Player:
     
