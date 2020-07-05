@@ -35,7 +35,17 @@ class Player:
     def __init__(self):
         pass
 
+# Inherits Player?
 class Prospect:
+
+    """
+
+    A prospect has, for variables:
+    1. eta - (int) | Estimated time of arrival - year
+    2. fv - (int) | Future value from Fangraphs
+    3. 
+
+    """
 
     def __init__(self):
         pass
