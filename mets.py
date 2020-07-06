@@ -137,8 +137,6 @@ class Prospect:
             elif eta_draw > .9:
                 self.dead = True
 
-
-
 # Fangraphs FV to mean WAR
 
 pitcher_fv_dict = {
