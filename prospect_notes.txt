@@ -30,4 +30,6 @@ A prospect development model
 - ETA
 - MLB potential --> based on FV
 
-ETA - after each year, ETA moves up a year, stays the same, or moves later by a year
+ETA - changes according to Markov process
+
+MLB potential (FV) drifts
