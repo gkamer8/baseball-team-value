@@ -25,3 +25,9 @@ Outline of the sim year method:
 	b) Give arbitration contracts based on performance
 
 A prospect development model
+
+2 variables:
+- ETA
+- MLB potential --> based on FV
+
+ETA - after each year, ETA moves up a year, stays the same, or moves later by a year
