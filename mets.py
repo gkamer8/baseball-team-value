@@ -30,6 +30,16 @@ class Team:
         self.prospects = prospects
 
         self.records = []
+    
+    def add_prospect(self, new_prospect):
+        self.prospects.append(new_prospect)
+    
+    # Takes list of prospects as argument
+    def add_prospects(self, new_prospects):
+        self.prospects.extend(new_prospects)
+
+    def run_year(self):
+        pass
 
 class Player:
     
@@ -53,14 +63,19 @@ class Prospect:
     2. fv - (int) | Future value from Fangraphs
     3. dead - (bool) | Is the player irrecovably injured/otherwise hopeless
     4. age - (int) | Age of player
+    5. pitcher - (bool) | Whether or not the prospect is a pitcher
+    6. name - (string) | Optional name of prospect
 
     """
 
-    def __init__(self, eta, fv, age):
+    def __init__(self, eta, fv, age, pitcher, name=""):
         self.eta = eta
         self.fv = fv
         self.dead = False
         self.age = age
+        self.pitcher = pitcher
+
+        self.name = name
 
     # Develop one year
     # Process is loosely based on historical data from Fangraphs scouting results
@@ -176,20 +191,29 @@ if __name__ == "__main__":
 
     # Scouting data
 
+    mets = Team("Mets", 3, "NL", [], [])
+
+    current_year = 2019
+
     with open('mets-board-data.csv') as csvfile:
-        this_file = []
         reader = csv.reader(csvfile)
         next(reader)  # skips header line
         for r in reader:
             fv = int(r[7].replace("+", ""))  # future value
             pitcher = r[2] == "RHP" or r[2] == "LHP"
 
-            if pitcher:
-                mean_war = pitcher_fv_dict[fv]
-            else:
-                mean_war = batter_fv_dict[fv]
+            pros = Prospect(int(r[8]) - current_year, fv, int(round(float(r[10]))), pitcher, name=r[0])
+            mets.add_prospect(pros)
+    
+    """
+    # Prints mets prospects
+    for p in mets.prospects:
+        print(p.name + ", FV: " + str(p.fv) + ", Age: " + str(p.age))
+    """
 
-            print(mean_war)
+    with open('mets-contracts.csv') as csvfile:
+        pass
+
 
 
     
