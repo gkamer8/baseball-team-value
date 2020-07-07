@@ -189,12 +189,11 @@ batter_fv_dict = {
 
 if __name__ == "__main__":
 
-    # Scouting data
-
     mets = Team("Mets", 3, "NL", [], [])
 
     current_year = 2019
 
+    # Scouting data
     with open('mets-board-data.csv') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)  # skips header line
@@ -210,6 +209,22 @@ if __name__ == "__main__":
     for p in mets.prospects:
         print(p.name + ", FV: " + str(p.fv) + ", Age: " + str(p.age))
     """
+
+    def test_prospect(pros):
+        print(pros.name)
+        print("2019. " + "FV: " + str(pros.fv) + ", ETA: " + str(2019 + pros.eta) + ", Age: " + str(pros.age))
+
+        for y in range(5):
+            pros.develop()
+            if pros.eta <= 0:
+                print("MLB")
+                exit()
+            elif pros.dead:
+                print("Dead")
+                exit()
+            print(str(2019 + y + 1) + ". " + "FV: " + str(pros.fv) + ", ETA: " + str(2019 + 1 + y + pros.eta) + ", Age: " + str(pros.age))
+    test_prospect(mets.prospects[15])
+
 
     with open('mets-contracts.csv') as csvfile:
         pass
