@@ -32,8 +32,8 @@ def war_bucket_mapper(war):
     elif war > 7:
         return "7+"
 
-batting_df = pd.read_csv('Aging Data\\Batters_WAR_by_Age.csv')
-pitching_df = pd.read_csv('Aging Data\\Pitchers_WAR_by_Age.csv')
+batting_df = pd.read_csv('Aging Data/Batters_WAR_by_Age.csv')
+pitching_df = pd.read_csv('Aging Data/Pitchers_WAR_by_Age.csv')
 progression_data_b = {}
 progression_data_p = {}
 age_buckets = ["22-", "22-24", "35-38", "38+"]
@@ -52,7 +52,6 @@ for i in range(24, 35):
     for bucket2 in war_buckets:
         progression_data_b[str(float(i))][bucket2] = []
         progression_data_p[str(float(i))][bucket2] = []
-print(progression_data_b)
 
 def find_deltas_by_age(df, batting):
     if batting:

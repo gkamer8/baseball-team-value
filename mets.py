@@ -14,7 +14,7 @@ class Team:
     3. league (string - NL or AL) | MLB league
     4. contracts (list of dictionaries with -) | All the existing contracts of the team
         a) player (Player object) | Player of the contract
-        b) salaries (list of ints) | Dollar figures of salary for each year
+        b) payouts (list of dictionaries) | Type of year (option, normal salary, etc.) and value for year in $
     5. prospects (list of Prospect objects) | Farm system
     6. records (list of dictionaries with -) | Season outcomes
         a) wins (int)
@@ -40,16 +40,30 @@ class Team:
     # Takes list of prospects as argument
     def add_prospects(self, new_prospects):
         self.prospects.extend(new_prospects)
+    
+    def add_contract(self, player, payouts):
+        """
+        player: player object
+        payouts: list of dictionaries
+        dictionaries:
+        {
+           'type':'team option', 'salary', 'vesting option', 'player option',
+           'value': $
+        }
+        """
+        self.contracts.append({'player': player, 'payouts': payouts})
 
     def run_year(self):
         pass
 
 class Player:
 
-    def __init__(self, contract_years, contract_value, war, age, position):
+    def __init__(self, war, age, position, name=""):
         self.war = war
         self.age = age
         self.pitcher = position
+
+        self.name = name
 
     def progress(self):
         self.age += 1
@@ -226,16 +240,51 @@ if __name__ == "__main__":
             pros.develop()
             if pros.eta <= 0:
                 print("MLB")
-                exit()
+                break
             elif pros.dead:
                 print("Dead")
-                exit()
+                break
             print(str(2019 + y + 1) + ". " + "FV: " + str(pros.fv) + ", ETA: " + str(2019 + 1 + y + pros.eta) + ", Age: " + str(pros.age))
     test_prospect(mets.prospects[3])
 
+    # Parsing baseball reference's entry for each year's contract value
+    def parse_contract_year(entry):
+        if entry == "":
+            return None
+        if "[" in entry:  # DOESN'T PROCESS OPTIONS; TODO
+            return None
+        if entry == "FA":
+            return None
+        if '$' in entry:
+            # true if value is in millions, false if thousands
+            millions = 'm' in entry.lower()
+            num = float(entry.lower().replace("$", "").replace("m", "").replace("k", ""))
+            if millions:
+                num = 1_000_000 * num
+            else:
+                num = 1000 * num
+            return {'type': 'salary', 'value': num}
+        if "Pre-Arb" in entry:
+            return {'type': 'pre-arb', 'value': None}
+        if "Arb" in entry:
+            return {'type': 'arb', 'value': None}
 
     with open('mets-contracts.csv') as csvfile:
-        pass
+        reader = csv.reader(csvfile)
+        next(reader)  # skips header line
+        for row in reader:
+            payouts = []
+            for year in row[7:]:
+                parsed = parse_contract_year(year)
+                if parsed is not None:
+                    payouts.append(parsed)
+            play = Player(0, 20, False, name=row[0].split("\\")[0])
+            mets.add_contract(play, payouts)
+    
+    for contract in mets.contracts[:15]:
+        print(contract['player'].name + ": " + str(contract['payouts'][0]['value']))
+
+
 
 
 
