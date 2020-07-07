@@ -39,6 +39,7 @@ class Player:
         self.war = war
         self.age = age
 
+    # change name later
     def progress_year(self):
         self.age += 1
 
