@@ -32,8 +32,8 @@ def war_bucket_mapper(war):
     elif war > 7:
         return "7+"
 
-batting_df = pd.read_csv('Batters_WAR_by_Age.csv')
-pitching_df = pd.read_csv('Pitchers_WAR_by_Age.csv')
+batting_df = pd.read_csv('Aging Data\\Batters_WAR_by_Age.csv')
+pitching_df = pd.read_csv('Aging Data\\Pitchers_WAR_by_Age.csv')
 progression_data_b = {}
 progression_data_p = {}
 age_buckets = ["22-", "22-24", "35-38", "38+"]
@@ -60,7 +60,6 @@ def find_deltas_by_age(df, batting):
     else:
         tmp_progressions = progression_data_p
     for i in range(len(df) - 1):
-        print(i)
         age1 = float(df.loc[i, "Age"])
         age2 = float(df.loc[i+1, "Age"])
         war1 = float(df.loc[i, "WAR"])
@@ -81,28 +80,20 @@ def get_model_parameters(deltas):
             if len(deltas[key1][key2]) > 1:
                 mu, std = norm.fit(deltas[key1][key2])
                 parameters_by_year[key1][key2] = (mu, std)
-                print(len(deltas[key1][key2]))
-                print("Age: " + key1)
-                print("war group: " + key2)
-                print("mean: " + str(mu))
-                print("std: " + str(std))
             else:
                 parameters_by_year[key1][key2] = 0, 1
     return parameters_by_year
 
 
-def get_models():
+def getmodels():
     batting_deltas = find_deltas_by_age(batting_df, True)
     batting_models = get_model_parameters(batting_deltas)
 
     pitching_deltas = find_deltas_by_age(pitching_df, False)
     pitching_models = get_model_parameters(pitching_deltas)
-    print(pitching_models)
-    print(batting_models)
     return batting_models, pitching_models
 
 
-get_models()
 # mu, std = norm.fit(progression_data["30"])
 #
 # # Plot the histogram.
@@ -119,4 +110,3 @@ get_models()
 # plt.show()
 #
 # print(progression_data)
-

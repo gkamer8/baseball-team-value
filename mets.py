@@ -1,5 +1,8 @@
 import csv
 import random
+from aging import getmodels, age_bucket_mapper, war_bucket_mapper
+
+aging_batters, aging_pitchers = getmodels()
 
 class Team:
 
@@ -20,7 +23,7 @@ class Team:
         d) outcome (string - empty or WC or DS or CS or WS)
 
     """
-    
+
     def __init__(self, name, division, league, contracts, prospects):
         self.name = name
         self.division = division
@@ -32,15 +35,22 @@ class Team:
         self.records = []
 
 class Player:
-    
-    def __init__(self, contract_years, contract_value, war, age):
-        self.contract_years = contract_years
-        self.contract_value = contract_value
+
+    def __init__(self, contract_years, contract_value, war, age, position):
         self.war = war
         self.age = age
+        self.pitcher = position
 
-    def progress_year(self):
+    def progress(self):
         self.age += 1
+        self.contract_years -= 1
+        age_bucket = age_bucket_mapper(self.age)
+        war_bucket = war_bucket_mapper(self.war)
+        if self.pitcher:
+            mu, std = aging_pitchers[age_bucket][war_bucket]
+        else:
+            mu, std = aging_batters[age_bucket][war_bucket]
+        self.war += random.normalvariate(mu, std)
 
 # Inherits Player?
 class Prospect:
@@ -68,7 +78,7 @@ class Prospect:
 
         # Evolve FV
         # Random walk with probabilities below
-        # -2    -1    0    1    2 
+        # -2    -1    0    1    2
         # .125 .25  .35  .25 .125
         fv_draw = random.random()
         if fv_draw < .125:
@@ -189,6 +199,3 @@ if __name__ == "__main__":
                 mean_war = batter_fv_dict[fv]
 
             print(mean_war)
-
-
-    
