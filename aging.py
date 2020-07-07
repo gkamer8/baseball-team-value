@@ -1,9 +1,8 @@
 import pandas as pd
-import numpy as np
 from scipy.stats import norm
-import matplotlib.pyplot as plt
 
 
+# Takes an age integer and returns the appropriate key in the model-data dictionaries
 def age_bucket_mapper(age):
     if 24 <= age < 35:
         return str(float(age))
@@ -18,6 +17,7 @@ def age_bucket_mapper(age):
             return "38+"
 
 
+# Takes an war float and returns the appropriate key in the model-data dictionaries
 def war_bucket_mapper(war):
     if war < 0:
         return "neg"
@@ -32,8 +32,17 @@ def war_bucket_mapper(war):
     elif war > 7:
         return "7+"
 
+<<<<<<< HEAD
 batting_df = pd.read_csv('Aging Data/Batters_WAR_by_Age.csv')
 pitching_df = pd.read_csv('Aging Data/Pitchers_WAR_by_Age.csv')
+=======
+
+# Loading career war data into dataframes
+batting_df = pd.read_csv('Aging Data\\Batters_WAR_by_Age.csv')
+pitching_df = pd.read_csv('Aging Data\\Pitchers_WAR_by_Age.csv')
+
+# Initializing dictionaries to hold model parameters
+>>>>>>> c4bc8dd8aa8aa1620851c6fb00fa73b460ee30e6
 progression_data_b = {}
 progression_data_p = {}
 age_buckets = ["22-", "22-24", "35-38", "38+"]
@@ -53,6 +62,8 @@ for i in range(24, 35):
         progression_data_b[str(float(i))][bucket2] = []
         progression_data_p[str(float(i))][bucket2] = []
 
+
+# Calculates change in WAR by age and war category, and stores the data in dictionary
 def find_deltas_by_age(df, batting):
     if batting:
         tmp_progressions = progression_data_b
@@ -71,6 +82,7 @@ def find_deltas_by_age(df, batting):
     return tmp_progressions
 
 
+# Fits change in war data to a normal distribution for each age/war category stores parameters
 def get_model_parameters(deltas):
     parameters_by_year = {}
     for key1 in deltas.keys():
@@ -84,6 +96,7 @@ def get_model_parameters(deltas):
     return parameters_by_year
 
 
+# Runs the functions above and returns the dictionaries containing model parameters
 def getmodels():
     batting_deltas = find_deltas_by_age(batting_df, True)
     batting_models = get_model_parameters(batting_deltas)
@@ -92,20 +105,3 @@ def getmodels():
     pitching_models = get_model_parameters(pitching_deltas)
     return batting_models, pitching_models
 
-
-# mu, std = norm.fit(progression_data["30"])
-#
-# # Plot the histogram.
-# plt.hist(progression_data["30"], bins=25, density=True, alpha=0.6, color='g')
-#
-# # Plot the PDF.
-# xmin, xmax = plt.xlim()
-# x = np.linspace(xmin, xmax, 100)
-# p = norm.pdf(x, mu, std)
-# plt.plot(x, p, 'k', linewidth=2)
-# title = "Fit results: mu = %.2f,  std = %.2f" % (mu, std)
-# plt.title(title)
-#
-# plt.show()
-#
-# print(progression_data)
