@@ -36,14 +36,13 @@ class Team:
 
 class Player:
 
-    def __init__(self, contract_years, contract_value, war, age, position):
+    def __init__(self, war, age, position):
         self.war = war
         self.age = age
         self.pitcher = position
 
     def progress(self):
-        self.age += 1
-        self.contract_years -= 1
+        self.age += 1`````````````
         age_bucket = age_bucket_mapper(self.age)
         war_bucket = war_bucket_mapper(self.war)
         if self.pitcher:

@@ -8,6 +8,7 @@ from datetime import date
 from selenium import webdriver
 
 
+# Cycles through baseballreference pages for each name in list and scrapes WAR by age data
 def data_scraper(players_list, batting):
     df_lst = []
     # open a web browser
@@ -58,6 +59,7 @@ def data_scraper(players_list, batting):
     return main_df
 
 
+# Takes a list of names and formats it for construction of urls
 def format_player_list(players):
     players = np.array(players)
     players = (np.unique(players)).tolist()
@@ -66,6 +68,7 @@ def format_player_list(players):
     return player_names
 
 
+# Takes player names from csvs, merges into one list, and eliminates duplicates
 batters2020 = pd.read_csv('Aging Data\\mlb-player-stats-Batters2020.csv')
 batters2020 = batters2020['Player'].to_list()
 batters2015 = pd.read_csv('Aging Data\\mlb-player-stats-Batters2015.csv')
@@ -90,12 +93,11 @@ pitchers2000 = pd.read_csv('Aging Data\\mlb-player-stats-Pitchers2000.csv')
 pitchers2000 = pitchers2000['Name'].to_list()
 pitchers = pitchers2020 + pitchers2015 + pitchers2010 + pitchers2005 + pitchers2000
 
-print(len(pitchers))
-print(len(batters))
 
-# batters_df = data_scraper(format_player_list(batters), True)
-# batters_df.to_csv('Batters_WAR_by_Age.csv')
+# Stores scraped WAR data in csvs
+batters_df = data_scraper(format_player_list(batters), True)
+batters_df.to_csv('Aging Data\\Batters_WAR_by_Age.csv')
 
 pitchers_df = data_scraper(format_player_list(pitchers), False)
-pitchers_df.to_csv('Pitchers_WAR_by_Age.csv')
+pitchers_df.to_csv('Aging Data\\Pitchers_WAR_by_Age.csv')
 
