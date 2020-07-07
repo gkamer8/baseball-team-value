@@ -223,7 +223,7 @@ if __name__ == "__main__":
                 print("Dead")
                 exit()
             print(str(2019 + y + 1) + ". " + "FV: " + str(pros.fv) + ", ETA: " + str(2019 + 1 + y + pros.eta) + ", Age: " + str(pros.age))
-    test_prospect(mets.prospects[15])
+    test_prospect(mets.prospects[3])
 
 
     with open('mets-contracts.csv') as csvfile:
