@@ -76,7 +76,7 @@ development_matrix <- matrix(
 t(development_matrix)
 
 library(expm) 
-(development_matrix %^% 2) %*% c(0, 0, 0, 1, 0, 0, 0)
+(development_matrix %^% 100) %*% c(0, 0, 0, 1, 0, 0, 0)
 
 # FV Drift
 
