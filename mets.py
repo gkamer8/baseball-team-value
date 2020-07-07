@@ -1,4 +1,5 @@
 import csv
+import random
 
 class Team:
 
@@ -32,8 +33,14 @@ class Team:
 
 class Player:
     
-    def __init__(self):
-        pass
+    def __init__(self, contract_years, contract_value, war, age):
+        self.contract_years = contract_years
+        self.contract_value = contract_value
+        self.war = war
+        self.age = age
+
+    def progress_year(self):
+        self.age += 1
 
 class Prospect:
 
