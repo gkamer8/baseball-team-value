@@ -61,6 +61,7 @@ class Player:
             mu, std = aging_batters[age_bucket][war_bucket]
         self.war += random.normalvariate(mu, std)
 
+
 # Inherits Player?
 class Prospect:
 
