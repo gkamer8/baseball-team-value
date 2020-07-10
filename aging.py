@@ -32,12 +32,17 @@ def war_bucket_mapper(war):
     elif war > 7:
         return "7+"
 
+<<<<<<< HEAD
+batting_df = pd.read_csv('Aging Data/Batters_WAR_by_Age.csv')
+pitching_df = pd.read_csv('Aging Data/Pitchers_WAR_by_Age.csv')
+=======
 
 # Loading career war data into dataframes
 batting_df = pd.read_csv('Aging Data\\Batters_WAR_by_Age.csv')
 pitching_df = pd.read_csv('Aging Data\\Pitchers_WAR_by_Age.csv')
 
 # Initializing dictionaries to hold model parameters
+>>>>>>> c4bc8dd8aa8aa1620851c6fb00fa73b460ee30e6
 progression_data_b = {}
 progression_data_p = {}
 age_buckets = ["22-", "22-24", "35-38", "38+"]
@@ -56,7 +61,6 @@ for i in range(24, 35):
     for bucket2 in war_buckets:
         progression_data_b[str(float(i))][bucket2] = []
         progression_data_p[str(float(i))][bucket2] = []
-print(progression_data_b)
 
 
 # Calculates change in WAR by age and war category, and stores the data in dictionary
