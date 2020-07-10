@@ -40,7 +40,7 @@ class Team:
     # Takes list of prospects as argument
     def add_prospects(self, new_prospects):
         self.prospects.extend(new_prospects)
-    
+
     def add_contract(self, player, payouts):
         """
         player: player object
@@ -57,12 +57,7 @@ class Team:
         pass
 
 class Player:
-
-<<<<<<< HEAD
     def __init__(self, war, age, position, name=""):
-=======
-    def __init__(self, war, age, position):
->>>>>>> c4bc8dd8aa8aa1620851c6fb00fa73b460ee30e6
         self.war = war
         self.age = age
         self.pitcher = position
@@ -275,7 +270,6 @@ if __name__ == "__main__":
             return {'type': 'arb', 'value': None}
 
     with open('mets-contracts.csv') as csvfile:
-<<<<<<< HEAD
         reader = csv.reader(csvfile)
         next(reader)  # skips header line
         for row in reader:
@@ -286,15 +280,6 @@ if __name__ == "__main__":
                     payouts.append(parsed)
             play = Player(0, 20, False, name=row[0].split("\\")[0])
             mets.add_contract(play, payouts)
-    
+
     for contract in mets.contracts[:15]:
         print(contract['player'].name + ": " + str(contract['payouts'][0]['value']))
-
-
-
-
-
-    
-=======
-        pass
->>>>>>> c4bc8dd8aa8aa1620851c6fb00fa73b460ee30e6
