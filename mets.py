@@ -40,7 +40,7 @@ class Team:
     # Takes list of prospects as argument
     def add_prospects(self, new_prospects):
         self.prospects.extend(new_prospects)
-    
+
     def add_contract(self, player, payouts):
         """
         player: player object
@@ -57,7 +57,10 @@ class Team:
         pass
 
 class Player:
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8e98c687082688a3c4b2fec8f74aa6155abcf012
     def __init__(self, war, age, position, name=""):
         self.war = war
         self.age = age
@@ -74,6 +77,7 @@ class Player:
         else:
             mu, std = aging_batters[age_bucket][war_bucket]
         self.war += random.normalvariate(mu, std)
+
 
 # Inherits Player?
 class Prospect:
@@ -280,12 +284,15 @@ if __name__ == "__main__":
                     payouts.append(parsed)
             play = Player(0, 20, False, name=row[0].split("\\")[0])
             mets.add_contract(play, payouts)
-    
+
     for contract in mets.contracts[:15]:
         print(contract['player'].name + ": " + str(contract['payouts'][0]['value']))
+<<<<<<< HEAD
 
 
 
 
 
     
+=======
+>>>>>>> 8e98c687082688a3c4b2fec8f74aa6155abcf012
