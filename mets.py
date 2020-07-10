@@ -58,11 +58,7 @@ class Team:
 
 class Player:
 
-<<<<<<< HEAD
     def __init__(self, war, age, position, name=""):
-=======
-    def __init__(self, war, age, position):
->>>>>>> c4bc8dd8aa8aa1620851c6fb00fa73b460ee30e6
         self.war = war
         self.age = age
         self.pitcher = position
@@ -274,7 +270,6 @@ if __name__ == "__main__":
             return {'type': 'arb', 'value': None}
 
     with open('mets-contracts.csv') as csvfile:
-<<<<<<< HEAD
         reader = csv.reader(csvfile)
         next(reader)  # skips header line
         for row in reader:
@@ -294,6 +289,3 @@ if __name__ == "__main__":
 
 
     
-=======
-        pass
->>>>>>> c4bc8dd8aa8aa1620851c6fb00fa73b460ee30e6
