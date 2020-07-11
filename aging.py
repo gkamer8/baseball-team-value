@@ -84,6 +84,7 @@ def get_model_parameters(deltas):
         parameters_by_year[key1] = {}
         for key2 in deltas[key1].keys():
             if len(deltas[key1][key2]) > 1:
+                print("Age: " + key1 + "\n" + "War: " + key2 + "\n" + "Size: " + len(deltas[key1][key2]))
                 mu, std = norm.fit(deltas[key1][key2])
                 parameters_by_year[key1][key2] = (mu, std)
             else:
