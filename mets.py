@@ -1,7 +1,6 @@
 import csv
 import random
-from aging import batting_models, pitching_models, age_bucket_mapper, war_bucket_mapper
-import copy
+from aging import batting_models, pitching_models
 
 aging_batters, aging_pitchers = batting_models, pitching_models
 
@@ -70,10 +69,6 @@ class Team:
     def run_year(self):
         self.age_players()
         self.record_year()
-    
-    def run_years(self, num):
-        for _ in range(num):
-            self.run_year()
 
 class Player:
     def __init__(self, id, war, age, position, name=""):
@@ -314,28 +309,17 @@ if __name__ == "__main__":
                 pobj.pitcher = player_pos
                 return None
         print("Not found: " + str(player_id))
-        
-    
+
+
     with open('mets-players.csv') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)  # skips header line
         for row in reader:
             replace_player_helper(mets, row[0].split("\\")[1], float(row[26]), int(row[1]), (int(row[13]) > 0))
 
-    bruh = sorted([x['player'].war for x in mets.contracts])[24]
-    new_contracts = []
     for contract in mets.contracts:
-        if contract['player'].war > bruh or len(new_contracts) < 25:
-            new_contracts.append(contract)
-    mets.contracts = new_contracts
-    print(len(new_contracts))
-            
+        print(contract['player'].name + ", " + str(contract['player'].war))
 
-    print("Running...")
-    with open("tests1.csv", "w") as fhand:
-        fhand.write("Year 1, Year 2, Year 3\n")
-        for _ in range(100):
-            yeet = copy.deepcopy(mets)
-            yeet.run_years(3)
-            rec = yeet.records
-            fhand.write(str(rec[0]['Total WAR']) + "," + str(rec[1]['Total WAR']) + "," + str(rec[2]['Total WAR']) + "\n")
+    print("Num contracts: " + str(len(mets.contracts)))
+
+    

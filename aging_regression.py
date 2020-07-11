@@ -1,5 +1,14 @@
 import pandas as pd
+import scipy
 from scipy.stats import norm
+from scipy.optimize import curve_fit
+import matplotlib.pyplot as plt
+from sklearn import datasets, linear_model
+from sklearn.metrics import mean_squared_error, r2_score
+import numpy as np
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
 
 
 # Takes an age integer and returns the appropriate key in the model-data dictionaries
@@ -37,69 +46,65 @@ def war_bucket_mapper(war):
 batting_df = pd.read_csv('Aging Data/Batters_WAR_by_Age.csv')
 pitching_df = pd.read_csv('Aging Data/Pitchers_WAR_by_Age.csv')
 
-# Initializing dictionaries to hold model parameters
-progression_data_b = {}
-progression_data_p = {}
-age_buckets = ["22-", "22-24", "35-38", "38+"]
-war_buckets = ["neg", "0-1", "1-2", "2-4", "4-7", "7+"]
-
-for bucket1 in age_buckets:
-    progression_data_b[bucket1] = {}
-    progression_data_p[bucket1] = {}
-    for bucket2 in war_buckets:
-        progression_data_b[bucket1][bucket2] = []
-        progression_data_p[bucket1][bucket2] = []
-
-for i in range(24, 35):
-    progression_data_b[str(float(i))] = {}
-    progression_data_p[str(float(i))] = {}
-    for bucket2 in war_buckets:
-        progression_data_b[str(float(i))][bucket2] = []
-        progression_data_p[str(float(i))][bucket2] = []
-
-
-# Calculates change in WAR by age and war category, and stores the data in dictionary
-def find_deltas_by_age(df, batting):
-    if batting:
-        tmp_progressions = progression_data_b
-    else:
-        tmp_progressions = progression_data_p
-    for i in range(len(df) - 1):
+def filter_data(df):
+    df_list = []
+    for i in range(2, len(df) - 1):
+        age0 = float(df.loc[i - 1, "Age"])
         age1 = float(df.loc[i, "Age"])
-        age2 = float(df.loc[i+1, "Age"])
+        age2 = float(df.loc[i + 1, "Age"])
+        war0 = float(df.loc[i - 1, "WAR"])
         war1 = float(df.loc[i, "WAR"])
-        war2 = float(df.loc[i+1, "WAR"])
-        if age1 == age2 - 1 and -12 < war2 - war1 < 12:
-            age_bucket = age_bucket_mapper(age2)
-            war_bucket = war_bucket_mapper(war1)
-            tmp_progressions[age_bucket][war_bucket].append(war2 - war1)
-
-    return tmp_progressions
-
-
-# Fits change in war data to a normal distribution for each age/war category stores parameters
-def get_model_parameters(deltas):
-    parameters_by_year = {}
-    for key1 in deltas.keys():
-        parameters_by_year[key1] = {}
-        for key2 in deltas[key1].keys():
-            print("Age: " + str(key1) + "\n" + "War: " + str(key2) + "\n" + "Size: " + str(len(deltas[key1][key2])))
-            if len(deltas[key1][key2]) > 1:
-                mu, std = norm.fit(deltas[key1][key2])
-                parameters_by_year[key1][key2] = (mu, std)
-            else:
-                parameters_by_year[key1][key2] = 0, 1
-    return parameters_by_year
+        war2 = float(df.loc[i + 1, "WAR"])
+        if age1 == age2 - 1 and -12 < war2 - war1 < 12 and age0 == age1 - 1:
+            df_list.append({"WAR Delta": war2 - war1, "Age": age_bucket_mapper(age2), "Previous War": war1, "2yr War": war0})
+    df = pd.DataFrame(df_list)
+    df.to_csv('regression_data1.csv')
+    return df
 
 
-# Runs the functions above and returns the dictionaries containing model parameters
-def getmodels():
-    batting_deltas = find_deltas_by_age(batting_df, True)
-    batting_models = get_model_parameters(batting_deltas)
+batting = filter_data(batting_df)
+y = batting["WAR Delta"]
 
-    # pitching_deltas = find_deltas_by_age(pitching_df, False)
-    # pitching_models = get_model_parameters(pitching_deltas)
-    # return batting_models, pitching_models
-    return batting_models
+ages = pd.get_dummies(batting["Age"], drop_first=True)
+batting = batting.drop('Age', axis=1)
+batting = batting.drop('WAR Delta', axis=1)
+X = pd.concat([ages, batting], axis=1)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=9)
+lin_reg_mod = LinearRegression()
+lin_reg_mod.fit(X_train, y_train)
+pred = lin_reg_mod.predict(X_test)
+test_set_rmse = (np.sqrt(mean_squared_error(y_test, pred)))
+test_set_r2 = r2_score(y_test, pred)
+#
+# print(test_set_rmse)
+# print(test_set_r2)
+# print(lin_reg_mod.coef_)
+# print(lin_reg_mod.intercept_)
+std = (mean_squared_error(y_test, pred))**0.5
+effects = {}
+for i in range(len(X.columns)):
+    effects[X.columns[i]] = lin_reg_mod.coef_[i]
+def mean(age, war1, war2):
+    return lin_reg_mod.intercept + effects[age] + effects['Previous War']*war1 + effects['2yr War']*war2
 
-getmodels()
+
+
+# def fn(x, a, b, c, d):
+#     return a + b*(x[0]) + c*(x[1]) + d*(x[2])
+#
+#
+# x = np.array([batting["Previous War"].to_list(),batting["Age"].to_list(), batting["2yr War"].to_list()])
+# y = np.array(batting["WAR Delta"].to_list())
+#
+# popt, pcov = curve_fit(fn, x, y)
+#
+# print(popt)
+# plt.scatter(batting["Age"], batting["WAR Delta"])
+# plt.title('Scatter plot pythonspot.com')
+# plt.xlabel('x')
+# plt.ylabel('y')
+# plt.show()
+
+
+
+
