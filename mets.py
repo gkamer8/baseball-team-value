@@ -1,8 +1,8 @@
 import csv
 import random
-from aging import getmodels, age_bucket_mapper, war_bucket_mapper
+from aging import batting_models, pitching_models
 
-aging_batters, aging_pitchers = getmodels()
+aging_batters, aging_pitchers = batting_models, pitching_models
 
 class Team:
 
@@ -53,8 +53,22 @@ class Team:
         """
         self.contracts.append({'player': player, 'payouts': payouts})
 
+    def age_players(self):
+        for player in self.contracts:
+            player['player'].progress()
+
+    def get_team_war(self):
+        war = 0
+        for player in self.contracts:
+            war += player['player'].get_war()
+        return war
+
+    def record_year(self):
+        self.records.append({'Total WAR': self.get_team_war()})
+
     def run_year(self):
-        pass
+        self.age_players()
+        self.record_year()
 
 class Player:
     def __init__(self, war, age, position, name=""):
@@ -73,6 +87,9 @@ class Player:
         else:
             mu, std = aging_batters[age_bucket][war_bucket]
         self.war += random.normalvariate(mu, std)
+
+    def get_war(self):
+        return self.war
 
 
 # Inherits Player?
