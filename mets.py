@@ -57,14 +57,11 @@ class Team:
         pass
 
 class Player:
-<<<<<<< HEAD
-
-=======
->>>>>>> 8e98c687082688a3c4b2fec8f74aa6155abcf012
-    def __init__(self, war, age, position, name=""):
+    def __init__(self, id, war, age, position, name=""):
         self.war = war
         self.age = age
         self.pitcher = position
+        self.id = id  # baseball reference id
 
         self.name = name
 
@@ -249,7 +246,7 @@ if __name__ == "__main__":
                 print("Dead")
                 break
             print(str(2019 + y + 1) + ". " + "FV: " + str(pros.fv) + ", ETA: " + str(2019 + 1 + y + pros.eta) + ", Age: " + str(pros.age))
-    test_prospect(mets.prospects[3])
+    # test_prospect(mets.prospects[3])
 
     # Parsing baseball reference's entry for each year's contract value
     def parse_contract_year(entry):
@@ -282,17 +279,28 @@ if __name__ == "__main__":
                 parsed = parse_contract_year(year)
                 if parsed is not None:
                     payouts.append(parsed)
-            play = Player(0, 20, False, name=row[0].split("\\")[0])
+            play = Player(row[0].split("\\")[1], 0, 20, False, name=row[0].split("\\")[0])
             mets.add_contract(play, payouts)
 
-    for contract in mets.contracts[:15]:
-        print(contract['player'].name + ": " + str(contract['payouts'][0]['value']))
-<<<<<<< HEAD
-
-
-
-
-
+    def replace_player_helper(team, player_id, player_war, player_age, player_pos):
+        # if it can't find player_id in the team, it doesn't do anything
+        for existing in team.contracts:
+            pobj = existing['player']
+            if pobj.id == player_id:
+                pobj.war = player_war
+                pobj.age = player_age
+                pobj.pitcher = player_pos
+                return None
+        print("Not found: " + str(player_id))
+        
     
-=======
->>>>>>> 8e98c687082688a3c4b2fec8f74aa6155abcf012
+    with open('mets-players.csv') as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader)  # skips header line
+        for row in reader:
+            replace_player_helper(mets, row[0].split("\\")[1], float(row[26]), int(row[1]), (int(row[13]) > 0))
+
+    for contract in mets.contracts:
+        print(contract['player'].name + ", " + str(contract['player'].war))
+    
+    print("Num contracts: " + str(len(mets.contracts)))
