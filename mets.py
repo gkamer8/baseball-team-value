@@ -1,6 +1,7 @@
 import csv
 import random
 from aging import batting_models, pitching_models
+from aging_regression import mean, std
 
 aging_batters, aging_pitchers = batting_models, pitching_models
 

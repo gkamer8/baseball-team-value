@@ -49,25 +49,27 @@ pitching_df = pd.read_csv('Aging Data/Pitchers_WAR_by_Age.csv')
 def filter_data(df):
     df_list = []
     for i in range(2, len(df) - 1):
+        age_2 = float(df.loc[i - 2, "Age"])
         age0 = float(df.loc[i - 1, "Age"])
         age1 = float(df.loc[i, "Age"])
         age2 = float(df.loc[i + 1, "Age"])
         war0 = float(df.loc[i - 1, "WAR"])
         war1 = float(df.loc[i, "WAR"])
         war2 = float(df.loc[i + 1, "WAR"])
-        if age1 == age2 - 1 and -12 < war2 - war1 < 12 and age0 == age1 - 1:
-            df_list.append({"WAR Delta": war2 - war1, "Age": age_bucket_mapper(age2), "Previous War": war1, "2yr War": war0})
+        war_2 = float(df.loc[i - 2, "WAR"])
+        if age1 == age2 - 1 and -12 < war2 - war1 < 12 and age0 == age1 - 1 and age_2 == age0 - 1:
+            df_list.append({"WAR": war2, "Age": age_bucket_mapper(age2), "Previous War": war1, "2yr War": war0, "3yr War": war_2})
     df = pd.DataFrame(df_list)
     df.to_csv('regression_data1.csv')
     return df
 
 
 batting = filter_data(batting_df)
-y = batting["WAR Delta"]
+y = batting["WAR"]
 
 ages = pd.get_dummies(batting["Age"], drop_first=True)
 batting = batting.drop('Age', axis=1)
-batting = batting.drop('WAR Delta', axis=1)
+batting = batting.drop('WAR', axis=1)
 X = pd.concat([ages, batting], axis=1)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state=9)
 lin_reg_mod = LinearRegression()
@@ -76,16 +78,20 @@ pred = lin_reg_mod.predict(X_test)
 test_set_rmse = (np.sqrt(mean_squared_error(y_test, pred)))
 test_set_r2 = r2_score(y_test, pred)
 #
-# print(test_set_rmse)
-# print(test_set_r2)
-# print(lin_reg_mod.coef_)
-# print(lin_reg_mod.intercept_)
+print(test_set_rmse)
+print(test_set_r2)
+print(X.columns)
+print(lin_reg_mod.coef_)
+print(lin_reg_mod.intercept_)
 std = (mean_squared_error(y_test, pred))**0.5
 effects = {}
 for i in range(len(X.columns)):
     effects[X.columns[i]] = lin_reg_mod.coef_[i]
-def mean(age, war1, war2):
-    return lin_reg_mod.intercept + effects[age] + effects['Previous War']*war1 + effects['2yr War']*war2
+effects['22-'] = 0
+
+def mean(age, war1, war2, war_2):
+    return lin_reg_mod.intercept_ + effects[age] + effects['Previous War']*war1 + effects['2yr War']*war2 + effects['3yr War']*war_2
+
 
 
 
