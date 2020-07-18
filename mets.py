@@ -1,9 +1,12 @@
 import csv
 import random
-from aging import batting_models, pitching_models
+from aging import batting_models, pitching_models, age_bucket_mapper, war_bucket_mapper
 from aging_regression import mean, std
 
 aging_batters, aging_pitchers = batting_models, pitching_models
+
+PRE_ARB = 555_000  # salary for players in pre-arbitration
+VESTING_THRESHOLD = 0.5  # threshold for vesting contract years
 
 class Team:
 
@@ -49,6 +52,7 @@ class Team:
         dictionaries:
         {
            'type':'team option', 'salary', 'vesting option', 'player option',
+                    'pre-arb', 'arb'
            'value': $
         }
         """
@@ -67,9 +71,51 @@ class Team:
     def record_year(self):
         self.records.append({'Total WAR': self.get_team_war()})
 
+    def get_contract_values(self):
+        return sum([x['value'] for x in self.contracts])
+    
+    def update_contracts(self):
+        new_contracts = []
+        for player in self.contracts:
+            if len(player['payouts']) <= 1:
+                continue
+            remaining_payouts = player['payouts'][1:]
+
+            # TODO Problems:
+            # Pre-arb figures should be checked
+            # Arb model should be compared with empirical data
+            # Vesting option model should be compared with empirical data
+            # Player and team options automatically execute, so this needs to be worked out
+
+            # Set salary for pre-arb and arb
+            # Pre-arb technically uncessary, but just as a check
+            if remaining_payouts[0]['type'] == 'pre-arb':
+                remaining_payouts[0]['value'] = PRE_ARB
+            elif remaining_payouts[0]['type'] == 'arb':
+                # Linear conversion from WAR to arb $, depending on how many years of arb left
+                # Values at the moment are arbitrary but should be replaced with empirically correct values
+                arb_years_remaining = sum(x['type'] == 'arb' for x in remaining_payouts)
+                if arb_years_remaining == 0:
+                    dol_per_war = 4
+                elif arb_years_remaining == 1:
+                    dol_per_war = 3
+                elif arb_years_remaining >= 2:
+                    dol_per_war = 2
+                remaining_payouts[0]['value'] = min(player['player'].get_war() * dol_per_war, PRE_ARB)
+            elif remaining_payouts[0]['type'] == 'vesting option':
+                if player['player'].get_war() < VESTING_THRESHOLD:
+                    continue
+            # Player and team options automatically execute
+            
+            player['payouts'] = remaining_payouts
+            
+            new_contracts.append(player)
+
+            
     def run_year(self):
         self.age_players()
         self.record_year()
+        self.update_contracts()
 
 class Player:
     def __init__(self, id, war, age, position, name=""):
@@ -310,7 +356,6 @@ if __name__ == "__main__":
                 pobj.pitcher = player_pos
                 return None
         print("Not found: " + str(player_id))
-
 
     with open('mets-players.csv') as csvfile:
         reader = csv.reader(csvfile)
