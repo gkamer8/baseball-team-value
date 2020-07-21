@@ -96,11 +96,11 @@ class Team:
                 # Values at the moment are arbitrary but should be replaced with empirically correct values
                 arb_years_remaining = sum(x['type'] == 'arb' for x in remaining_payouts)
                 if arb_years_remaining == 0:
-                    dol_per_war = 4
+                    dol_per_war = 4_000_000
                 elif arb_years_remaining == 1:
-                    dol_per_war = 3
+                    dol_per_war = 3_000_000
                 elif arb_years_remaining >= 2:
-                    dol_per_war = 2
+                    dol_per_war = 2_000_000
                 remaining_payouts[0]['value'] = min(player['player'].get_war() * dol_per_war, PRE_ARB)
             elif remaining_payouts[0]['type'] == 'vesting option':
                 if player['player'].get_war() < VESTING_THRESHOLD:
