@@ -2,11 +2,14 @@ import csv
 import random
 from aging import batting_models, pitching_models, age_bucket_mapper, war_bucket_mapper
 from aging_regression import mean, std
+import numpy as np
 
 aging_batters, aging_pitchers = batting_models, pitching_models
 
 PRE_ARB = 555_000  # salary for players in pre-arbitration
 VESTING_THRESHOLD = 0.5  # threshold for vesting contract years
+
+DOLLAR_PER_WAR = 5_000_000  # market value for WAR - $5m/win
 
 class Team:
 
@@ -25,10 +28,11 @@ class Team:
         b) losses (int)
         c) div_place (int)
         d) outcome (string - empty or WC or DS or CS or WS)
+    7. max_payroll (float) | Total team payroll
 
     """
 
-    def __init__(self, name, division, league, contracts, prospects):
+    def __init__(self, name, division, league, contracts, prospects, max_payroll=None):
         self.name = name
         self.division = division
         self.league = league
@@ -37,6 +41,12 @@ class Team:
         self.prospects = prospects
 
         self.records = []
+
+        # if max_payroll isn't set, it becomes whatever the initial payroll is
+        if max_payroll is None:
+            self.max_payroll = self.get_contract_values()
+        else:
+            self.max_payroll = max_payroll
 
     def add_prospect(self, new_prospect):
         self.prospects.append(new_prospect)
@@ -61,18 +71,26 @@ class Team:
     def age_players(self):
         for player in self.contracts:
             player['player'].progress()
+    
+    def get_fa_war(self):
+        # note: fa_allocation could be negative!
+        fa_allocation = self.max_payroll - self.get_contract_values()
+        fa_mu = fa_allocation / DOLLAR_PER_WAR
+        fa_std_dev = fa_mu / 4  # 4 is arbitrary - goal is to scale with the mu WAR
+        return np.random.normal(fa_mu, fa_std_dev, 1)[0]
 
     def get_team_war(self):
         war = 0
         for player in self.contracts:
             war += player['player'].get_war()
+        war += self.get_fa_war()
         return war
 
     def record_year(self):
         self.records.append({'Total WAR': self.get_team_war()})
 
     def get_contract_values(self):
-        return sum([x['value'] for x in self.contracts])
+        return sum([x['payouts']['value'] for x in self.contracts])
     
     def update_contracts(self):
         new_contracts = []
