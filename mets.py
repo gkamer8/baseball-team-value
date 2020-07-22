@@ -11,6 +11,32 @@ VESTING_THRESHOLD = 0.5  # threshold for vesting contract years
 
 DOLLAR_PER_WAR = 5_000_000  # market value for WAR - $5m/win
 
+pitcher_fv_dict = {
+    20: -0.1,
+    30: 0.0,
+    35: 0.1,
+    40: 0.45,
+    45: 1.35,
+    50: 2.15,
+    55: 3,
+    60: 4.2,
+    70: 6,
+    80: 7
+}
+
+batter_fv_dict = {
+    20: -0.1,
+    30: 0.0,
+    35: 0.1,
+    40: 0.35,
+    45: 1.15,
+    50: 2,
+    55: 2.9,
+    60: 4.15,
+    70: 6,
+    80: 7
+}
+
 class Team:
 
     """
@@ -72,6 +98,25 @@ class Team:
         for player in self.contracts:
             player['player'].progress()
     
+    def age_prospects(self):
+        # Replaces prospect list with new list, excluding new MLB players and dead prospects
+        new_prospects = []
+        for prospect in self.prospects:
+            prospect.develop()
+            if prospect.eta == 0:
+                # ID is made up of a random number and the name
+                new_id = prospect.name.lower().replace(" ", "") + str(random.randint(0, 1_000_000))
+                new_war = pitcher_fv_dict[prospect.fv] if prospect.pitcher else batter_fv_dict[prospect.fv]
+                new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, name=prospect.name)
+                
+                # Three years of pre-arb, three years of arb
+                new_payouts = [{'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}]
+                
+                self.contracts.append({'player': new_player, 'payouts': new_payouts})
+            elif not prospect.dead:
+                new_prospects.append(prospect)
+        self.prospects = new_prospects
+    
     def get_fa_war(self):
         # note: fa_allocation could be negative!
         fa_allocation = self.max_payroll - self.get_contract_values()
@@ -132,6 +177,7 @@ class Team:
             
     def run_year(self):
         self.age_players()
+        self.age_prospects()
         self.record_year()
         self.update_contracts()
 
@@ -263,34 +309,6 @@ class Prospect:
                 self.eta = 4
             elif eta_draw > .9:
                 self.dead = True
-
-# Fangraphs FV to mean WAR
-
-pitcher_fv_dict = {
-    20: -0.1,
-    30: 0.0,
-    35: 0.1,
-    40: 0.45,
-    45: 1.35,
-    50: 2.15,
-    55: 3,
-    60: 4.2,
-    70: 6,
-    80: 7
-}
-
-batter_fv_dict = {
-    20: -0.1,
-    30: 0.0,
-    35: 0.1,
-    40: 0.35,
-    45: 1.15,
-    50: 2,
-    55: 2.9,
-    60: 4.15,
-    70: 6,
-    80: 7
-}
 
 if __name__ == "__main__":
 
