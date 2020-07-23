@@ -6,10 +6,11 @@ import numpy as np
 
 aging_batters, aging_pitchers = batting_models, pitching_models
 
-PRE_ARB = 555_000  # salary for players in pre-arbitration
-VESTING_THRESHOLD = 0.5  # threshold for vesting contract years
+PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
+VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-DOLLAR_PER_WAR = 5_000_000  # market value for WAR - $5m/win
+DOLLAR_PER_WAR = 8_000_000  # market value for WAR - $8m/win
+# ^^^ based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
 pitcher_fv_dict = {
     20: -0.1,
@@ -149,6 +150,7 @@ class Team:
             # Arb model should be compared with empirical data
             # Vesting option model should be compared with empirical data
             # Player and team options automatically execute, so this needs to be worked out
+            # Super 2 should be implemented
 
             # Set salary for pre-arb and arb
             # Pre-arb technically uncessary, but just as a check
