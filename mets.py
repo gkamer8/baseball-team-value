@@ -1,12 +1,46 @@
 import csv
 import random
 from aging import batting_models, pitching_models, age_bucket_mapper, war_bucket_mapper
+<<<<<<< HEAD
 from player_class import Player
+=======
+from aging_regression import mean, std
+import numpy as np
+>>>>>>> 188968c47638aabe74b9d1922186ec9d7372d87a
 
 aging_batters, aging_pitchers = batting_models, pitching_models
 
-PRE_ARB = 555_000  # salary for players in pre-arbitration
-VESTING_THRESHOLD = 0.5  # threshold for vesting contract years
+PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
+VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
+
+DOLLAR_PER_WAR = 8_000_000  # market value for WAR - $8m/win
+# ^^^ based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
+
+pitcher_fv_dict = {
+    20: -0.1,
+    30: 0.0,
+    35: 0.1,
+    40: 0.45,
+    45: 1.35,
+    50: 2.15,
+    55: 3,
+    60: 4.2,
+    70: 6,
+    80: 7
+}
+
+batter_fv_dict = {
+    20: -0.1,
+    30: 0.0,
+    35: 0.1,
+    40: 0.35,
+    45: 1.15,
+    50: 2,
+    55: 2.9,
+    60: 4.15,
+    70: 6,
+    80: 7
+}
 
 class Team:
 
@@ -25,10 +59,11 @@ class Team:
         b) losses (int)
         c) div_place (int)
         d) outcome (string - empty or WC or DS or CS or WS)
+    7. max_payroll (float) | Total team payroll
 
     """
 
-    def __init__(self, name, division, league, contracts, prospects):
+    def __init__(self, name, division, league, contracts, prospects, max_payroll=None):
         self.name = name
         self.division = division
         self.league = league
@@ -37,6 +72,12 @@ class Team:
         self.prospects = prospects
 
         self.records = []
+
+        # if max_payroll isn't set, it becomes whatever the initial payroll is
+        if max_payroll is None:
+            self.max_payroll = self.get_contract_values()
+        else:
+            self.max_payroll = max_payroll
 
     def add_prospect(self, new_prospect):
         self.prospects.append(new_prospect)
@@ -60,7 +101,33 @@ class Team:
 
     def age_players(self):
         for player in self.contracts:
-            player['player'].progress_year()
+            player['player'].progress()
+
+    def age_prospects(self):
+        # Replaces prospect list with new list, excluding new MLB players and dead prospects
+        new_prospects = []
+        for prospect in self.prospects:
+            prospect.develop()
+            if prospect.eta == 0:
+                # ID is made up of a random number and the name
+                new_id = prospect.name.lower().replace(" ", "") + str(random.randint(0, 1_000_000))
+                new_war = pitcher_fv_dict[prospect.fv] if prospect.pitcher else batter_fv_dict[prospect.fv]
+                new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, name=prospect.name)
+
+                # Three years of pre-arb, three years of arb
+                new_payouts = [{'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}]
+
+                self.contracts.append({'player': new_player, 'payouts': new_payouts})
+            elif not prospect.dead:
+                new_prospects.append(prospect)
+        self.prospects = new_prospects
+
+    def get_fa_war(self):
+        # note: fa_allocation could be negative!
+        fa_allocation = self.max_payroll - self.get_contract_values()
+        fa_mu = fa_allocation / DOLLAR_PER_WAR
+        fa_std_dev = fa_mu / 4  # 4 is arbitrary - goal is to scale with the mu WAR
+        return np.random.normal(fa_mu, fa_std_dev, 1)[0]
 
     def get_team_war(self):
         wars = []
@@ -73,8 +140,8 @@ class Team:
         self.records.append({'Total WAR': self.get_team_war()})
 
     def get_contract_values(self):
-        return sum([x['value'] for x in self.contracts])
-    
+        return sum([x['payouts']['value'] for x in self.contracts])
+
     def update_contracts(self):
         new_contracts = []
         for player in self.contracts:
@@ -87,6 +154,7 @@ class Team:
             # Arb model should be compared with empirical data
             # Vesting option model should be compared with empirical data
             # Player and team options automatically execute, so this needs to be worked out
+            # Super 2 should be implemented
 
             # Set salary for pre-arb and arb
             # Pre-arb technically uncessary, but just as a check
@@ -97,24 +165,25 @@ class Team:
                 # Values at the moment are arbitrary but should be replaced with empirically correct values
                 arb_years_remaining = sum(x['type'] == 'arb' for x in remaining_payouts)
                 if arb_years_remaining == 0:
-                    dol_per_war = 4
+                    dol_per_war = 4_000_000
                 elif arb_years_remaining == 1:
-                    dol_per_war = 3
+                    dol_per_war = 3_000_000
                 elif arb_years_remaining >= 2:
-                    dol_per_war = 2
+                    dol_per_war = 2_000_000
                 remaining_payouts[0]['value'] = min(player['player'].get_war() * dol_per_war, PRE_ARB)
             elif remaining_payouts[0]['type'] == 'vesting option':
                 if player['player'].get_war() < VESTING_THRESHOLD:
                     continue
             # Player and team options automatically execute
-            
+
             player['payouts'] = remaining_payouts
-            
+
             new_contracts.append(player)
 
-            
+
     def run_year(self):
         self.age_players()
+        self.age_prospects()
         self.record_year()
         self.update_contracts()
 
@@ -225,34 +294,6 @@ class Prospect:
             elif eta_draw > .9:
                 self.dead = True
 
-# Fangraphs FV to mean WAR
-
-pitcher_fv_dict = {
-    20: -0.1,
-    30: 0.0,
-    35: 0.1,
-    40: 0.45,
-    45: 1.35,
-    50: 2.15,
-    55: 3,
-    60: 4.2,
-    70: 6,
-    80: 7
-}
-
-batter_fv_dict = {
-    20: -0.1,
-    30: 0.0,
-    35: 0.1,
-    40: 0.35,
-    45: 1.15,
-    50: 2,
-    55: 2.9,
-    60: 4.15,
-    70: 6,
-    80: 7
-}
-
 if __name__ == "__main__":
 
     mets = Team("Mets", 3, "NL", [], [])
@@ -346,4 +387,3 @@ if __name__ == "__main__":
         print(contract['player'].name + ", " + str(contract['player'].war))
 
     print("Num contracts: " + str(len(mets.contracts)))
-
