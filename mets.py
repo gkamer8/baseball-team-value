@@ -1,7 +1,7 @@
 import csv
 import random
 from aging import batting_models, pitching_models, age_bucket_mapper, war_bucket_mapper
-from aging_regression import mean, std
+from player_class import Player
 
 aging_batters, aging_pitchers = batting_models, pitching_models
 
@@ -60,13 +60,14 @@ class Team:
 
     def age_players(self):
         for player in self.contracts:
-            player['player'].progress()
+            player['player'].progress_year()
 
     def get_team_war(self):
-        war = 0
+        wars = []
         for player in self.contracts:
-            war += player['player'].get_war()
-        return war
+            wars.append(player['player'].get_war())
+        wars.sort(reverse=True)
+        return sum(wars[:40])
 
     def record_year(self):
         self.records.append({'Total WAR': self.get_team_war()})
@@ -116,28 +117,6 @@ class Team:
         self.age_players()
         self.record_year()
         self.update_contracts()
-
-class Player:
-    def __init__(self, id, war, age, position, name=""):
-        self.war = war
-        self.age = age
-        self.pitcher = position
-        self.id = id  # baseball reference id
-
-        self.name = name
-
-    def progress(self):
-        self.age += 1
-        age_bucket = age_bucket_mapper(self.age)
-        war_bucket = war_bucket_mapper(self.war)
-        if self.pitcher:
-            mu, std = aging_pitchers[age_bucket][war_bucket]
-        else:
-            mu, std = aging_batters[age_bucket][war_bucket]
-        self.war += random.normalvariate(mu, std)
-
-    def get_war(self):
-        return self.war
 
 
 # Inherits Player?
@@ -281,7 +260,7 @@ if __name__ == "__main__":
     current_year = 2019
 
     # Scouting data
-    with open('mets-board-data.csv') as csvfile:
+    with open('prospect_data/mets-board-data.csv') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)  # skips header line
         for r in reader:
