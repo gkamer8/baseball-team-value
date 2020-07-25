@@ -1,4 +1,4 @@
-from player_class import Player
+from player import Player
 
 
 
