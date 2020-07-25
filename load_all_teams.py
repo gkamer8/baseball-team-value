@@ -53,6 +53,11 @@ def create_team(name):
             pitcher = r[2] == "RHP" or r[2] == "LHP"
 
             pros = Prospect(int(r[8]) - current_year, fv, int(round(float(r[10]))), pitcher, name=r[0])
+            new_contracts = []
+            for contract in team.contracts:
+                if contract['player'].name != pros.name:
+                    new_contracts.append(contract)
+            team.contracts = new_contracts
             team.add_prospect(pros)
     return team
 
