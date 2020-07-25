@@ -24,38 +24,64 @@ def merge_batting_pitching(list1, list2):
     return list(list(zip(*sorted_items))[1]), list(list(zip(*sorted_items))[0])
 
 
-# Cycles through baseballreference pages for each name in list and scrapes WAR by age data
-def data_scraper1(name):
+def data_scraper(name):
     link = "https://www.baseball-reference.com/players/" + name[1][0] + "/" + name[1][:5] + name[0][:2] + "01.shtml"
     driver.get(link)
     war_list = []
     age_list = []
+    games_list = []
+    pitcher = False
+    found = True
     print(name)
+    start_ratio = ''
     try:
-        tmp = driver.find_element_by_id('pitching_value').find_element_by_tag_name('tbody')
-        tmp1 = extract_war(tmp.find_elements_by_css_selector('[data-stat="WAR_pitch"]'))
-        tmp1_age = extract_age(tmp.find_elements_by_css_selector('[data-stat="age"]'))
-    except:
-        try:
-            tmp = driver.find_element_by_id('batting_value').find_element_by_tag_name('tbody')
-            tmp1 = extract_war(tmp.find_elements_by_css_selector('[data-stat="WAR"]'))
-            tmp1_age = extract_age(tmp.find_elements_by_css_selector('[data-stat="age"]'))
-            war_list, age_list = merge_batting_pitching(list(zip(tmp1_age, tmp1)), [])
-        except selenium.common.exceptions.NoSuchElementException:
-            print('not found')
-
+        position = driver.find_element_by_xpath("//div[@id='meta']/div[2]/p").text
+    except selenium.common.exceptions.NoSuchElementException:
+        print("Failed to find position")
+        found = False
     else:
-        try:
-            tmp = driver.find_element_by_id('batting_value').find_element_by_tag_name('tbody')
-            tmp2 = extract_war(tmp.find_elements_by_css_selector('[data-stat="WAR"]'))
-            tmp2_age = extract_age(tmp.find_elements_by_css_selector('[data-stat="age"]'))
-            war_list, age_list = merge_batting_pitching(list(zip(tmp1_age, tmp1)), list(zip(tmp2_age, tmp2)))
-        except:
-            print("pitching only")
-            war_list, age_list = merge_batting_pitching(list(zip(tmp1_age, tmp1)), [])
+        if position == "Position: Pitcher":
+            print("found pitcher")
+            pitcher = True
 
-    return war_list, age_list
+    if found:
+        if pitcher:
+            try:
+                tmp = driver.find_element_by_id('pitching_value').find_element_by_tag_name('tbody')
+                tmp1 = extract_war(tmp.find_elements_by_css_selector('[data-stat="WAR_pitch"]'))
+                tmp1_age = extract_age(tmp.find_elements_by_css_selector('[data-stat="age"]'))
+                tmp1_games = extract_war(tmp.find_elements_by_css_selector('[data-stat="G"]'))
+                g_temp = driver.find_element_by_class_name('stats_pullout')
+                gs = g_temp.find_element_by_xpath("//div[@id='info']/div[4]/div[3]/div[2]/p").text
+                gp = g_temp.find_element_by_xpath("//div[@id='info']/div[4]/div[3]/div/p").text
+                start_ratio = float(gs) / float(gp)
+            except selenium.common.exceptions.NoSuchElementException:
+                print("no pitching stats")
+                found = False
+            else:
+                try:
+                    tmp = driver.find_element_by_id('batting_value').find_element_by_tag_name('tbody')
+                    tmp2 = extract_war(tmp.find_elements_by_css_selector('[data-stat="WAR"]'))
+                    tmp2_age = extract_age(tmp.find_elements_by_css_selector('[data-stat="age"]'))
+                    war_list, age_list= merge_batting_pitching(list(zip(tmp1_age, tmp1)), list(zip(tmp2_age, tmp2)))
+                    games_list, _ = merge_batting_pitching(list(zip(tmp1_age, tmp1_games)), [])
+                except selenium.common.exceptions.NoSuchElementException:
+                    print("pitching only")
+                    war_list, age_list= merge_batting_pitching(list(zip(tmp1_age, tmp1)), [])
+                    games_list, _ = merge_batting_pitching(list(zip(tmp1_age, tmp1_games)), [])
+        else:
+            try:
+                tmp = driver.find_element_by_id('batting_value').find_element_by_tag_name('tbody')
+                tmp1 = extract_war(tmp.find_elements_by_css_selector('[data-stat="WAR"]'))
+                tmp1_age = extract_age(tmp.find_elements_by_css_selector('[data-stat="age"]'))
+                tmp1_games = extract_war(tmp.find_elements_by_css_selector('[data-stat="G"]'))
+                war_list, age_list = merge_batting_pitching(list(zip(tmp1_age, tmp1)), [])
+                games_list, _ = merge_batting_pitching(list(zip(tmp1_age, tmp1_games)), [])
+            except selenium.common.exceptions.NoSuchElementException:
+                print("no batting stats")
+                found = False
 
+    return war_list, age_list, games_list, pitcher, start_ratio, found
 
 # Takes a list of names and formats it for construction of urls
 def format_player_list(players):
@@ -91,7 +117,7 @@ pitchers2000 = pd.read_csv('Aging Data\\mlb-player-stats-Pitchers2000.csv')
 pitchers2000 = pitchers2000['Name'].to_list()
 pitchers = pitchers2020 + pitchers2015 + pitchers2010 + pitchers2005 + pitchers2000
 
-
+players = batters + pitchers
 # Stores scraped WAR data in csvs
 # batters_df = data_scraper(format_player_list(batters), True)
 # batters_df.to_csv('Aging Data\\Batters_WAR_by_Age.csv')
@@ -103,24 +129,22 @@ pitchers = pitchers2020 + pitchers2015 + pitchers2010 + pitchers2005 + pitchers2
 def get_data(name_list):
     ages = []
     wars = []
+    games = []
+    pitchers = []
+    start_ratios = []
     for name in format_player_list(name_list):
-        ages.append("")
-        wars.append("")
-        war_lst, age_lst = data_scraper1(name)
-        if isinstance(war_lst, list) and isinstance(age_lst, list):
-            wars.extend(war_lst)
-            ages.extend(age_lst)
-    return ages, wars
+        war_lst, age_lst, games_lst, pitcher, start_ratio, found = data_scraper(name)
+        if found:
+            wars.append(war_lst)
+            ages.append(age_lst)
+            games.append(games_lst)
+            pitchers.append(pitcher)
+            start_ratios.append(start_ratio)
+    return ages, wars, games, pitchers, start_ratios
 
 if __name__ == "__main__":
-    # ages, wars = get_data(pitchers)
-    # df_p = pd.DataFrame(list(zip(wars, ages)),
-    #                columns =['WAR', 'Age'])
-    # df_p.to_csv('Aging Data/Pitchers_WAR_by_Age.csv')
-    print(batters[:10])
-
-    ages1, wars1 = get_data(batters)
-    df_b = pd.DataFrame(list(zip(wars1, ages1)),
-                   columns =['WAR', 'Age'])
-    df_b.to_csv('Aging Data/Batters_WAR_by_Age.csv')
+    ages1, wars1, games, positions, ratios = get_data(players)
+    df_b = pd.DataFrame(list(zip(wars1, ages1, games, positions, ratios)),
+                   columns =['WAR', 'Age', 'Games', 'pitcher', 'start_ratio'])
+    df_b.to_csv('Aging Data/WAR_by_Age1.csv')
 

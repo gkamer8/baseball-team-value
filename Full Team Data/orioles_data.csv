@@ -1,57 +1,57 @@
-,Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2020,2021,2022,career,pitcher
-0,Chris Davis\davisch02,34,12,Free Agency,10.061,Boras Corporation,7 yrs/$161M (16-22),$23M,$23M,$23M,"[1.1, -0.9, -0.5, -0.1, 1.9, 7.1, 1.1, 4.9, 3.1, -0.6, -3.6, -1.2]",True
-1,Alex Cobb\cobbal01,32,8,Free Agency,8.061,Beverly Hills Spo...,4 yrs/$57M (18-21),$14M,$15M,FA,"[0.6, 0.8, 3.6999999999999997, 4.1, -0.8, 2.1999999999999997, 1.2, -0.4]",True
-2,Trey Mancini\mancitr01,28,4,Amateur Draft,3.015,,1 yr/$4.75M (20),$4.75M,Arb,Arb,"[0.3, 2.4, 0.4, 3.5]",False
-3,Mychal Givens\givenmy01,30,5,Amateur Draft,4.069,Excel Sports Mana...,1 yr/$3.23M (20),$3.23M,Arb,FA,"[0.9, 1.5, 2.3, 1.1, 0.7]",True
-4,José Iglesias\iglesjo01,30,8,,7.0360000000000005,MVP Sports Group,1 yr/$3M (20) & 21 team option,$2.5M,$500k [FA-*],FA,"[0.0, 0.3, 2.4, 1.3, 2.5, 1.0, 2.3, 1.4]",False
-5,Hanser Alberto\alberha01,27,4,Waivers,3.085,ISE Baseball,1 yr/$1.65M (20),$1.65M,Arb,Arb,"[0.4, -0.6, -0.3, 2.8]",True
-6,Miguel Castro\castrmi01,25,5,Traded,3.0789999999999997,Magnus Sports,1 yr/$1.05M (20),$1.05M,Arb,Arb,"[-0.30000000000000004, -0.2, 0.9, 1.5, 0.7]",True
-7,Richard Bleier\bleieri01,33,4,Traded,3.074,,1 yr/$915k (20),$915k,Arb,Arb,"[0.6, 1.4, 1.6, 0.4]",True
-8,Kohl Stewart\stewako01,25,2,,0.094,,1 yr/$800k (20),$800k,Pre-Arb,Pre-Arb,"[0.6, -0.2]",True
-9,Wade LeBlanc\leblawa01,35,11,,6.131,CAA Sports (Greg ...,1 yr/$100k (20),$100k,FA,,"[-0.5, 0.6, 0.6, 0.3, 1.5, -0.8, 0.30000000000000004, 0.5, 0.2, 2.6, 0.4]",True
-10,Tommy Milone\milonto01,33,9,,6.1129999999999995,Magnus Sports,1 yr/$100k (20),$100k,FA,,"[0.5, 2.0, 0.8, 0.10000000000000006, 1.5, -0.5, -1.0, -0.2, 1.5]",True
-11,Jose Rondon\rondojo02,26,3,Waivers,1.056,,1 yr/$100k (20),$100k,Pre-Arb,Arb,"[-0.7, 0.3, -0.7]",True
-12,Bryan Holaday\holadbr01,32,8,,5.013,Lagardere Sports,,Arb-3,FA,,"[0.0, 0.3, -0.5, 0.2, 0.3, -0.3, -0.1, 0.4]",True
-13,Pat Valaika\valaipa01,27,4,,2.079,,,Pre-Arb-3,Arb-1,Arb-2,"[0.0, 0.6, -1.4, -0.6]",False
-14,Ty Blach\blachty01,29,4,Waivers,2.065,Sports Pro Servic...,,Pre-Arb-3,Arb-1,Arb-2,"[0.8999999999999999, 2.0, -0.2, -1.1]",True
-15,Mason Williams\willima10,28,5,Free Agency,2.002,Bobby Barad,,Pre-Arb-3,Arb-1,Arb-2,"[0.1, -0.1, -0.3, 0.3, -0.1]",False
-16,Stevie Wilkerson\wilkest01,28,2,Amateur Draft,1.093,,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[-0.2, -0.8]",True
-17,David Hess\hessda01,26,2,Amateur Draft,1.068,,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.8, -1.1]",True
-18,Pedro Severino\severpe01,26,5,Waivers,2.099,Wasserman,,Pre-Arb-3,Arb-1,Arb-2,"[0.1, 0.7, -0.3, -1.2, 1.0]",False
-19,Dilson Herrera\herredi01,26,3,,1.034,Magnus Sports,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.1, -0.2, -0.2]",False
-20,Hunter Cervenka\cervehu01,30,2,,1.018,,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.6, -0.4]",True
-21,Shawn Armstrong\armstsh01,29,5,Waivers,2.028,,,Pre-Arb-3,Arb-1,Arb-2,"[0.2, 0.3, 0.1, 0.7, 0.10000000000000003]",True
-22,Hector Velazquez\velazhe01,31,3,,2.017,,,Pre-Arb-3,Arb-1,Arb-2,"[0.6, 1.5, -0.1]",True
-23,Renato Nunez\nunezre01,26,4,Waivers,1.167,,,Pre-Arb-2,Arb-1,Arb-2,"[-0.3, 0.0, 1.2999999999999998, 0.4]",False
-24,Anthony Santander\santaan02,25,3,Rule 5 Draft,1.162,,,Pre-Arb-2,Arb-1,Arb-2,"[0.0, -0.6, 1.4]",False
-25,Asher Wojciechowski\wojcias01,31,3,Purchased,1.156,ISE Baseball,,Pre-Arb-2,Arb-1,Arb-2,"[-0.4, -1.1, 1.5]",True
-26,Rio Ruiz\ruizri01,26,4,Waivers,1.109,Scott Boras,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.1, -0.3, 0.1, -0.2]",False
-27,Chance Sisco\siscoch01,25,3,Amateur Draft,1.103,VC Sports Group,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.4, -0.3, 0.0]",False
-28,Paul Fry\frypa01,27,2,Traded,1.0959999999999999,Wasserman,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.3, -0.1]",True
-29,Dwight Smith Jr.\smithdw02,27,3,Traded,1.085,,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.0, 0.0, -0.8]",False
-30,Tanner Scott\scottta01,25,3,Amateur Draft,1.0590000000000002,MVP Sports Group,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[-0.1, 0.0, 0.1]",True
-31,Austin Wynns\wynnsau01,29,2,Amateur Draft,1.016,,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.4, 0.3]",False
-32,Brady Rodgers\rodgebr01,29,2,,1.015,Hendricks Sports,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[-0.6, -0.3]",True
-33,John Means\meansjo01,27,2,Amateur Draft,1.0070000000000001,Wasserman,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[-0.2, 4.8999999999999995]",True
-34,Richie Martin\martiri01,25,1st,Rule 5 Draft,1.0,,,Pre-Arb-2,Pre-Arb-3,Arb-1,[-1.3],False
-35,Richard Urena\urenari01,24,3,,0.156,,,Pre-Arb,Pre-Arb-2,Arb-1,"[-0.5, 0.5, -0.2]",True
-36,Cesar Valdez\valdece01,35,2,,0.14300000000000002,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.7999999999999999, -0.7]",True
-37,Rob Zastryzny\zastrro01,28,3,,0.1,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[0.6, -0.3, -0.1]",True
-38,Taylor Davis\davista01,30,3,,0.099,Mike Mosa,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.1, 0.0, -0.2]",True
-39,Branden Kline\klinebr01,28,1st,Amateur Draft,0.094,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[0.0],True
-40,Cedric Mullins\mullice01,25,2,Amateur Draft,0.078,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.2, -0.7]",False
-41,Josh Rogers\rogerjo01,25,2,Traded,0.14300000000000002,Sosnick Cobbe & K...,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.3, -0.2]",True
-42,Evan Phillips\phillev01,25,2,Traded,0.133,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.7, -0.1]",True
-43,DJ Stewart\stewadj01,26,2,Amateur Draft,0.12300000000000001,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[0.6, -0.4]",False
-44,Jesmuel Valentin\valenje01,26,1st,,0.091,SportsMeter,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.7999999999999999],True
-45,Eric Hanhold\hanhoer01,26,1st,,0.044000000000000004,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.1],True
-46,Tom Eshelman\eshelto01,26,1st,Traded,0.036000000000000004,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.4],True
-47,Andrew Velazquez\velazan01,25,2,,0.07,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[0.3, -0.2]",False
-48,Chandler Shepherd\shephch01,27,1st,Waivers,0.033,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.1],True
-49,Cody Carroll\carroco01,27,1st,Traded,0.062,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.4],True
-50,Luis Ortiz\ortizlu02,24,2,Traded,0.028999999999999998,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.3, -0.1]",True
-51,Austin Hays\haysau01,24,2,Amateur Draft,0.057,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.5, 0.7]",False
-52,Travis Lakins\lakintr01,26,1st,,0.054000000000000006,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[0.4],True
-53,Dillon Tate\tatedi01,26,1st,Traded,0.048,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.2],True
-54,Hunter Harvey\harvehu01,25,1st,Amateur Draft,0.047,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[0.3],True
-55,Cole Sulser\sulseco01,30,1st,,0.027999999999999997,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[0.3],True
+,Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2020,2021,2022,career,pitcher,start_ratio
+0,Chris Davis\davisch02,34,12,Free Agency,10.061,Boras Corporation,7 yrs/$161M (16-22),$23M,$23M,$23M,"[1.1, -0.9, -0.5, -0.1, 1.9, 7.1, 1.1, 4.9, 3.1, -0.6, -3.6, -1.2]",True,1.1065340909090908
+1,Alex Cobb\cobbal01,32,8,Free Agency,8.061,Beverly Hills Spo...,4 yrs/$57M (18-21),$14M,$15M,FA,"[0.6, 0.8, 3.6999999999999997, 4.1, -0.8, 2.1999999999999997, 1.2, -0.4]",True,1.0
+2,Trey Mancini\mancitr01,28,4,Amateur Draft,3.015,,1 yr/$4.75M (20),$4.75M,Arb,Arb,"[0.3, 2.4, 0.4, 3.5]",False,
+3,Mychal Givens\givenmy01,30,5,Amateur Draft,4.069,Excel Sports Mana...,1 yr/$3.23M (20),$3.23M,Arb,FA,"[0.9, 1.5, 2.3, 1.1, 0.7]",True,0.0
+4,José Iglesias\iglesjo01,30,8,,7.0360000000000005,MVP Sports Group,1 yr/$3M (20) & 21 team option,$2.5M,$500k [FA-*],FA,"[0.0, 0.3, 2.4, 1.3, 2.5, 1.0, 2.3, 1.4]",False,
+5,Hanser Alberto\alberha01,27,4,Waivers,3.085,ISE Baseball,1 yr/$1.65M (20),$1.65M,Arb,Arb,"[0.4, -0.6, -0.3, 2.8]",True,0.7894736842105263
+6,Miguel Castro\castrmi01,25,5,Traded,3.0789999999999997,Magnus Sports,1 yr/$1.05M (20),$1.05M,Arb,Arb,"[-0.30000000000000004, -0.2, 0.9, 1.5, 0.7]",True,0.00980392156862745
+7,Richard Bleier\bleieri01,33,4,Traded,3.074,,1 yr/$915k (20),$915k,Arb,Arb,"[0.6, 1.4, 1.6, 0.4]",True,0.006097560975609756
+8,Kohl Stewart\stewako01,25,2,,0.094,,1 yr/$800k (20),$800k,Pre-Arb,Pre-Arb,"[0.6, -0.2]",True,0.35294117647058826
+9,Wade LeBlanc\leblawa01,35,11,,6.131,CAA Sports (Greg ...,1 yr/$100k (20),$100k,FA,,"[-0.5, 0.6, 0.6, 0.3, 1.5, -0.8, 0.30000000000000004, 0.5, 0.2, 2.6, 0.4]",True,0.48717948717948717
+10,Tommy Milone\milonto01,33,9,,6.1129999999999995,Magnus Sports,1 yr/$100k (20),$100k,FA,,"[0.5, 2.0, 0.8, 0.10000000000000006, 1.5, -0.5, -1.0, -0.2, 1.5]",True,0.7816091954022989
+11,Jose Rondon\rondojo02,26,3,Waivers,1.056,,1 yr/$100k (20),$100k,Pre-Arb,Arb,"[-0.7, 0.3, -0.7]",True,0.9230769230769231
+12,Bryan Holaday\holadbr01,32,8,,5.013,Lagardere Sports,,Arb-3,FA,,"[0.0, 0.3, -0.5, 0.2, 0.3, -0.3, -0.1, 0.4]",True,1.1384615384615384
+13,Pat Valaika\valaipa01,27,4,,2.079,,,Pre-Arb-3,Arb-1,Arb-2,"[0.0, 0.6, -1.4, -0.6]",False,
+14,Ty Blach\blachty01,29,4,Waivers,2.065,Sports Pro Servic...,,Pre-Arb-3,Arb-1,Arb-2,"[0.8999999999999999, 2.0, -0.2, -1.1]",True,0.4782608695652174
+15,Mason Williams\willima10,28,5,Free Agency,2.002,Bobby Barad,,Pre-Arb-3,Arb-1,Arb-2,"[0.1, -0.1, -0.3, 0.3, -0.1]",False,
+16,Stevie Wilkerson\wilkest01,28,2,Amateur Draft,1.093,,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[-0.2, -0.8]",True,0.8837209302325582
+17,David Hess\hessda01,26,2,Amateur Draft,1.068,,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.8, -1.1]",True,0.75
+18,Pedro Severino\severpe01,26,5,Waivers,2.099,Wasserman,,Pre-Arb-3,Arb-1,Arb-2,"[0.1, 0.7, -0.3, -1.2, 1.0]",False,
+19,Dilson Herrera\herredi01,26,3,,1.034,Magnus Sports,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.1, -0.2, -0.2]",False,
+20,Hunter Cervenka\cervehu01,30,2,,1.018,,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.6, -0.4]",True,0.0
+21,Shawn Armstrong\armstsh01,29,5,Waivers,2.028,,,Pre-Arb-3,Arb-1,Arb-2,"[0.2, 0.3, 0.1, 0.7, 0.10000000000000003]",True,0.0
+22,Hector Velazquez\velazhe01,31,3,,2.017,,,Pre-Arb-3,Arb-1,Arb-2,"[0.6, 1.5, -0.1]",True,0.21348314606741572
+23,Renato Nunez\nunezre01,26,4,Waivers,1.167,,,Pre-Arb-2,Arb-1,Arb-2,"[-0.3, 0.0, 1.2999999999999998, 0.4]",False,
+24,Anthony Santander\santaan02,25,3,Rule 5 Draft,1.162,,,Pre-Arb-2,Arb-1,Arb-2,"[0.0, -0.6, 1.4]",False,
+25,Asher Wojciechowski\wojcias01,31,3,Purchased,1.156,ISE Baseball,,Pre-Arb-2,Arb-1,Arb-2,"[-0.4, -1.1, 1.5]",True,0.574468085106383
+26,Rio Ruiz\ruizri01,26,4,Waivers,1.109,Scott Boras,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.1, -0.3, 0.1, -0.2]",False,
+27,Chance Sisco\siscoch01,25,3,Amateur Draft,1.103,VC Sports Group,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.4, -0.3, 0.0]",False,
+28,Paul Fry\frypa01,27,2,Traded,1.0959999999999999,Wasserman,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.3, -0.1]",True,0.0
+29,Dwight Smith Jr.\smithdw02,27,3,Traded,1.085,,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.0, 0.0, -0.8]",False,
+30,Tanner Scott\scottta01,25,3,Amateur Draft,1.0590000000000002,MVP Sports Group,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[-0.1, 0.0, 0.1]",True,0.0
+31,Austin Wynns\wynnsau01,29,2,Amateur Draft,1.016,,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[0.4, 0.3]",False,
+32,Brady Rodgers\rodgebr01,29,2,,1.015,Hendricks Sports,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[-0.6, -0.3]",True,0.125
+33,John Means\meansjo01,27,2,Amateur Draft,1.0070000000000001,Wasserman,,Pre-Arb-2,Pre-Arb-3,Arb-1,"[-0.2, 4.8999999999999995]",True,0.84375
+34,Richie Martin\martiri01,25,1st,Rule 5 Draft,1.0,,,Pre-Arb-2,Pre-Arb-3,Arb-1,[-1.3],False,
+35,Richard Urena\urenari01,24,3,,0.156,,,Pre-Arb,Pre-Arb-2,Arb-1,"[-0.5, 0.5, -0.2]",True,0.7
+36,Cesar Valdez\valdece01,35,2,,0.14300000000000002,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.7999999999999999, -0.7]",True,0.3
+37,Rob Zastryzny\zastrro01,28,3,,0.1,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[0.6, -0.3, -0.1]",True,0.05555555555555555
+38,Taylor Davis\davista01,30,3,,0.099,Mike Mosa,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.1, 0.0, -0.2]",True,2.3333333333333335
+39,Branden Kline\klinebr01,28,1st,Amateur Draft,0.094,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[0.0],True,0.0
+40,Cedric Mullins\mullice01,25,2,Amateur Draft,0.078,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.2, -0.7]",False,
+41,Josh Rogers\rogerjo01,25,2,Traded,0.14300000000000002,Sosnick Cobbe & K...,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.3, -0.2]",True,0.375
+42,Evan Phillips\phillev01,25,2,Traded,0.133,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.7, -0.1]",True,0.029411764705882353
+43,DJ Stewart\stewadj01,26,2,Amateur Draft,0.12300000000000001,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[0.6, -0.4]",False,
+44,Jesmuel Valentin\valenje01,26,1st,,0.091,SportsMeter,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.7999999999999999],True,0.75
+45,Eric Hanhold\hanhoer01,26,1st,,0.044000000000000004,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.1],True,0.0
+46,Tom Eshelman\eshelto01,26,1st,Traded,0.036000000000000004,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.4],True,0.4
+47,Andrew Velazquez\velazan01,25,2,,0.07,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[0.3, -0.2]",False,
+48,Chandler Shepherd\shephch01,27,1st,Waivers,0.033,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.1],True,0.6
+49,Cody Carroll\carroco01,27,1st,Traded,0.062,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.4],True,0.0
+50,Luis Ortiz\ortizlu02,24,2,Traded,0.028999999999999998,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.3, -0.1]",True,0.6666666666666666
+51,Austin Hays\haysau01,24,2,Amateur Draft,0.057,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,"[-0.5, 0.7]",False,
+52,Travis Lakins\lakintr01,26,1st,,0.054000000000000006,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[0.4],True,0.1875
+53,Dillon Tate\tatedi01,26,1st,Traded,0.048,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[-0.2],True,0.0
+54,Hunter Harvey\harvehu01,25,1st,Amateur Draft,0.047,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[0.3],True,0.0
+55,Cole Sulser\sulseco01,30,1st,,0.027999999999999997,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,[0.3],True,0.0
