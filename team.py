@@ -1,6 +1,8 @@
 import random
+import string
 import numpy as np
 from player import Player
+from prospect import Prospect
 
 PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
@@ -141,25 +143,6 @@ class Team:
 
     def get_contract_values(self):
         return sum([x['payouts']['value'] for x in self.contracts])
-    
-    # Adds new prospects from draft and J2 – only top prospects
-    def add_new_prospects(self):
-        # Values inferred from: https://blogs.fangraphs.com/an-update-to-prospect-valuation/
-        # and https://academicworks.cuny.edu/cgi/viewcontent.cgi?article=1759&context=cc_etds_theses
-
-        # Go through draft:
-        most_recent_war = self.records[-1]['Total WAR']
-        # TODO
-        pick = ((.294 * 162 + most_recent_war) / 162) * 30  # Replacement level team is .294
-        pick = round(pick)
-
-        for r in range(40):
-            # TODO: get empirical percentage of prospects that are pitchers
-            position = np.random.choice([True, False], 1, True, [.2, .8])[0]
-
-            pick_num = pick * r
-            if pick == 1:
-                pass
 
     def update_contracts(self):
         new_contracts = []
@@ -199,6 +182,31 @@ class Team:
 
             new_contracts.append(player)
 
+    # Adds new prospects from draft and J2 – only top prospects
+    def add_new_prospects(self):
+        # Values inferred from: https://blogs.fangraphs.com/an-update-to-prospect-valuation/
+        # and https://academicworks.cuny.edu/cgi/viewcontent.cgi?article=1759&context=cc_etds_theses
+
+        # Go through draft:
+        most_recent_war = self.records[-1]['Total WAR']
+        # TODO
+        pick = ((.294 * 162 + most_recent_war) / 162) * 30  # Replacement level team is .294
+        pick = round(pick)
+
+        for r in range(40):
+            # TODO: get empirical percentage of prospects that are pitchers
+            position = np.random.choice([True, False], 1, True, [.2, .8])[0]
+
+            pick_num = pick * r
+            if pick_num == 1:
+                pass
+
+            # TODO: these are placeholder variables
+            eta = 3
+            fv = 50
+            age = 18
+            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)))
+            self.prospects.append(prospect)
 
     def run_year(self):
         self.age_players()  # Ages players by a year, gets new WAR value 
