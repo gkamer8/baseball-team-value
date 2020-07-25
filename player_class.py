@@ -9,18 +9,18 @@ class Player:
         self.id = id  # baseball reference id
         self.name = name
 
-    def progress_year(self):
+    def progress(self):
         self.age += 1
         if self.pitcher:
             if len(self.wars) > 1:
-                self.wars.append((war_predictor2_years_p(self.age, self.wars[-1], self.wars[-2]))[0])
+                self.wars.append(self.wars[-1] + (war_predictor2_years_p(self.age, self.wars[-1], self.wars[-2]))[0])
             else:
-                self.wars.append((war_predictor1_year_p(self.age, self.wars[-1]))[0])
+                self.wars.append(self.wars[-1] + (war_predictor1_year_p(self.age, self.wars[-1]))[0])
         else:
             if len(self.wars) > 1:
-                self.wars.append((war_predictor2_years_b(self.age, self.wars[-1], self.wars[-2]))[0])
+                self.wars.append(self.wars[-1] + (war_predictor2_years_b(self.age, self.wars[-1], self.wars[-2]))[0])
             else:
-                self.wars.append((war_predictor1_year_b(self.age, self.wars[-1]))[0])
+                self.wars.append(self.wars[-1] + (war_predictor1_year_b(self.age, self.wars[-1]))[0])
 
 
     def get_war(self):

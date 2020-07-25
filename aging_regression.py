@@ -41,10 +41,6 @@ def parse_data(df):
     return df_list
 
 
-print(parse_data(pitching_df))
-print(parse_data(batting_df))
-
-
 def filter_data(df):
     df_list = []
     for i in range(2, len(df) - 1):
@@ -55,7 +51,7 @@ def filter_data(df):
         war1 = float(df.loc[i, "WAR"])
         war2 = float(df.loc[i + 1, "WAR"])
         if age1 == age2 - 1 and -8 < war2 - war1 < 8 and age0 == age1 - 1:
-            df_list.append({"WAR": war2, "Age": age2, "Previous War": war1, "2yr_war": war0})
+            df_list.append({"WAR": war2 - war1, "Age": age2, "Previous War": war1, "2yr_war": war0})
     df = pd.DataFrame(df_list)
     df.to_csv('regression_data1.csv')
     return df
@@ -70,7 +66,7 @@ def filter_data_first_year(df):
         war1 = float(df.loc[i, "WAR"])
         war2 = float(df.loc[i + 1, "WAR"])
         if age1 == age2 - 1 and -8 < war2 - war1 < 8 and math.isnan(age0):
-            df_list.append({"WAR": war2, "Age": age2, "Previous War": war1})
+            df_list.append({"WAR": war2 - war1, "Age": age2, "Previous War": war1})
     df = pd.DataFrame(df_list)
     df.to_csv('regression_data1.csv')
     return df

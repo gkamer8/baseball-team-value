@@ -6,14 +6,14 @@ data1 = []
 data2 = []
 # for i in range(18, 50):
 #     data[str(i)] = []
-player1 = Player(1, [4], 20.0, False, "")
-player2 = Player(1, [0, 4], 20.0, False, "")
-player3 = Player(1, [4], 20.0, True, "")
-player4 = Player(1, [0, 4], 20.0, True, "")
+player1 = Player(1, [2], 20.0, False, "")
+player2 = Player(1, [0, 2], 20.0, False, "")
+player3 = Player(1, [2], 20.0, True, "")
+player4 = Player(1, [0, 2], 20.0, True, "")
 players = [player1, player2, player3, player4]
 for player in players:
     for j in range(20):
-        player.progress_year()
+        player.progress()
     print(player.wars)
 
 

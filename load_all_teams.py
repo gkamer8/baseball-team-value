@@ -45,7 +45,7 @@ def create_team(name):
         play = Player(player_name[1], wars, age, position, player_name[0])
         team.add_contract(play, payouts)
 
-    with open('prospect_data//' + name + '-board-data.csv') as csvfile:
+    with open('prospect_data/' + name + '-board-data.csv') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)  # skips header line
         for r in reader:
@@ -62,10 +62,10 @@ team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 
              'tigers', 'astros', 'royals', 'angels', 'dodgers', 'marlins', 'brewers', 'twins', 'mets',
              'yankees', 'athletics', 'phillies', 'pirates', 'padres', 'giants', 'mariners', 'cardinals',
              'rays', 'rangers', 'bluejays', 'nationals']
-
+team_list1 = ['dodgers']
 #
 teams = []
-for team in team_list:
+for team in team_list1:
     teams.append(create_team(team))
 
 team_names = []
@@ -73,6 +73,8 @@ team_wars = []
 for team in teams:
     print(team.name)
     team.run_year()
+    for contract in team.contracts:
+        print(contract['player'].name + ", " + str(contract['player'].wars[-1]))
     team_names.append(team.name)
     team_wars.append(((60 * team.get_team_war())/162))
 
