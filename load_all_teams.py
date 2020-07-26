@@ -80,10 +80,10 @@ team_names = []
 team_wars = []
 for team in teams:
     print(team.name)
-    for i in range(10):
+    for i in range(1):
         team.run_year()
-    for contract in team.contracts:
-        print(contract['player'].name + ", " + str(contract['player'].wars[-1]))
+    # for contract in team.contracts:
+    #     print(contract['player'].name + ", " + str(contract['player'].wars[-1]))
     team_names.append(team.name)
     team_wars.append(((60 * team.get_team_war())/162))
 

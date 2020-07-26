@@ -1,25 +1,19 @@
 import pandas as pd
-import scipy
 from scipy.stats import norm
-from scipy.optimize import curve_fit
-import matplotlib.pyplot as plt
-from sklearn import datasets, linear_model
-from sklearn.metrics import mean_squared_error, r2_score
-import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.neural_network import MLPRegressor
-from sklearn.datasets import make_regression
 from sklearn.preprocessing import StandardScaler, Normalizer
-from sklearn.linear_model import ElasticNet
-from sklearn.model_selection import GridSearchCV
-import math
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.svm import SVR
+import random
+import matplotlib.pyplot as plt
+import numpy as np
+import scipy.stats as stats
+import scipy
+from scipy.stats import cauchy
 
 
 """
@@ -40,7 +34,7 @@ pitching_df = df[df['pitcher']==True].drop("pitcher", axis=1)
 
 
 def average(list1):
-    return sum(list1) / len(list1)
+    return sum(list1[-4:]) / len(list1[-4:])
 
 
 def filter_data1(df, pitcher):
@@ -59,7 +53,7 @@ def filter_data1(df, pitcher):
             games = df.loc[i, 'Games']
             start_ratio = df.loc[i, 'start_ratio']
             for j in range(1, len(games) - 1):
-                if games[j] > game_cutoff and games[j + 1] > game_cutoff and games[j - 1] > game_cutoff:
+                if games[j] > game_cutoff and games[j + 1] > game_cutoff and games[j - 1] > game_cutoff and -8 < wars[j+1] - wars[j] < 8:
                     df_list.append({"WAR": wars[j+1], "Age": ages[j+1], "Previous War": wars[j],
                                     "Average War": average(wars[:j+1]), "ratio": start_ratio})
     if pitcher:
@@ -87,24 +81,6 @@ def filter_data(df):
     return df
 
 
-def filter_data_first_year(df):
-    df_list = []
-    indexes = list(df.index)
-    for i in range(2, len(df) - 1):
-        index0 = indexes[i - 1]
-        index1 = indexes[i]
-        index2 = indexes[i + 1]
-        age2 = float(df.loc[index2, "Age"])
-        war1 = float(df.loc[index1, "WAR"])
-        war2 = float(df.loc[index2, "WAR"])
-        ratio = float(df.loc[index1, "start_ratio"])
-        if index1 == index2 - 1 and -8 < war2 - war1 < 8 and index0 != index1 - 1:
-            df_list.append({"WAR": war2, "Age": age2, "Previous War": war1, "ratio": ratio})
-    df = pd.DataFrame(df_list)
-    df.to_csv('regression_data1.csv')
-    return df
-
-
 def getNeighbors(df):
     neigh = KNeighborsRegressor(n_neighbors=10)
     y = df["WAR"]
@@ -115,7 +91,9 @@ def getNeighbors(df):
     X_test = sc.transform(X_test)
     neigh.fit(X_train, y_train)
     print(neigh.score(X_test, y_test))
-    return neigh, sc
+    residuals = y_train - neigh.predict(X_train)
+    mu, std = norm.fit(residuals)
+    return neigh, sc, mu, std
 
 
 def getNeural(df):
@@ -129,6 +107,12 @@ def getNeural(df):
     regr.fit(X_train, y_train)
     print(regr.score(X_test, y_test))
     residuals = y_train - regr.predict(X_train)
+    # _, bins, _ = plt.hist(residuals, 150, density=1, alpha=0.5)
+    # mu, std = scipy.stats.gamma.fit(residuals)
+    # best_fit_line = scipy.stats.gamma.pdf(bins, mu, std)
+    # plt.plot(bins, best_fit_line)
+    # plt.title(str(mu) + str(std))
+    # plt.show()
     return regr, sc, residuals
 
 
@@ -143,7 +127,8 @@ def getForest(df):
     regr.fit(X_train, y_train)
     print(regr.score(X_test, y_test))
     residuals = y_train - regr.predict(X_train)
-    return regr, sc, residuals
+    mu, std = norm.fit(residuals)
+    return regr, sc, mu, std
 
 
 def getLinear(df):
@@ -156,7 +141,9 @@ def getLinear(df):
     X_test = sc.transform(X_test)
     regr.fit(X_train, y_train)
     print(regr.score(X_test, y_test))
-    return regr, sc
+    residuals = y_train - regr.predict(X_train)
+    mu, std = norm.fit(residuals)
+    return regr, sc, mu, std
 
 
 def getPoly(df):
@@ -170,7 +157,12 @@ def getPoly(df):
     regr.fit(X_train, y_train)
     print(regr.score(X_test, y_test))
     residuals = y_train - regr.predict(X_train)
-    mu, std = norm.fit(residuals)
+    _, bins, _ = plt.hist(residuals, 150, density=1, alpha=0.5)
+    mu, std = scipy.stats.norm.fit(residuals)
+    best_fit_line = scipy.stats.norm.pdf(bins, mu, std)
+    plt.plot(bins, best_fit_line)
+    plt.title(str(mu) + str(std))
+    plt.show()
     return regr, sc, mu, std
 
 
@@ -184,69 +176,41 @@ def getSVR(df):
     X_test = sc.transform(X_test)
     regr.fit(X_train, y_train)
     print(regr.score(X_test, y_test))
-    return regr, sc
+    residuals = y_train - regr.predict(X_train)
+    mu, std = norm.fit(residuals)
+    return regr, sc, mu, std
 
 
 def getModel(df):
-    return getPoly(df)
-
-
-# batting1 = filter_data_first_year(batting_df).drop("ratio", axis=1).dropna(axis=0)
-# batting2 = filter_data(batting_df).drop("ratio", axis=1).dropna(axis=0)
-# pitching1 = filter_data_first_year(pitching_df).dropna(axis=0)
-# pitching2 = filter_data(pitching_df).dropna(axis=0)
-# print(batting1.head())
-# start_pitching1 = filter_data_first_year(starting_pitchers).dropna(axis=0)
-# start_pitching2 = filter_data(starting_pitchers).dropna(axis=0)
-# relief_pitching1 = filter_data_first_year(relief_pitchers).dropna(axis=0)
-# relief_pitching2 = filter_data(relief_pitchers).dropna(axis=0)
+    return getNeural(df)
 
 
 batting = filter_data1(df, False)
 pitching = filter_data1(df, True)
 
-bat_model, scb, mub, stdb = getModel(batting)
-print(mub, stdb)
-pitch_model, scp, mup, stdp = getModel(pitching)
-print(mup, stdp)
+
+bat_model, scb, residualsb = getModel(batting)
+pitch_model, scp, residualsp = getModel(pitching)
+
+# test = []
+# for i in range(10000):
+#     test.append()
+#
+# plt.hist(test, bins=100)
+# plt.show()
+
+
 
 def war_predictor(age, war, average, pitching, start_ratio):
     if pitching:
-        return pitch_model.predict(scp.transform([[age, war, average, start_ratio]]))[0]
+        return pitch_model.predict(scp.transform([[age, war, average, start_ratio]]))[0] + random.choice(list(residualsp))
     else:
-        return bat_model.predict(scb.transform([[age, war, average]]))[0]
-
-# def war_predictor1_year_b(age, war1): + np.random.normal(mub, stdb)
-#     return batt1_model.predict(sc1.transform([[age, war1]])) + np.random.normal(mup, stdp)
-
-# batt1_model, sc1, residualsb1 = getModel(batting1)
-# def war_predictor1_year_b(age, war1):
-#     return batt1_model.predict(sc1.transform([[age, war1]]))
-#
-#
-# batt2_model, sc2, residualsb2 = getModel(batting2)
-# def war_predictor2_years_b(age, war1, war2):
-#     return batt2_model.predict(sc2.transform([[age, war1, war2]]))
-#
-#
-# # mu, std = norm.fit(residualsb2)
-# # print(mu, std)
-# # n, bins, patches = plt.hist(residualsb2, bins=100)
-# # plt.show()
-#
-# pitch1_model, sc3, residualsrp1 = getModel(pitching1)
-# def war_predictor1_year_p(age, war1, ratio):
-#     return pitch1_model.predict(sc3.transform([[age, war1, ratio]]))
-#
-#
-# pitch2_model, sc4, residualsrp2 = getModel(pitching2)
-# def war_predictor2_years_p(age, war1, war2, ratio):
-#     return pitch2_model.predict(sc4.transform([[age, war1, war2, ratio]]))
+        return bat_model.predict(scb.transform([[age, war, average]]))[0] + random.choice(list(residualsb))
 
 
 # parameter_space = {
-#     'hidden_layer_sizes': [(50,50,50), (50,100,50), (100,)],
-#     'solver': ['sgd', 'adam'],
+#     'hidden_layer_sizes': [(50,50,50), (50,100,50), (100,)], + np.random.normal(mub, stdb)
+#     'solver': ['sgd', 'adam'], + np.random.normal(mup, stdp)
 #     'alpha': [0.0001, 0.05],
 # }
 # mlp = MLPRegressor(random_state=1, max_iter=500)

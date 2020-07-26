@@ -6,9 +6,9 @@ data1 = []
 data2 = []
 # for i in range(18, 50):
 #     data[str(i)] = []
-player1 = Player(1, [2], 24.0, False, 0.0, "")
-player2 = Player(1, [5, 0], 20.0, False, 0.0, "")
-player3 = Player(1, [0], 20.0, True, 0.2, "")
+player1 = Player(1, [0], 24.0, False, 0.0, "")
+player2 = Player(1, [0, 0], 20.0, False, 0.0, "")
+player3 = Player(1, [0], 23.0, True, .85, "")
 player4 = Player(1, [5, 5], 20.0, True, 1.0, "")
 players = [player1, player2, player3, player4]
 for player in players:
