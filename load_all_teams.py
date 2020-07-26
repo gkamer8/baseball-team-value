@@ -1,7 +1,9 @@
-from player_class import Player
-from mets import Team, Prospect
+from player import Player
+from team import Team
+from prospect import Prospect
 import pandas as pd
 import csv
+import numpy as np
 
 current_year = 2019
 
@@ -42,7 +44,8 @@ def create_team(name):
         player_name = df.loc[i, 'Name'].split("\\")
         age = df.loc[i, 'Age']
         position = df.loc[i, 'pitcher']
-        play = Player(player_name[1], wars, age, position, player_name[0])
+        starts = df.loc[i, 'start_ratio']
+        play = Player(player_name[1], wars, age, position, starts, player_name[0])
         team.add_contract(play, payouts)
 
     with open('prospect_data/' + name + '-board-data.csv') as csvfile:
@@ -70,14 +73,15 @@ team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 
 team_list1 = ['dodgers']
 #
 teams = []
-for team in team_list1:
+for team in team_list:
     teams.append(create_team(team))
 
 team_names = []
 team_wars = []
 for team in teams:
     print(team.name)
-    team.run_year()
+    for i in range(10):
+        team.run_year()
     for contract in team.contracts:
         print(contract['player'].name + ", " + str(contract['player'].wars[-1]))
     team_names.append(team.name)

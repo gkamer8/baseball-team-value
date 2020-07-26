@@ -22,6 +22,16 @@ from sklearn.preprocessing import PolynomialFeatures
 from sklearn.svm import SVR
 
 
+"""
+
+This script takes the data obtained via war_data_scraping.py and fits it to an
+appropriate model. The function war_predictor is used to progress players in
+the simulation based on the fitted model's prediction and a normally distributed
+error term.
+
+"""
+
+
 # Loading career war data into dataframes
 df = pd.read_csv('Aging Data/WAR_by_Age1.csv', converters={'WAR': eval,'Age': eval, "Games": eval})
 df = df[df['Age'] != "--"]
@@ -202,12 +212,12 @@ print(mup, stdp)
 
 def war_predictor(age, war, average, pitching, start_ratio):
     if pitching:
-        return pitch_model.predict(scp.transform([[age, war, average, start_ratio]]))[0] + np.random.normal(mup, stdp)
+        return pitch_model.predict(scp.transform([[age, war, average, start_ratio]]))[0]
     else:
-        return bat_model.predict(scb.transform([[age, war, average]]))[0] + np.random.normal(mub, stdb)
+        return bat_model.predict(scb.transform([[age, war, average]]))[0]
 
-# def war_predictor1_year_b(age, war1):
-#     return batt1_model.predict(sc1.transform([[age, war1]]))
+# def war_predictor1_year_b(age, war1): + np.random.normal(mub, stdb)
+#     return batt1_model.predict(sc1.transform([[age, war1]])) + np.random.normal(mup, stdp)
 
 # batt1_model, sc1, residualsb1 = getModel(batting1)
 # def war_predictor1_year_b(age, war1):

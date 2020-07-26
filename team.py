@@ -113,8 +113,9 @@ class Team:
             if prospect.eta == 0:
                 # ID is made up of a random number and the name
                 new_id = prospect.name.lower().replace(" ", "") + str(random.randint(0, 1_000_000))
+                starts = np.random.uniform(0,1)
                 new_war = pitcher_fv_dict[prospect.fv] if prospect.pitcher else batter_fv_dict[prospect.fv]
-                new_player = Player(new_id, [new_war], prospect.age, prospect.pitcher, name=prospect.name)
+                new_player = Player(new_id, [new_war], prospect.age, prospect.pitcher, starts, name=prospect.name)
 
                 # Three years of pre-arb, three years of arb
                 new_payouts = [{'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}]

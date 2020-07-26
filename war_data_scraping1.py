@@ -6,22 +6,17 @@ import numpy as np
 from numpy import random
 from datetime import date
 from selenium import webdriver
-from get_full_team_data import zip_sum, extract_age, extract_war, filter_lists, driver
+from get_full_team_data import zip_sum, extract_age, extract_war, filter_lists, driver, merge_batting_pitching
 import selenium
 
+"""
 
-def merge_batting_pitching(list1, list2):
-    list1 = filter_lists(list1)
-    list2 = filter_lists(list2)
-    dict1 = {}
-    for (age, war) in (list1 + list2):
-        if age in dict1:
-            dict1[age] = dict1[age] + war
-        else:
-            dict1[age] = war
-    dictionary_items = dict1.items()
-    sorted_items = sorted(dictionary_items)
-    return list(list(zip(*sorted_items))[1]), list(list(zip(*sorted_items))[0])
+This script scrapes data from baseball reference for players active between athletics
+years 2000 and 2019 on career war by year, career games played by year, position,
+and percent of games started as pitcher for each player under contract
+
+
+"""
 
 
 def data_scraper(name):
@@ -147,4 +142,3 @@ if __name__ == "__main__":
     df_b = pd.DataFrame(list(zip(wars1, ages1, games, positions, ratios)),
                    columns =['WAR', 'Age', 'Games', 'pitcher', 'start_ratio'])
     df_b.to_csv('Aging Data/WAR_by_Age1.csv')
-
