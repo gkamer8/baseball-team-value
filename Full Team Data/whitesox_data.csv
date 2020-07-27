@@ -1,52 +1,52 @@
-,Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2020,2021,2022,2023,2024,2025,2026,career,pitcher
-0,Yasmani Grandal\grandya01,31,8,,7.115,Wasserman,4 yrs/$73M (20-23),$18.25M,$18.25M,$18.25M,$18.25M,FA,,,"[2.5, 0.8, 1.1, 1.5, 3.0, 2.4, 3.6, 2.4]",False
-1,Yoan Moncada\moncayo01,25,4,Traded,2.106,Movement Manageme...,5 yrs/$70M (20-24) & 25 team option,$1.8M,$6.8M,$13.8M,$17.8M,$24.8M,$5M [FA-*],FA,"[-0.4, 1.6, 1.3, 4.8]",False
-2,Dallas Keuchel\keuchda01,32,8,,7.031000000000001,Scott Boras,3 yrs/$55.5M (20-22) & 23 team option,$18M,$18M,$18M,$1.5M [FA-*],FA,,,"[-0.1, -0.1, 4.5, 6.5, 0.3, 3.9, 2.9, 1.9]",True
-3,José Abreu\abreujo02,33,6,Free Agency,6.0,ISE Baseball,3 yrs/$50M (20-22),$12.67M,$17.67M,$19.67M,FA,,,,"[5.8, 3.5, 3.1, 5.0, 1.5, 2.0]",False
-4,Eloy Jimenez\jimenel02,23,1st,Traded,1.0,,6 yrs/$43M (19-24) & 25-26 team option,$2.33M,$4.33M,$7.33M,$10.33M,$13.83M,$3M [FA-*],$0 [FA-*],[1.5],False
-5,Tim Anderson\anderti01,27,4,Amateur Draft,3.115,Reynolds Sports,6 yrs/$25M (17-22) & 23-24 team option,$4M,$7.25M,$9.5M,$1M [FA-*],$0 [FA-*],FA,,"[2.4, -0.4, 3.1, 3.7]",False
-6,Kelvin Herrera\herreke01,30,9,Free Agency,7.157,Republik Sports,2 yrs/$18M (19-20) & 21 vesting option,$8.5M,$1M [FA-*],FA,,,,,"[-0.2, 2.6, -0.1, 2.9, 1.5, 2.0, 0.3, 1.7, -0.4]",True
-7,Aaron Bummer\bummeaa01,26,3,Amateur Draft,1.15,,5 yrs/$16M (20-24) & 25-26 team option,$1M,$2M,$2.5M,$3.75M,$5.5M,$1.25M [FA-*],$0 [FA-*],"[0.2, -0.1, 2.9]",True
-8,Edwin Encarnacion\encared01,37,15,,14.085,Rep 1 Baseball,1 yr/$12M (20) & 21 team option,$12M,$0 [FA-*],FA,,,,,"[0.9, 0.9, 1.5, 0.6, 0.0, 1.6, 1.0, 5.0, 4.1, 3.8, 4.9, 4.1, 2.8, 1.9, 3.0]",False
-9,Alex Colome\colomal01,31,7,Traded,5.118,Republik Sports,1 yr/$10.53M (20),$10.53M,FA,,,,,,"[0.0, 0.7, 0.8, 2.3, 0.7, 1.0999999999999999, 1.1]",True
-10,Steve Cishek\cishest01,34,10,,8.142999999999999,Jet Sports Manage...,1 yr/$6M (20) & 21 team option,$5.25M,$750k [FA-*],FA,,,,,"[0.2, 1.2, 1.2, 2.1, 0.9, -0.09999999999999998, 1.6, 1.5, 2.1, 1.9]",True
-11,Nomar Mazara\mazarno01,25,4,,4.0,ISE Baseball,1 yr/$5.56M (20),$5.56M,Arb,FA,,,,,"[0.3, -0.4, 0.7, 0.7]",False
-12,James McCann\mccanja02,30,6,Free Agency,5.0280000000000005,Ballengee Group,1 yr/$5.4M (20),$5.4M,FA,,,,,,"[-0.1, 0.7, 0.9, 1.4, -0.8, 3.7]",False
-13,Gio Gonzalez\gonzagi01,34,12,,10.146,CAA Sports,2 yrs/$5M (20-21),$4.5M,$500k,FA,,,,,"[-1.2, -0.4, 3.8, 4.5, 4.8, 2.5, 1.9000000000000001, 2.4, 0.8, 6.3, 1.5, 1.8]",True
-14,Carlos Rodon\rodonca01,27,5,Amateur Draft,4.168,Scott Boras,1 yr/$4.45M (20),$4.45M,Arb,FA,,,,,"[1.6, 1.7, 1.3, 2.2, 0.1]",True
-15,Leury Garcia\garcile02,29,7,Traded,5.025,Rep 1 Baseball,1 yr/$3.5M (20) & 21 team option,$3.25M,$250k [FA-*],FA,,,,,"[-0.09999999999999998, -0.7, -0.1, -0.2, 1.0, 0.7, 1.3]",True
-16,Evan Marshall\marshev01,30,6,Free Agency,3.09,ISE Baseball,1 yr/$1M (20),$1M,Arb,Arb,FA,,,,"[0.9, -0.3, -0.7, -0.3, -0.2, 1.8]",True
-17,Ross Detwiler\detwiro01,34,11,Free Agency,7.011,CAA Sports (Jeff ...,1 yr/$100k (20),$100k,FA,,,,,,"[0.0, 0.49999999999999994, -0.5, 1.0, 1.5, 0.1, -0.3, -1.7000000000000002, -0.2, 0.1, -0.4]",True
-18,Andrew Romine\rominan01,34,9,,6.0489999999999995,Moye Sports Assoc...,1 yr/$100k (20),$100k,FA,,,,,,"[-0.3, -0.2, 0.1, 0.6, 0.6, 0.7, 0.5, -0.7000000000000001, -0.2]",True
-19,Cheslor Cuthbert\cuthbch01,27,5,,3.1519999999999997,Sports One Athlet...,1 yr/$100k (20),$100k,Arb,Arb,FA,,,,"[0.3, 0.3, -0.6, -0.4, -0.6]",False
-20,Christian Friedrich\friedch01,32,4,,4.046,Frontline,,Arb-2,Arb-3,FA,,,,,"[0.1, -0.8, -0.1, 0.19999999999999998]",True
-21,Bryan Mitchell\mitchbr01,29,5,,3.054,,,Arb-1,Arb-2,Arb-3,FA,,,,"[0.3, -0.6, 0.4, -0.3, -0.6]",True
-22,Gorkys Hernandez\hernago01,32,6,,3.042,Scott Boras,,Arb-1 (~$1M),Arb-2,Arb-3,FA,,,,"[-0.7000000000000001, -0.1, 0.5, -0.8, 0.5, -0.5]",False
-23,Jacob Lindgren\lindgja01,27,1st,,2.134,,,Arb-1,Arb-2,Arb-3,Arb-4,FA,,,[0.0],True
-24,Zach Putnam\putnaza01,32,7,Free Agency,4.135,ISE Baseball,,Arb-2,Arb-3,FA,,,,,"[-0.1, 0.1, -0.3, 1.8, 0.1, 0.7, 0.5]",True
-25,Adalberto Mejia\mejiaad01,27,4,,2.052,,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[0.0, 0.9, 1.0, -0.6]",True
-26,Tayron Guerrero\guerrta01,29,3,,2.004,TLA Worldwide,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[0.0, -1.0, -0.7]",True
-27,Nicky Delmonico\delmoni01,27,3,Free Agency,1.09,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,"[1.4, -1.0, -0.5]",False
-28,Reynaldo Lopez\lopezre01,26,4,Traded,2.096,,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[-0.30000000000000004, 0.1, 3.4, 0.5]",True
-29,Daniel Palka\palkada01,28,2,Waivers,1.046,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,"[0.6, -1.4]",False
-30,Michael Kopech\kopecmi01,24,1st,Traded,1.041,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,[0.1],True
-31,Lucas Giolito\giolilu01,25,4,Traded,2.08,CAA Sports,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[-0.4, 1.5, -1.1, 5.7]",True
-32,Ryan Burr\burrry01,26,2,Free Agency,1.04,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,"[-0.2, 0.0]",True
-33,Adam Engel\engelad01,28,3,Amateur Draft,2.0580000000000003,,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[-0.7, 0.8, 0.6]",False
-34,Jace Fry\fryja01,26,3,Amateur Draft,2.005,NWSMG/Nik Lubisic...,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[-0.3, 0.2, 0.2]",True
-35,Carson Fulmer\fulmeca01,26,4,Amateur Draft,1.04,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,"[-0.3, 0.5, -0.9, -0.4]",True
-36,Connor Sadzeck\sadzeco01,28,2,,1.031,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,"[0.4, 0.4]",True
-37,Jose Ruiz\ruizjo01,25,3,Waivers,0.17,,,Pre-Arb,Pre-Arb-2,Arb-1,Arb-2,Arb-3,Arb-4,FA,"[0.0, 0.1, -0.1]",True
-38,Ramon Torres\torrera01,27,2,,0.12300000000000001,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[-0.1, 0.0]",False
-39,Jimmy Cordero\cordeji01,28,2,Waivers,0.136,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[-0.1, 1.1]",True
-40,Matt Skole\skolema01,30,2,Free Agency,0.066,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[0.0, -0.6]",False
-41,Jaycob Brugman\brugmja01,28,1st,,0.063,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.3],False
-42,Alex McRae\mcraeal01,27,2,,0.061,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[-0.1, -0.9]",True
-43,Zack Collins\colliza01,25,1st,Amateur Draft,0.055,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.2],False
-44,Caleb Frare\frareca01,26,2,Free Agency,0.045,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[0.0, -0.1]",True
-45,Dylan Cease\ceasedy01,24,1st,Traded,0.08900000000000001,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.1],True
-46,Drew Anderson\anderdr02,26,3,,0.037000000000000005,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[-0.3, 0.0, -0.1]",True
-47,Ian Hamilton\hamilia01,25,1st,Amateur Draft,0.039,NWSMG/Nik Lubisic...,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.1],True
-48,Danny Mendick\mendida01,26,1st,Amateur Draft,0.027000000000000003,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[0.5],False
-49,Seby Zavala\zavalse01,26,1st,Amateur Draft,0.011000000000000001,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.2],False
-50,Brady Lail\lailbr01,26,1st,,0.004,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.2],True
+,Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2020,2021,2022,2023,2024,2025,2026,career,pitcher,start_ratio,games
+0,Yasmani Grandal\grandya01,31,8,,7.115,Wasserman,4 yrs/$73M (20-23),$18.25M,$18.25M,$18.25M,$18.25M,FA,,,"[2.5, 0.8, 1.1, 1.5, 3.0, 2.4, 3.6, 2.4]",False,,"[60.0, 28.0, 128.0, 115.0, 126.0, 129.0, 140.0, 153.0]"
+1,Yoan Moncada\moncayo01,25,4,Traded,2.106,Movement Manageme...,5 yrs/$70M (20-24) & 25 team option,$1.8M,$6.8M,$13.8M,$17.8M,$24.8M,$5M [FA-*],FA,"[-0.4, 1.6, 1.3, 4.8]",False,,"[8.0, 54.0, 149.0, 132.0]"
+2,Dallas Keuchel\keuchda01,32,8,,7.031000000000001,Scott Boras,3 yrs/$55.5M (20-22) & 23 team option,$18M,$18M,$18M,$1.5M [FA-*],FA,,,"[-0.1, -0.1, 4.5, 6.5, 0.3, 3.9, 2.9, 1.9]",True,0.957345971563981,"[16.0, 31.0, 29.0, 33.0, 26.0, 23.0, 34.0, 19.0]"
+3,José Abreu\abreujo02,33,6,Free Agency,6.0,ISE Baseball,3 yrs/$50M (20-22),$12.67M,$17.67M,$19.67M,FA,,,,"[5.8, 3.5, 3.1, 5.0, 1.5, 2.0]",False,,"[145.0, 154.0, 159.0, 156.0, 128.0, 159.0]"
+4,Eloy Jimenez\jimenel02,23,1st,Traded,1.0,,6 yrs/$43M (19-24) & 25-26 team option,$2.33M,$4.33M,$7.33M,$10.33M,$13.83M,$3M [FA-*],$0 [FA-*],[1.5],False,,[122.0]
+5,Tim Anderson\anderti01,27,4,Amateur Draft,3.115,Reynolds Sports,6 yrs/$25M (17-22) & 23-24 team option,$4M,$7.25M,$9.5M,$1M [FA-*],$0 [FA-*],FA,,"[2.4, -0.4, 3.1, 3.7]",False,,"[99.0, 146.0, 153.0, 123.0]"
+6,Kelvin Herrera\herreke01,30,9,Free Agency,7.157,Republik Sports,2 yrs/$18M (19-20) & 21 vesting option,$8.5M,$1M [FA-*],FA,,,,,"[-0.2, 2.6, -0.1, 2.9, 1.5, 2.0, 0.3, 1.7, -0.4]",True,0.0,"[2.0, 76.0, 59.0, 70.0, 72.0, 72.0, 64.0, 48.0, 57.0]"
+7,Aaron Bummer\bummeaa01,26,3,Amateur Draft,1.15,,5 yrs/$16M (20-24) & 25-26 team option,$1M,$2M,$2.5M,$3.75M,$5.5M,$1.25M [FA-*],$0 [FA-*],"[0.2, -0.1, 2.9]",True,0.0,"[30.0, 37.0, 58.0]"
+8,Edwin Encarnacion\encared01,37,15,,14.085,Rep 1 Baseball,1 yr/$12M (20) & 21 team option,$12M,$0 [FA-*],FA,,,,,"[0.9, 0.9, 1.5, 0.6, 0.0, 1.6, 1.0, 5.0, 4.1, 3.8, 4.9, 4.1, 2.8, 1.9, 3.0]",False,,"[69.0, 117.0, 139.0, 146.0, 85.0, 96.0, 134.0, 151.0, 142.0, 128.0, 146.0, 160.0, 157.0, 137.0, 109.0]"
+9,Alex Colome\colomal01,31,7,Traded,5.118,Republik Sports,1 yr/$10.53M (20),$10.53M,FA,,,,,,"[0.0, 0.7, 0.8, 2.3, 0.7, 1.0999999999999999, 1.1]",True,0.06229508196721312,"[3.0, 5.0, 43.0, 57.0, 65.0, 70.0, 62.0]"
+10,Steve Cishek\cishest01,34,10,,8.142999999999999,Jet Sports Manage...,1 yr/$6M (20) & 21 team option,$5.25M,$750k [FA-*],FA,,,,,"[0.2, 1.2, 1.2, 2.1, 0.9, -0.09999999999999998, 1.6, 1.5, 2.1, 1.9]",True,0.0,"[3.0, 45.0, 68.0, 69.0, 67.0, 59.0, 62.0, 49.0, 80.0, 70.0]"
+11,Nomar Mazara\mazarno01,25,4,,4.0,ISE Baseball,1 yr/$5.56M (20),$5.56M,Arb,FA,,,,,"[0.3, -0.4, 0.7, 0.7]",False,,"[145.0, 148.0, 128.0, 116.0]"
+12,James McCann\mccanja02,30,6,Free Agency,5.0280000000000005,Ballengee Group,1 yr/$5.4M (20),$5.4M,FA,,,,,,"[-0.1, 0.7, 0.9, 1.4, -0.8, 3.7]",False,,"[9.0, 114.0, 105.0, 106.0, 118.0, 118.0]"
+13,Gio Gonzalez\gonzagi01,34,12,,10.146,CAA Sports,2 yrs/$5M (20-21),$4.5M,$500k,FA,,,,,"[-1.2, -0.4, 3.8, 4.5, 4.8, 2.5, 1.9000000000000001, 2.4, 0.8, 6.3, 1.5, 1.8]",True,0.9759036144578314,"[10.0, 20.0, 33.0, 32.0, 32.0, 32.0, 27.0, 31.0, 32.0, 32.0, 32.0, 19.0]"
+14,Carlos Rodon\rodonca01,27,5,Amateur Draft,4.168,Scott Boras,1 yr/$4.45M (20),$4.45M,Arb,FA,,,,,"[1.6, 1.7, 1.3, 2.2, 0.1]",True,0.967741935483871,"[26.0, 28.0, 12.0, 20.0, 7.0]"
+15,Leury Garcia\garcile02,29,7,Traded,5.025,Rep 1 Baseball,1 yr/$3.5M (20) & 21 team option,$3.25M,$250k [FA-*],FA,,,,,"[-0.09999999999999998, -0.5, -0.1, -0.2, 1.0, 0.7, 1.3]",False,,"[45.0, 73.0, 17.0, 18.0, 87.0, 82.0, 140.0]"
+16,Evan Marshall\marshev01,30,6,Free Agency,3.09,ISE Baseball,1 yr/$1M (20),$1M,Arb,Arb,FA,,,,"[0.9, -0.3, -0.7, -0.3, -0.2, 1.8]",True,0.0,"[57.0, 13.0, 15.0, 6.0, 10.0, 55.0]"
+17,Ross Detwiler\detwiro01,34,11,Free Agency,7.011,CAA Sports (Jeff ...,1 yr/$100k (20),$100k,FA,,,,,,"[0.0, 0.49999999999999994, -0.5, 1.0, 1.5, 0.1, -0.3, -1.7000000000000002, -0.2, 0.1, -0.4]",True,0.0,"[1.0, 15.0, 8.0, 15.0, 33.0, 13.0, 47.0, 41.0, 16.0, 1.0, 18.0]"
+18,Andrew Romine\rominan01,34,9,,6.0489999999999995,Moye Sports Assoc...,1 yr/$100k (20),$100k,FA,,,,,,"[-0.3, -0.2, 0.1, 0.6, 0.7, 0.7, 0.5, -0.8, -0.1]",False,,"[5.0, 10.0, 12.0, 47.0, 94.0, 109.0, 108.0, 124.0, 72.0]"
+19,Cheslor Cuthbert\cuthbch01,27,5,,3.1519999999999997,Sports One Athlet...,1 yr/$100k (20),$100k,Arb,Arb,FA,,,,"[0.3, 0.3, -0.6, -0.4, -0.6]",False,,"[19.0, 128.0, 58.0, 30.0, 87.0]"
+20,Christian Friedrich\friedch01,32,4,,4.046,Frontline,,Arb-2,Arb-3,FA,,,,,"[0.1, -0.8, -0.1, 0.19999999999999998]",True,0.3387096774193548,"[16.0, 16.0, 68.0, 24.0]"
+21,Bryan Mitchell\mitchbr01,29,5,,3.054,,,Arb-1,Arb-2,Arb-3,FA,,,,"[0.3, -0.6, 0.4, -0.3, -0.6]",True,0.3125,"[3.0, 20.0, 5.0, 20.0, 16.0]"
+22,Gorkys Hernandez\hernago01,32,6,,3.042,Scott Boras,,Arb-1 (~$1M),Arb-2,Arb-3,FA,,,,"[-0.7000000000000001, -0.1, 0.5, -0.8, 0.5, -0.5]",False,,"[70.0, 8.0, 26.0, 128.0, 142.0, 20.0]"
+23,Jacob Lindgren\lindgja01,27,1st,,2.134,,,Arb-1,Arb-2,Arb-3,Arb-4,FA,,,[0.0],True,0.0,[7.0]
+24,Zach Putnam\putnaza01,32,7,Free Agency,4.135,ISE Baseball,,Arb-2,Arb-3,FA,,,,,"[-0.1, 0.1, -0.3, 1.8, 0.1, 0.7, 0.5]",True,0.0,"[8.0, 2.0, 5.0, 49.0, 49.0, 25.0, 7.0]"
+25,Adalberto Mejia\mejiaad01,27,4,,2.052,,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[0.0, 0.9, 1.0, -0.6]",True,0.4032258064516129,"[1.0, 21.0, 5.0, 35.0]"
+26,Tayron Guerrero\guerrta01,29,3,,2.004,TLA Worldwide,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[0.0, -1.0, -0.7]",True,0.0,"[1.0, 60.0, 52.0]"
+27,Nicky Delmonico\delmoni01,27,3,Free Agency,1.09,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,"[1.4, -1.0, -0.5]",False,,"[43.0, 88.0, 21.0]"
+28,Reynaldo Lopez\lopezre01,26,4,Traded,2.096,,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[-0.30000000000000004, 0.1, 3.4, 0.5]",True,0.9404761904761905,"[11.0, 8.0, 32.0, 33.0]"
+29,Daniel Palka\palkada01,28,2,Waivers,1.046,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,"[0.6, -1.4]",False,,"[124.0, 30.0]"
+30,Michael Kopech\kopecmi01,24,1st,Traded,1.041,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,[0.1],True,1.0,[4.0]
+31,Lucas Giolito\giolilu01,25,4,Traded,2.08,CAA Sports,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[-0.4, 1.5, -1.1, 5.7]",True,1.0,"[6.0, 7.0, 32.0, 29.0]"
+32,Ryan Burr\burrry01,26,2,Free Agency,1.04,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,"[-0.2, 0.0]",True,0.041666666666666664,"[8.0, 16.0]"
+33,Adam Engel\engelad01,28,3,Amateur Draft,2.0580000000000003,,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[-0.7, 0.8, 0.6]",False,,"[97.0, 143.0, 89.0]"
+34,Jace Fry\fryja01,26,3,Amateur Draft,2.005,NWSMG/Nik Lubisic...,,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,,"[-0.3, 0.2, 0.2]",True,0.0,"[11.0, 59.0, 68.0]"
+35,Carson Fulmer\fulmeca01,26,4,Amateur Draft,1.04,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,"[-0.3, 0.5, -0.9, -0.4]",True,0.3409090909090909,"[8.0, 7.0, 9.0, 20.0]"
+36,Connor Sadzeck\sadzeco01,28,2,,1.031,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,,"[0.4, 0.4]",True,0.06060606060606061,"[13.0, 20.0]"
+37,Jose Ruiz\ruizjo01,25,3,Waivers,0.17,,,Pre-Arb,Pre-Arb-2,Arb-1,Arb-2,Arb-3,Arb-4,FA,"[0.0, 0.1, -0.1]",True,0.02127659574468085,"[1.0, 6.0, 40.0]"
+38,Ramon Torres\torrera01,27,2,,0.12300000000000001,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[-0.1, 0.0]",False,,"[33.0, 9.0]"
+39,Jimmy Cordero\cordeji01,28,2,Waivers,0.136,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[-0.1, 1.1]",True,0.0,"[22.0, 31.0]"
+40,Matt Skole\skolema01,30,2,Free Agency,0.066,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[0.0, -0.6]",False,,"[4.0, 27.0]"
+41,Jaycob Brugman\brugmja01,28,1st,,0.063,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.3],False,,[48.0]
+42,Alex McRae\mcraeal01,27,2,,0.061,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[-0.1, -0.9]",True,0.15384615384615385,"[2.0, 11.0]"
+43,Zack Collins\colliza01,25,1st,Amateur Draft,0.055,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.2],False,,[27.0]
+44,Caleb Frare\frareca01,26,2,Free Agency,0.045,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[0.0, -0.1]",True,0.0,"[11.0, 5.0]"
+45,Dylan Cease\ceasedy01,24,1st,Traded,0.08900000000000001,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.1],True,1.0,[14.0]
+46,Drew Anderson\anderdr02,26,3,,0.037000000000000005,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,"[-0.3, 0.0, -0.1]",True,0.1111111111111111,"[2.0, 5.0, 2.0]"
+47,Ian Hamilton\hamilia01,25,1st,Amateur Draft,0.039,NWSMG/Nik Lubisic...,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.1],True,0.0,[10.0]
+48,Danny Mendick\mendida01,26,1st,Amateur Draft,0.027000000000000003,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[0.5],False,,[16.0]
+49,Seby Zavala\zavalse01,26,1st,Amateur Draft,0.011000000000000001,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.2],False,,[5.0]
+50,Brady Lail\lailbr01,26,1st,,0.004,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2,Arb-3,FA,[-0.2],True,0.0,[1.0]
