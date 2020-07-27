@@ -224,13 +224,27 @@ class Team:
                 fv = 40
 
             # Loosely based off of 2020 figures so far
-            eta = np.random.choice(np.arange(1, 6), 1, p=[.04, .08, 0.18, 0.39, .31])[0]
             age = np.random.choice(np.arange(17, 24), 1, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])[0]
+            # Different ETA rules for college vs. high school
+            if age < 20:
+                eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
+            else:
+                eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
 
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)))
             self.prospects.append(prospect)
         
-        # TODO: Add July 2 players
+        # Based on analysis, draft prospects outnumber J2 signings close to 2-1
+        for _ in range(3):
+            age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
+            
+            if age < 20:
+                eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
+            else:
+                eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
+
+            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)))
+            self.prospects.append(prospect)
 
     def run_year(self):
         self.age_players()  # Ages players by a year, gets new WAR value 

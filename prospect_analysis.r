@@ -66,7 +66,13 @@ prop.table(table(data$ETA[data$Sign.Yr == 2020]))
 prop.table(table(data$ETA[data$Sign.Yr == 2019]))
 prop.table(table(data$ETA[data$Sign.Yr == 2018]))
 
+plot(data$ETA[data$Sign.Yr == 2020], data$Age[data$Sign.Yr == 2020])
+
 # What are the ages of draft prospects?
 
 hist(data$Age[data$Sign.Mkt == "Draft" & data$Sign.Yr == 2020])
 
+# What do the J2 prospects look like?
+
+hist(data$Age[data$Sign.Mkt == "J2" & data$Sign.Yr == 2019])  # Almost all age 17
+prop.table(table(data$new.FV[data$Sign.Yr == 2019]))
