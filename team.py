@@ -189,7 +189,6 @@ class Team:
         # and https://academicworks.cuny.edu/cgi/viewcontent.cgi?article=1759&context=cc_etds_theses
 
         # Go through draft:
-        # Assumes each team picks 6 players - only looking for top prospects here (simulating Fangraphs' The Board)
         most_recent_war = self.records[-1]['Total WAR']
 
         # Note: this line should be replaced with the real win loss if that's calculated in the sim
@@ -202,14 +201,12 @@ class Team:
             pick = 3  # is actually 3-8
         elif wl < .512:
             pick = 9  # is actually 9-16
-        elif wl < .512:
-            pick = 9  # is actually 9-16
         elif wl < .593:
             pick = 17  # is actually 17-27
         else:
             pick = 28  # is actually 28-30
         
-
+        # Assumes each team picks 6 players - only looking for top prospects here (simulating Fangraphs' The Board)
         for r in range(6):
             # Pitchers and position players on The Board are about evenly split
             position = random.random() > .5
@@ -226,9 +223,10 @@ class Team:
             else:
                 fv = 40
 
-            # TODO: these are placeholder variables
-            eta = 3
-            age = 18
+            # Loosely based off of 2020 figures so far
+            eta = np.random.choice(np.arange(1, 6), 1, p=[.04, .08, 0.18, 0.39, .31])[0]
+            age = np.random.choice(np.arange(17, 24), 1, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])[0]
+
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)))
             self.prospects.append(prospect)
         

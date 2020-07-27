@@ -60,3 +60,13 @@ hist(wl.data[wl.data$Year == 2016,]$tmWL)
 
 quantile(wl.data$tmWL, probs = c(2/30, 8/30, 16/30, (57 - 30)/30))
 
+# What's the ETA of prospects when they're signed?
+
+prop.table(table(data$ETA[data$Sign.Yr == 2020]))
+prop.table(table(data$ETA[data$Sign.Yr == 2019]))
+prop.table(table(data$ETA[data$Sign.Yr == 2018]))
+
+# What are the ages of draft prospects?
+
+hist(data$Age[data$Sign.Mkt == "Draft" & data$Sign.Yr == 2020])
+
