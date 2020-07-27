@@ -12,7 +12,7 @@ DOLLAR_PER_WAR = 8_000_000  # market value for WAR - $8m/win
 
 # Based on Fangraphs FV to average WAR values
 
-pitcher_fv_dict = {
+PITCHER_FV_DICT = {
     20: -0.1,
     25: 0,
     30: 0.0,
@@ -28,7 +28,7 @@ pitcher_fv_dict = {
     80: 7
 }
 
-batter_fv_dict = {
+BATTER_FV_DICT = {
     20: -0.1,
     25: 0,
     30: 0.0,
@@ -113,7 +113,7 @@ class Team:
             if prospect.eta == 0:
                 # ID is made up of a random number and the name
                 new_id = prospect.name.lower().replace(" ", "") + str(random.randint(0, 1_000_000))
-                new_war = pitcher_fv_dict[prospect.fv] if prospect.pitcher else batter_fv_dict[prospect.fv]
+                new_war = PITCHER_FV_DICT[prospect.fv] if prospect.pitcher else BATTER_FV_DICT[prospect.fv]
                 new_player = Player(new_id, [new_war], prospect.age, prospect.pitcher, name=prospect.name)
 
                 # Three years of pre-arb, three years of arb
