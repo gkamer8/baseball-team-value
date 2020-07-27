@@ -189,25 +189,50 @@ class Team:
         # and https://academicworks.cuny.edu/cgi/viewcontent.cgi?article=1759&context=cc_etds_theses
 
         # Go through draft:
+        # Assumes each team picks 6 players - only looking for top prospects here (simulating Fangraphs' The Board)
         most_recent_war = self.records[-1]['Total WAR']
-        # TODO
-        pick = ((.294 * 162 + most_recent_war) / 162) * 30  # Replacement level team is .294
-        pick = round(pick)
 
-        for r in range(40):
-            # TODO: get empirical percentage of prospects that are pitchers
-            position = np.random.choice([True, False], 1, True, [.2, .8])[0]
+        # Note: this line should be replaced with the real win loss if that's calculated in the sim
+        wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
+        
+        # Based on analysis in prospect_analysis.r
+        if wl < .395:
+            pick = 1  # Is actually the first or second
+        elif wl < .451:
+            pick = 3  # is actually 3-8
+        elif wl < .512:
+            pick = 9  # is actually 9-16
+        elif wl < .512:
+            pick = 9  # is actually 9-16
+        elif wl < .593:
+            pick = 17  # is actually 17-27
+        else:
+            pick = 28  # is actually 28-30
+        
+
+        for r in range(6):
+            # Pitchers and position players on The Board are about evenly split
+            position = random.random() > .5
 
             pick_num = pick * r
-            if pick_num == 1:
-                pass
+            if pick_num <= 2:
+                fv = 60
+            elif pick_num <= 8:
+                fv = 55
+            elif pick_num <= 16:
+                fv = 50
+            elif pick_num <= 57:
+                fv = 45
+            else:
+                fv = 40
 
             # TODO: these are placeholder variables
             eta = 3
-            fv = 50
             age = 18
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)))
             self.prospects.append(prospect)
+        
+        # TODO: Add July 2 players
 
     def run_year(self):
         self.age_players()  # Ages players by a year, gets new WAR value 
