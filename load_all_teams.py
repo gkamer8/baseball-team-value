@@ -48,20 +48,20 @@ def create_team(name):
         play = Player(player_name[1], wars, age, position, starts, player_name[0])
         team.add_contract(play, payouts)
 
-    with open('prospect_data/' + name + '-board-data.csv') as csvfile:
-        reader = csv.reader(csvfile)
-        next(reader)  # skips header line
-        for r in reader:
-            fv = int(r[7].replace("+", ""))  # future value
-            pitcher = r[2] == "RHP" or r[2] == "LHP"
-
-            pros = Prospect(int(r[8]) - current_year, fv, int(round(float(r[10]))), pitcher, name=r[0])
-            new_contracts = []
-            for contract in team.contracts:
-                if contract['player'].name != pros.name:
-                    new_contracts.append(contract)
-            team.contracts = new_contracts
-            team.add_prospect(pros)
+    # with open('prospect_data/' + name + '-board-data.csv') as csvfile:
+    #     reader = csv.reader(csvfile)
+    #     next(reader)  # skips header line
+    #     for r in reader:
+    #         fv = int(r[7].replace("+", ""))  # future value
+    #         pitcher = r[2] == "RHP" or r[2] == "LHP"
+    #
+    #         pros = Prospect(int(r[8]) - current_year, fv, int(round(float(r[10]))), pitcher, name=r[0])
+    #         new_contracts = []
+    #         for contract in team.contracts:
+    #             if contract['player'].name != pros.name:
+    #                 new_contracts.append(contract)
+    #         team.contracts = new_contracts
+    #         team.add_prospect(pros)
     return team
 
 
@@ -73,17 +73,17 @@ team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 
 team_list1 = ['dodgers']
 #
 teams = []
-for team in team_list:
+for team in team_list1:
     teams.append(create_team(team))
 
 team_names = []
 team_wars = []
 for team in teams:
     print(team.name)
-    for i in range(1):
+    for i in range(5):
         team.run_year()
-    # for contract in team.contracts:
-    #     print(contract['player'].name + ", " + str(contract['player'].wars[-1]))
+    for contract in team.contracts:
+        print(contract['player'].name + ", " + str(contract['player'].wars[-1]))
     team_names.append(team.name)
     team_wars.append(((60 * team.get_team_war())/162))
 

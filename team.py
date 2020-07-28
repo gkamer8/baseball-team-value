@@ -72,6 +72,7 @@ class Team:
 
         self.contracts = contracts
         self.prospects = prospects
+        self.roster = []
 
         self.records = []
 
@@ -105,6 +106,10 @@ class Team:
         for player in self.contracts:
             player['player'].progress()
 
+    def add_player_variance(self):
+        for player in self.contracts:
+            player['player'].add_variance()
+
     def age_prospects(self):
         # Replaces prospect list with new list, excluding new MLB players and dead prospects
         new_prospects = []
@@ -132,12 +137,19 @@ class Team:
         fa_std_dev = fa_mu / 4  # 4 is arbitrary - goal is to scale with the mu WAR
         return np.random.normal(fa_mu, fa_std_dev, 1)[0]
 
-    def get_team_war(self):
-        wars = []
+    def get_roster(self):
+        roster = []
         for player in self.contracts:
-            wars.append(player['player'].get_war())
-        wars.sort(reverse=True)
-        return sum(wars[:40])
+            roster.append((player['player'].get_war(), player['player']))
+        roster.sort(key=lambda x: x[0], reverse=True)
+        starters = roster[:40]
+        self.roster = list(zip(*starters))[1]
+
+    def get_team_war(self):
+        war = 0
+        for player in self.roster:
+            war += player.get_war()
+        return war
 
     def record_year(self):
         self.records.append({'Total WAR': self.get_team_war()})
@@ -210,8 +222,10 @@ class Team:
             self.prospects.append(prospect)
 
     def run_year(self):
-        self.age_players()  # Ages players by a year, gets new WAR value 
+        self.age_players()  # Ages players by a year, gets new WAR value
         self.age_prospects()  # Ages prospects, develops by a year, adds to MLB if needed
+        self.get_roster()
+        self.add_player_variance()
         self.record_year()  # Collects WAR for players, prospects, and FA
         self.update_contracts()  # Progresses contracts by a year
         self.add_new_prospects()  # Conducts draft and J2 signings

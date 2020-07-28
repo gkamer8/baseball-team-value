@@ -97,7 +97,7 @@ def getNeighbors(df):
 
 
 def getNeural(df):
-    regr = MLPRegressor(max_iter=500, hidden_layer_sizes=(50,100,50), solver='sgd', alpha=0.05, learning_rate='constant')
+    regr = MLPRegressor(max_iter=500, hidden_layer_sizes=(50,100,50), alpha=0.05, learning_rate='constant')
     y = df["WAR"]
     X = df.drop("WAR", axis=1)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
@@ -142,7 +142,6 @@ def getLinear(df):
     regr.fit(X_train, y_train)
     print(regr.score(X_test, y_test))
     residuals = y_train - regr.predict(X_train)
-    mu, std = norm.fit(residuals)
     return regr, sc, mu, std
 
 
@@ -200,12 +199,18 @@ pitch_model, scp, residualsp = getModel(pitching)
 # plt.show()
 
 
-
 def war_predictor(age, war, average, pitching, start_ratio):
     if pitching:
-        return pitch_model.predict(scp.transform([[age, war, average, start_ratio]]))[0] + random.choice(list(residualsp))
+        return pitch_model.predict(scp.transform([[age, war, average, start_ratio]]))[0]
     else:
-        return bat_model.predict(scb.transform([[age, war, average]]))[0] + random.choice(list(residualsb))
+        return bat_model.predict(scb.transform([[age, war, average]]))[0]
+
+
+def error_predictor(pitcher):
+    if pitcher:
+        return random.choice(list(residualsp))
+    else:
+        return random.choice(list(residualsb))
 
 
 # parameter_space = {
