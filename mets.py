@@ -6,9 +6,6 @@ from team import Team
 from prospect import Prospect
 import numpy as np
 
-aging_batters, aging_pitchers = batting_models, pitching_models
-
-
 if __name__ == "__main__":
 
     mets = Team("Mets", 3, "NL", [], [])

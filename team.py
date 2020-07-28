@@ -12,7 +12,7 @@ DOLLAR_PER_WAR = 8_000_000  # market value for WAR - $8m/win
 
 # Based on Fangraphs FV to average WAR values
 
-pitcher_fv_dict = {
+PITCHER_FV_DICT = {
     20: -0.1,
     25: 0,
     30: 0.0,
@@ -28,7 +28,7 @@ pitcher_fv_dict = {
     80: 7
 }
 
-batter_fv_dict = {
+BATTER_FV_DICT = {
     20: -0.1,
     25: 0,
     30: 0.0,
@@ -119,7 +119,7 @@ class Team:
                 # ID is made up of a random number and the name
                 new_id = prospect.name.lower().replace(" ", "") + str(random.randint(0, 1_000_000))
                 starts = np.random.uniform(0,1)
-                new_war = pitcher_fv_dict[prospect.fv] if prospect.pitcher else batter_fv_dict[prospect.fv]
+                new_war = PITCHER_FV_DICT[prospect.fv] if prospect.pitcher else BATTER_FV_DICT[prospect.fv]
                 new_player = Player(new_id, [new_war], prospect.age, prospect.pitcher, starts, name=prospect.name)
 
                 # Three years of pre-arb, three years of arb
@@ -202,22 +202,59 @@ class Team:
 
         # Go through draft:
         most_recent_war = self.records[-1]['Total WAR']
-        # TODO
-        pick = ((.294 * 162 + most_recent_war) / 162) * 30  # Replacement level team is .294
-        pick = round(pick)
 
-        for r in range(40):
-            # TODO: get empirical percentage of prospects that are pitchers
-            position = np.random.choice([True, False], 1, True, [.2, .8])[0]
+        # Note: this line should be replaced with the real win loss if that's calculated in the sim
+        wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
+        
+        # Based on analysis in prospect_analysis.r
+        if wl < .395:
+            pick = 1  # Is actually the first or second
+        elif wl < .451:
+            pick = 3  # is actually 3-8
+        elif wl < .512:
+            pick = 9  # is actually 9-16
+        elif wl < .593:
+            pick = 17  # is actually 17-27
+        else:
+            pick = 28  # is actually 28-30
+        
+        # Assumes each team picks 6 players - only looking for top prospects here (simulating Fangraphs' The Board)
+        for r in range(6):
+            # Pitchers and position players on The Board are about evenly split
+            position = random.random() > .5
 
             pick_num = pick * r
-            if pick_num == 1:
-                pass
+            if pick_num <= 2:
+                fv = 60
+            elif pick_num <= 8:
+                fv = 55
+            elif pick_num <= 16:
+                fv = 50
+            elif pick_num <= 57:
+                fv = 45
+            else:
+                fv = 40
 
-            # TODO: these are placeholder variables
-            eta = 3
-            fv = 50
-            age = 18
+            # Loosely based off of 2020 figures so far
+            age = np.random.choice(np.arange(17, 24), 1, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])[0]
+            # Different ETA rules for college vs. high school
+            if age < 20:
+                eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
+            else:
+                eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
+
+            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)))
+            self.prospects.append(prospect)
+        
+        # Based on analysis, draft prospects outnumber J2 signings close to 2-1
+        for _ in range(3):
+            age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
+            
+            if age < 20:
+                eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
+            else:
+                eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
+
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)))
             self.prospects.append(prospect)
 
