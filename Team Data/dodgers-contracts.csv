@@ -1,48 +1,47 @@
-Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2020,2021,2022,2023
-David Price\priceda01,34,12,,10.164,Bo McKinnis,7 yrs/$217M (16-22),$32M,$32M,$32M,FA
-Clayton Kershaw\kershcl01,32,12,Amateur Draft,11.105,Excel Sports Mana...,3 yrs/$93M (19-21),$31M,$31M,FA,
-Kenley Jansen\janseke01,32,10,Free Agency,9.073,Wasserman,5 yrs/$80M (17-21),$18M,$20M,FA,
-Justin Turner\turneju01,35,11,Free Agency,9.045,The Legacy Agency,4 yrs/$64M (17-20),$20M,FA,,
-A.J. Pollock\polloaj01,32,8,Free Agency,7.052,Excel Sports Mana...,4 yrs/$55M (19-22) & 23 player option,$15M,$18M,$13M,$5M [FA-*]
-Mookie Betts\bettsmo01,27,6,,5.070,VC Sports Group,1 yr/$27M (20),$27M,FA,,
-Max Muncy\muncyma01,29,4,Free Agency,3.027,,3 yrs/$26M (20-22) & 23 team option,$2.5M,$9M,$13M,$1.5M [FA-*]
-Joe Kelly\kellyjo05,32,8,Free Agency,7.029,ACES (Sam & Seth ...,3 yrs/$25M (19-21) & 22 team option,$8.83M,$8.83M,$4M [FA-*],FA
-Chris Taylor\tayloch03,29,6,Traded,4.037,,2 yrs/$13.4M (20-21),$5.6M,$7.8M,FA,
-Cody Bellinger\bellico01,24,3,Amateur Draft,2.160,,1 yr/$11.5M (20),$11.5M,Arb,Arb,Arb
-Blake Treinen\treinbl01,32,6,,5.065,Sosnick Cobbe & K...,1 yr/$10M (20),$10M,FA,,
-Joc Pederson\pederjo01,28,6,Amateur Draft,5.028,Excel Sports Mana...,1 yr/$7.75M (20),$7.75M,FA,,
-Corey Seager\seageco01,26,5,Amateur Draft,4.032,Scott Boras,1 yr/$7.6M (20),$7.6M,Arb,FA,
-Enrique Hernandez\hernaen02,28,6,Traded,5.054,Wasserman,1 yr/$5.9M (20),$5.9M,FA,,
-Alex Wood\woodal02,29,7,Traded,6.123,ACES (Sam & Seth ...,1 yr/$4M (20),$4M,FA,,
-Pedro Baez\baezpe01,32,6,Amateur Free Agent,5.059,Kelvin Nova,1 yr/$4M (20),$4M,FA,,
-Ross Stripling\stripro01,30,4,Amateur Draft,3.115,,1 yr/$2.1M (20),$2.1M,Arb,Arb,FA
-Jimmy Nelson\nelsoji02,31,6,,5.107,CAA Sports,1 yr/$1.25M (20) & 21 team option,$750k,$500k [FA-*],FA,
-Austin Barnes\barneau01,30,5,Traded,3.098,,1 yr/$1.1M (20),$1.1M,Arb,Arb,FA
-Julio Urias\uriasju01,23,4,Amateur Free Agent,2.117,,1 yr/$1M (20),$1M,Arb,Arb,Arb
-Scott Alexander\alexasc02,30,5,Traded,3.097,Sosnick Cobbe & K...,1 yr/$875k (20),$875k,Arb,Arb,FA
-Jose Lobaton\lobatjo01,35,9,,7.041,Athletes X Agency...,,FA,,,
-Zach McAllister\mcallza01,32,8,,6.049,Excel Sports Mana...,,FA,,,
-Edubray Ramos\ramosed02,27,4,,3.060,,,Arb-1 (~$800k),Arb-2,Arb-3,FA
-Tyler White\whitety01,29,4,Traded,2.101,Ballengee Group,,Pre-Arb-3,Arb-1,Arb-2,Arb-3
-Justin De Fratus\defraju01,32,5,,3.090,Wasserman,,Arb-1,Arb-2,Arb-3,FA
-Terrance Gore\gorete01,29,6,,1.143,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2
-Kyle Lobstein\lobstky01,30,3,,1.088,Ballengee Group,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2
-Dylan Floro\florody01,29,4,Traded,2.053,,,Pre-Arb-3,Arb-1,Arb-2,Arb-3
-Walker Buehler\buehlwa01,25,3,Amateur Draft,1.168,,,Pre-Arb-2,Arb-1,Arb-2,Arb-3
-Andrew Toles\tolesan01,28,3,Free Agency,1.128,Magnus Sports,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2
-Adam Kolarek\kolarad01,31,3,Traded,1.122,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2
-Caleb Ferguson\ferguca01,23,2,Amateur Draft,1.093,,,Pre-Arb-2,Pre-Arb-3,Arb-1,Arb-2
-Reymin Guduan\guduare01,28,3,,0.104,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Rocky Gale\galero01,32,4,Free Agency,0.101,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Matt Beaty\beatyma01,27,1st,Amateur Draft,0.137,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Dennis Santana\santade01,24,2,Amateur Free Agent,0.133,Optimum Baseball,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Josh Sborz\sborzjo01,26,1st,Amateur Draft,0.049,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Will Smith\smithwi05,25,1st,Amateur Draft,0.090,Sosnick Cobbe & K...,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Dustin May\maydu01,22,1st,Amateur Draft,0.059,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Daniel Corcino\corcida01,29,2,Free Agency,0.053,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Tony Gonsolin\gonsoto01,26,1st,Amateur Draft,0.049,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Edwin Rios\riosed01,26,1st,Amateur Draft,0.043,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Connor Joe\joeco01,27,1st,,0.017,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Brusdar Graterol\gratebr01,21,1st,,0.029,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Gavin Lux\luxga01,22,1st,Amateur Draft,0.028,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
-Drew Jackson\jacksdr01,26,1st,,0.014,,,Pre-Arb,Pre-Arb-2,Pre-Arb-3,Arb-1
+Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032
+Mookie Betts\bettsmo01,27,7,Traded,5.070,VC Sports Group,1 yr/$27M (20)12 yrs/$365M (21-32),$27M,$22.92M,$22.92M,$25.42M,$30.4M,$30.4M,$30.4M,$30.4M,$35.4M,$35.4M,$35.4M,$32.9M,$32.9M
+David Price\priceda01,34,12,,10.164,Bo McKinnis,7 yrs/$217M (16-22),$32M,$32M,$32M,FA,,,,,,,,,
+Clayton Kershaw\kershcl01,32,12,Amateur Draft,11.105,Excel Sports Mana...,3 yrs/$93M (19-21),$31M,$31M,FA,,,,,,,,,,
+Kenley Jansen\janseke01,32,11,Free Agency,9.073,Wasserman,5 yrs/$80M (17-21),$18M,$20M,FA,,,,,,,,,,
+Justin Turner\turneju01,35,12,Free Agency,9.045,The Legacy Agency,4 yrs/$64M (17-20),$20M,FA,,,,,,,,,,,
+AJ Pollock\polloaj01,32,9,Free Agency,7.052,Excel Sports Mana...,4 yrs/$55M (19-22) & 23 player option,$15M,$18M,$13M,$5M [FA-*],FA,,,,,,,,
+Jake McGee\mcgeeja01,33,11,,8.127,Wasserman,3 yrs/$27M (18-20) & 21 team option,$9.5M,$2M [FA-*],FA,,,,,,,,,,
+Max Muncy\muncyma01,29,5,Free Agency,3.027,,3 yrs/$26M (20-22) & 23 team option,$2.5M,$9M,$13M,$1.5M [FA-*],FA,,,,,,,,
+Joe Kelly\kellyjo05,32,9,Free Agency,7.029,ACES (Sam & Seth ...,3 yrs/$25M (19-21) & 22 team option,$8.83M,$8.83M,$4M [FA-*],FA,,,,,,,,,
+Chris Taylor\tayloch03,29,7,Traded,4.037,,2 yrs/$13.4M (20-21),$5.6M,$7.8M,FA,,,,,,,,,,
+Cody Bellinger\bellico01,24,4,Amateur Draft,2.160,,1 yr/$11.5M (20),$11.5M,Arb,Arb,Arb,FA,,,,,,,,
+Blake Treinen\treinbl01,32,7,Free Agency,5.065,Sosnick Cobbe & K...,1 yr/$10M (20),$10M,FA,,,,,,,,,,,
+Joc Pederson\pederjo01,28,7,Amateur Draft,5.028,Excel Sports Mana...,1 yr/$7.75M (20),$7.75M,FA,,,,,,,,,,,
+Corey Seager\seageco01,26,6,Amateur Draft,4.032,Scott Boras,1 yr/$7.6M (20),$7.6M,Arb,FA,,,,,,,,,,
+Enrique Hernandez\hernaen02,28,7,Traded,5.054,Wasserman,1 yr/$5.9M (20),$5.9M,FA,,,,,,,,,,,
+Alex Wood\woodal02,29,8,Free Agency,6.123,ACES (Sam & Seth ...,1 yr/$4M (20),$4M,FA,,,,,,,,,,,
+Pedro Baez\baezpe01,32,7,Amateur Free Agent,5.059,Kelvin Nova,1 yr/$4M (20),$4M,FA,,,,,,,,,,,
+Ross Stripling\stripro01,30,5,Amateur Draft,3.115,,1 yr/$2.1M (20),$2.1M,Arb,Arb,FA,,,,,,,,,
+Jimmy Nelson\nelsoji02,31,6,,5.107,CAA Sports,1 yr/$1.25M (20) & 21 team option,$750k,$500k [FA-*],FA,,,,,,,,,,
+Austin Barnes\barneau01,30,6,Traded,3.098,,1 yr/$1.1M (20),$1.1M,Arb,Arb,FA,,,,,,,,,
+Julio Urias\uriasju01,23,5,Amateur Free Agent,2.117,,1 yr/$1M (20),$1M,Arb,Arb,Arb,FA,,,,,,,,
+Scott Alexander\alexasc02,30,6,Traded,3.097,Sosnick Cobbe & K...,1 yr/$875k (20),$875k,Arb,Arb,FA,,,,,,,,,
+Zach McAllister\mcallza01,32,8,,6.049,Excel Sports Mana...,,FA,,,,,,,,,,,,
+AJ Ramos\ramosaj01,33,7,,6.030,Sports One Athlet...,,FA,,,,,,,,,,,,
+Justin De Fratus\defraju01,32,5,,3.090,Wasserman,,Arb,,Arb,FA,,,,,,,,,
+Edubray Ramos\ramosed02,27,4,,3.060,,,Arb (~$800k),,Arb,FA,,,,,,,,,
+Dylan Floro\florody01,29,5,Traded,2.053,,,,,Arb,Arb,FA,,,,,,,,
+Walker Buehler\buehlwa01,25,3,Amateur Draft,1.168,,,,,Arb,Arb,Arb,FA,,,,,,,
+Terrance Gore\gorete01,29,7,Free Agency,1.143,,,,,Arb,Arb,Arb,FA,,,,,,,
+Andrew Toles\tolesan01,28,3,Free Agency,1.128,Magnus Sports,,,,Arb,Arb,Arb,FA,,,,,,,
+Adam Kolarek\kolarad01,31,4,Traded,1.122,,,,,Arb,Arb,Arb,FA,,,,,,,
+Caleb Ferguson\ferguca01,23,3,Amateur Draft,1.093,,,,,Arb,Arb,Arb,FA,,,,,,,
+Kyle Lobstein\lobstky01,30,3,,1.088,Ballengee Group,,,,Arb,Arb,Arb,FA,,,,,,,
+Matt Beaty\beatyma01,27,1st,Amateur Draft,0.137,,,,,,Arb,Arb,Arb,FA,,,,,,
+Dennis Santana\santade01,24,3,Amateur Free Agent,0.133,Optimum Baseball,,,,,Arb,Arb,Arb,FA,,,,,,
+Reymin Guduan\guduare01,28,3,,0.104,,,,,,Arb,Arb,Arb,FA,,,,,,
+Rocky Gale\galero01,32,4,Free Agency,0.101,,,,,,Arb,Arb,Arb,FA,,,,,,
+Josh Sborz\sborzjo01,26,1st,Amateur Draft,0.049,,,,,,Arb,Arb,Arb,FA,,,,,,
+Will Smith\smithwi05,25,2,Amateur Draft,0.090,Sosnick Cobbe & K...,,,,,Arb,Arb,Arb,FA,,,,,,
+Dustin May\maydu01,22,2,Amateur Draft,0.059,,,,,,Arb,Arb,Arb,FA,,,,,,
+Tony Gonsolin\gonsoto01,26,1st,Amateur Draft,0.049,,,,,,Arb,Arb,Arb,FA,,,,,,
+Edwin Rios\riosed01,26,2,Amateur Draft,0.043,,,,,,Arb,Arb,Arb,FA,,,,,,
+Brusdar Graterol\gratebr01,21,2,Traded,0.029,,,,,,Arb,Arb,Arb,FA,,,,,,
+Gavin Lux\luxga01,22,1st,Amateur Draft,0.028,,,,,,Arb,Arb,Arb,FA,,,,,,
+Connor Joe\joeco01,27,1st,,0.017,,,,,,Arb,Arb,Arb,FA,,,,,,
+Drew Jackson\jacksdr01,26,1st,,0.014,,,,,,Arb,Arb,Arb,FA,,,,,,
