@@ -3,11 +3,12 @@ import string
 import numpy as np
 from player import Player
 from prospect import Prospect
+from aging_regression import adjust_prospect_war, predict_start_ratio
 
 PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-DOLLAR_PER_WAR = 8_000_000  # market value for WAR - $8m/win
+DOLLAR_PER_WAR = 9_100_000  # market value for WAR - $8m/win
 # ^^^ based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
 # Based on Fangraphs FV to average WAR values
@@ -118,9 +119,10 @@ class Team:
             if prospect.eta == 0:
                 # ID is made up of a random number and the name
                 new_id = prospect.name.lower().replace(" ", "") + str(random.randint(0, 1_000_000))
-                starts = np.random.uniform(0,1)
                 new_war = PITCHER_FV_DICT[prospect.fv] if prospect.pitcher else BATTER_FV_DICT[prospect.fv]
-                new_player = Player(new_id, [new_war], prospect.age, prospect.pitcher, starts, name=prospect.name)
+                starts = predict_start_ratio(new_war)
+                new_war = [adjust_prospect_war(new_war, prospect.age, prospect.pitcher)]
+                new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, starts, name=prospect.name)
 
                 # Three years of pre-arb, three years of arb
                 new_payouts = [{'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}]
@@ -195,6 +197,8 @@ class Team:
 
             new_contracts.append(player)
 
+        self.contracts = new_contracts
+
     # Adds new prospects from draft and J2 – only top prospects
     def add_new_prospects(self):
         # Values inferred from: https://blogs.fangraphs.com/an-update-to-prospect-valuation/
@@ -261,8 +265,8 @@ class Team:
     def run_year(self):
         self.age_players()  # Ages players by a year, gets new WAR value
         self.age_prospects()  # Ages prospects, develops by a year, adds to MLB if needed
-        self.get_roster()
-        self.add_player_variance()
+        self.get_roster()  # Creates the roster based off of the top 40 players
+        self.add_player_variance()  # Adds in-season variance
         self.record_year()  # Collects WAR for players, prospects, and FA
         self.update_contracts()  # Progresses contracts by a year
         self.add_new_prospects()  # Conducts draft and J2 signings
