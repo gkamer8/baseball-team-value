@@ -95,11 +95,8 @@ class Team:
 
         self.records = []
 
-        # if max_payroll isn't set, it becomes whatever the initial payroll is
-        if max_payroll is None:
-            self.max_payroll = self.get_contract_values()
-        else:
-            self.max_payroll = max_payroll
+        # if max_payroll isn't set, it becomes whatever the initial payroll is in the first year - set in run_year()
+        self.max_payroll = max_payroll
         
         self.last_fa_war = 0  # For record keeping
 
@@ -294,7 +291,7 @@ class Team:
             self.prospects.append(prospect)
         
         # Based on analysis, draft prospects outnumber J2 signings close to 2-1
-        for _ in range(3):
+        for _ in range(2):
             age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
             
             if age < 20:
@@ -310,6 +307,10 @@ class Team:
         self.age_prospects()  # Ages prospects, develops by a year, adds to MLB if needed
         self.get_roster()  # Creates the roster based off of the top 40 players
         self.add_player_variance()  # Adds in-season variance
+        
+        if self.max_payroll is None:
+            self.max_payroll = self.get_contract_values()
+
         self.record_year()  # Collects WAR for players, prospects, and FA
         self.update_contracts()  # Progresses contracts by a year
         self.add_new_prospects()  # Conducts draft and J2 signings
