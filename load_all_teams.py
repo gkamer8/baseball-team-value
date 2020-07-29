@@ -12,7 +12,6 @@ war_wl = get_war_wl_regr()
 def convert_wars_to_probabilities(war):
     return war_wl.predict([[war]])[0][0]
 
-
 def parse_contract_year(entry):
     if entry == "":
         return None
@@ -21,7 +20,18 @@ def parse_contract_year(entry):
     if entry == "FA":
         return None
     if "Arb" in entry:
-        return {'type': 'arb', 'value': None}
+        if "$" in entry:
+            num_string = entry[entry.find("$") + 1:entry.find(")")]
+            if "M" in num_string:
+                value = float(num_string[0:num_string.find("M")]) * 1_000_000
+                return {'type': 'arb', 'value': value}
+            elif "k" in num_string:
+                value = float(num_string[0:num_string.find("k")]) * 1_000
+                return {'type': 'arb', 'value': value}
+            else:
+                return {'type': 'arb', 'value': float(num_string)}
+        else:
+            return {'type': 'arb', 'value': None}
     if '$' in entry:
         # true if value is in millions, false if thousands
         millions = 'm' in entry.lower()
@@ -67,6 +77,7 @@ def create_team(name):
                     new_contracts.append(contract)
             team.contracts = new_contracts
             team.add_prospect(pros)
+    team.max_payroll = team.get_contract_values()
     return team
 
 
