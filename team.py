@@ -51,6 +51,7 @@ for key in PITCHER_FV_DICT:
 for key in BATTER_FV_DICT:
     BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .7
 
+
 # Linear conversion from WAR to arb $, depending on how many years of arb left
 # Values at the moment are arbitrary but should be replaced with empirically correct values
 def get_arb_salary(war, arb_years_remaining=1):
@@ -167,6 +168,19 @@ class Team:
         self.roster = list(zip(*starters))[1]
 
     def get_team_war(self):
+
+        """
+        # Nerf
+        roster = []
+        for player in self.contracts:
+            roster.append((player['player'].get_war(), player['player']))
+        roster.sort(key=lambda x: x[0], reverse=True)
+        backup = roster[5:]
+
+        for backup_player in backup:
+            backup_player[1].wars[-1] = backup_player[1].wars[-1] * .5  # chop backup player war in half
+        """
+
         war = 0
         for player in self.roster:
             war += player.get_war()
@@ -195,7 +209,6 @@ class Team:
             except:  # Sloppy!
                 pass
         return tots
-
 
     def update_contracts(self):
         new_contracts = []
@@ -252,8 +265,8 @@ class Team:
         else:
             pick = 28  # is actually 28-30
         
-        # Assumes each team picks 5 players - only looking for top prospects here (simulating Fangraphs' The Board)
-        for r in range(5):
+        # Assumes each team picks 6 players - only looking for top prospects here (simulating Fangraphs' The Board)
+        for r in range(6):
             # Pitchers and position players on The Board are about evenly split
             position = random.random() > .5
 
@@ -281,7 +294,7 @@ class Team:
             self.prospects.append(prospect)
         
         # Based on analysis, draft prospects outnumber J2 signings close to 2-1
-        for _ in range(2):
+        for _ in range(3):
             age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
             
             if age < 20:

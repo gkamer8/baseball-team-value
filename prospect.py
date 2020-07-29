@@ -31,15 +31,15 @@ class Prospect:
         # Evolve FV
         # Random walk with probabilities below
         # -2    -1    0    1    2
-        # .15 .25  .40  .15 .05
+        # .05 .10  .70  .10 .05
         fv_draw = random.random()
-        if fv_draw < .15:
+        if fv_draw < .05:
             self.fv = max(self.fv - 10, 20)
-        elif fv_draw < .15 + .25:
+        elif fv_draw < .05 + .10:
             self.fv = max(self.fv - 5, 20)
-        elif fv_draw < .15 + .25 + .40:
+        elif fv_draw < .05 + .10 + .70:
             pass
-        elif fv_draw < .15 + .25 + .40 + .15:
+        elif fv_draw < .05 + .10 + .70 + .10:
             self.fv = min(self.fv + 5, 80)
         else:
             self.fv = min(self.fv + 10, 80)
