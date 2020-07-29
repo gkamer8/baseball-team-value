@@ -308,7 +308,7 @@ def predict_start_ratio(average_war):
     return min(1, start_model.predict(start_scaler.transform([[average_war]]))[0])
 
 
-print(predict_start_ratio(3.0))
+# print(predict_start_ratio(3.0))
 
 
 # parameter_space = {
