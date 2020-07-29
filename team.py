@@ -8,7 +8,7 @@ from aging_regression import adjust_prospect_war, predict_start_ratio
 PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-DOLLAR_PER_WAR = 9_100_000  # market value for WAR - $8m/win
+DOLLAR_PER_WAR = 9_100_000  # market value for WAR - $9.1m/win
 # ^^^ based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
 # Based on Fangraphs FV to average WAR values
@@ -44,6 +44,15 @@ BATTER_FV_DICT = {
     75: 6.5,
     80: 7
 }
+
+def get_arb_salary(war, arb_years_remaining=1):
+    if arb_years_remaining == 0:
+        dol_per_war = 4_000_000
+    elif arb_years_remaining == 1:
+        dol_per_war = 3_000_000
+    elif arb_years_remaining >= 2:
+        dol_per_war = 2_000_000
+    return dol_per_war * war
 
 class Team:
 
@@ -82,6 +91,8 @@ class Team:
             self.max_payroll = self.get_contract_values()
         else:
             self.max_payroll = max_payroll
+        
+        self.last_fa_war = 0  # For record keeping
 
     def add_prospect(self, new_prospect):
         self.prospects.append(new_prospect)
@@ -122,7 +133,7 @@ class Team:
                 new_war = PITCHER_FV_DICT[prospect.fv] if prospect.pitcher else BATTER_FV_DICT[prospect.fv]
                 starts = predict_start_ratio(new_war)
                 new_war = [adjust_prospect_war(new_war, prospect.age, prospect.pitcher)]
-                new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, starts, name=prospect.name)
+                new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, starts, name=prospect.name, sim_grown=True)
 
                 # Three years of pre-arb, three years of arb
                 new_payouts = [{'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}]
@@ -137,27 +148,46 @@ class Team:
         fa_allocation = self.max_payroll - self.get_contract_values()
         fa_mu = fa_allocation / DOLLAR_PER_WAR
         fa_std_dev = fa_mu / 4  # 4 is arbitrary - goal is to scale with the mu WAR
-        return np.random.normal(fa_mu, fa_std_dev, 1)[0]
+        return np.random.normal(fa_mu, abs(fa_std_dev), 1)[0]
 
     def get_roster(self):
         roster = []
         for player in self.contracts:
             roster.append((player['player'].get_war(), player['player']))
         roster.sort(key=lambda x: x[0], reverse=True)
-        starters = roster[:40]
+        starters = roster[:26]
         self.roster = list(zip(*starters))[1]
 
     def get_team_war(self):
         war = 0
         for player in self.roster:
             war += player.get_war()
+        self.last_fa_war = self.get_fa_war()
+        war += self.last_fa_war
         return war
 
     def record_year(self):
-        self.records.append({'Total WAR': self.get_team_war()})
+        to_add = {
+            'Total WAR': self.get_team_war(), 
+            'FA WAR': self.last_fa_war,
+            'Sim Prospect WAR': sum([(x['player'].wars[-1] if x['player'].sim_grown else 0) for x in self.contracts]),
+            'Max Payroll': self.max_payroll
+        }
+        self.records.append(to_add)
 
     def get_contract_values(self):
-        return sum([x['payouts']['value'] for x in self.contracts])
+        # return sum([x['payouts'][0]['value'] for x in self.contracts])
+        tots = 0
+        for cont in self.contracts:
+            try:
+                if cont['payouts'][0]['type'] == "arb" and cont['payouts'][0]['value'] is None:
+                    tots += get_arb_salary(cont['player'].get_war())
+                else:
+                    tots += cont['payouts'][0]['value']
+            except:  # Sloppy!
+                pass
+        return tots
+
 
     def update_contracts(self):
         new_contracts = []
@@ -247,7 +277,7 @@ class Team:
             else:
                 eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
 
-            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)))
+            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " D" + str(r))
             self.prospects.append(prospect)
         
         # Based on analysis, draft prospects outnumber J2 signings close to 2-1
@@ -259,7 +289,7 @@ class Team:
             else:
                 eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
 
-            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)))
+            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " J2")
             self.prospects.append(prospect)
 
     def run_year(self):
@@ -270,3 +300,7 @@ class Team:
         self.record_year()  # Collects WAR for players, prospects, and FA
         self.update_contracts()  # Progresses contracts by a year
         self.add_new_prospects()  # Conducts draft and J2 signings
+    
+    def run_years(self, num_years):
+        for _ in range(num_years):
+            self.run_year()
