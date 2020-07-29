@@ -167,7 +167,11 @@ class Team:
         return war
 
     def record_year(self):
-        self.records.append({'Total WAR': self.get_team_war(), 'FA War': self.last_fa_war})
+        to_add = {
+            'Total WAR': self.get_team_war(), 
+            'FA War': self.last_fa_war
+        }
+        self.records.append(to_add)
 
     def get_contract_values(self):
         # return sum([x['payouts'][0]['value'] for x in self.contracts])

@@ -15,13 +15,15 @@ class Player:
 
     """
 
-    def __init__(self, id, wars, age, position, start_ratio, name=""):
+    def __init__(self, id, wars, age, position, start_ratio, name="", sim_grown=False):
         self.wars = wars
         self.age = age
         self.pitcher = position
         self.id = id  # baseball reference id
         self.name = name
         self.start_ratio = start_ratio
+
+        self.sim_grown = sim_grown  # For record keeping – whether player comes from sim
 
     def progress(self):
         self.age += 1
