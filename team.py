@@ -8,7 +8,7 @@ from aging_regression import adjust_prospect_war, predict_start_ratio
 PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-DOLLAR_PER_WAR = 9_100_000  # market value for WAR - $9.1m/win
+DOLLAR_PER_WAR = 10_000_000  # market value for WAR
 # ^^^ based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
 # Based on Fangraphs FV to average WAR values
@@ -45,13 +45,22 @@ BATTER_FV_DICT = {
     80: 7
 }
 
+# PROSPECT ADJUSTMENTS - decrease AVG WAR by 30%
+for key in PITCHER_FV_DICT:
+    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .7
+for key in BATTER_FV_DICT:
+    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .7
+
+
+# Linear conversion from WAR to arb $, depending on how many years of arb left
+# Values at the moment are arbitrary but should be replaced with empirically correct values
 def get_arb_salary(war, arb_years_remaining=1):
     if arb_years_remaining == 0:
-        dol_per_war = 4_000_000
+        dol_per_war = 6_000_000
     elif arb_years_remaining == 1:
-        dol_per_war = 3_000_000
+        dol_per_war = 4_500_000
     elif arb_years_remaining >= 2:
-        dol_per_war = 2_000_000
+        dol_per_war = 3_000_000
     return dol_per_war * war
 
 class Team:
@@ -159,6 +168,19 @@ class Team:
         self.roster = list(zip(*starters))[1]
 
     def get_team_war(self):
+
+        """
+        # Nerf
+        roster = []
+        for player in self.contracts:
+            roster.append((player['player'].get_war(), player['player']))
+        roster.sort(key=lambda x: x[0], reverse=True)
+        backup = roster[5:]
+
+        for backup_player in backup:
+            backup_player[1].wars[-1] = backup_player[1].wars[-1] * .5  # chop backup player war in half
+        """
+
         war = 0
         for player in self.roster:
             war += player.get_war()
@@ -188,7 +210,6 @@ class Team:
                 pass
         return tots
 
-
     def update_contracts(self):
         new_contracts = []
         for player in self.contracts:
@@ -208,16 +229,8 @@ class Team:
             if remaining_payouts[0]['type'] == 'pre-arb':
                 remaining_payouts[0]['value'] = PRE_ARB
             elif remaining_payouts[0]['type'] == 'arb':
-                # Linear conversion from WAR to arb $, depending on how many years of arb left
-                # Values at the moment are arbitrary but should be replaced with empirically correct values
                 arb_years_remaining = sum(x['type'] == 'arb' for x in remaining_payouts)
-                if arb_years_remaining == 0:
-                    dol_per_war = 4_000_000
-                elif arb_years_remaining == 1:
-                    dol_per_war = 3_000_000
-                elif arb_years_remaining >= 2:
-                    dol_per_war = 2_000_000
-                remaining_payouts[0]['value'] = min(player['player'].get_war() * dol_per_war, PRE_ARB)
+                remaining_payouts[0]['value'] = min(get_arb_salary(player['player'].get_war(), arb_years_remaining=arb_years_remaining), PRE_ARB)
             elif remaining_payouts[0]['type'] == 'vesting option':
                 if player['player'].get_war() < VESTING_THRESHOLD:
                     continue

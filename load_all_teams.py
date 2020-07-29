@@ -16,7 +16,7 @@ def convert_wars_to_probabilities(war):
 
 def parse_contract_year(entry):
     if entry == "":
-        return None
+        return {'type': 'pre-arb', 'value': None}
     if "[" in entry:  # DOESN'T PROCESS OPTIONS; TODO
         return None
     if entry == "FA":
@@ -69,6 +69,8 @@ def create_team(name):
         next(reader)  # skips header line
         for r in reader:
             fv = int(r[7].replace("+", ""))  # future value
+            fv -= 5  # NERF Board prospects
+
             pitcher = r[2] == "RHP" or r[2] == "LHP"
 
             pros = Prospect(int(r[8]) - current_year, fv, int(round(float(r[10]))), pitcher, name=r[0])
@@ -94,7 +96,7 @@ if __name__ == "__main__":
             tic = time.perf_counter()
             print("Running sim...")
             func(*args, **kwargs)
-            print(f"Sim complete in {time.perf_counter() - tic:0.4f} seconds")
+            print(f"Sim complete in {time.perf_counter() - tic:0.3f} seconds")
         return wrapper
 
     # Creates JSON file in Sim Records with records for each year of the sim stored by team
