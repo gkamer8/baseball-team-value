@@ -133,7 +133,7 @@ class Team:
                 new_war = PITCHER_FV_DICT[prospect.fv] if prospect.pitcher else BATTER_FV_DICT[prospect.fv]
                 starts = predict_start_ratio(new_war)
                 new_war = [adjust_prospect_war(new_war, prospect.age, prospect.pitcher)]
-                new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, starts, name=prospect.name)
+                new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, starts, name=prospect.name, sim_grown=True)
 
                 # Three years of pre-arb, three years of arb
                 new_payouts = [{'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}]
@@ -170,7 +170,8 @@ class Team:
         to_add = {
             'Total WAR': self.get_team_war(), 
             'FA WAR': self.last_fa_war,
-            'Sim Prospect WAR': sum([(x['player'].wars[-1] if x['player'].sim_grown else 0) for x in self.contracts])
+            'Sim Prospect WAR': sum([(x['player'].wars[-1] if x['player'].sim_grown else 0) for x in self.contracts]),
+            'Max Payroll': self.max_payroll
         }
         self.records.append(to_add)
 
@@ -276,7 +277,7 @@ class Team:
             else:
                 eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
 
-            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000) + " D" + str(r) ))
+            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " D" + str(r))
             self.prospects.append(prospect)
         
         # Based on analysis, draft prospects outnumber J2 signings close to 2-1
@@ -299,3 +300,7 @@ class Team:
         self.record_year()  # Collects WAR for players, prospects, and FA
         self.update_contracts()  # Progresses contracts by a year
         self.add_new_prospects()  # Conducts draft and J2 signings
+    
+    def run_years(self, num_years):
+        for _ in range(num_years):
+            self.run_year()
