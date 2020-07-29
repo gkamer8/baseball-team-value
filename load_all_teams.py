@@ -94,7 +94,7 @@ if __name__ == "__main__":
             tic = time.perf_counter()
             print("Running sim...")
             func(*args, **kwargs)
-            print(f"Sim complete in {time.perf_counter() - tic:0.4f} seconds")
+            print(f"Sim complete in {time.perf_counter() - tic:0.3f} seconds")
         return wrapper
 
     # Creates JSON file in Sim Records with records for each year of the sim stored by team

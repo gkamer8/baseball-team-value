@@ -45,7 +45,7 @@ BATTER_FV_DICT = {
     80: 7
 }
 
-# PROSPECT ADJUSTMENTS - decrease by AVG WAR by 30%
+# PROSPECT ADJUSTMENTS - decrease AVG WAR by 30%
 for key in PITCHER_FV_DICT:
     PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .7
 for key in BATTER_FV_DICT:
