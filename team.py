@@ -169,7 +169,8 @@ class Team:
     def record_year(self):
         to_add = {
             'Total WAR': self.get_team_war(), 
-            'FA War': self.last_fa_war
+            'FA WAR': self.last_fa_war,
+            'Sim Prospect WAR': sum([(x['player'].wars[-1] if x['player'].sim_grown else 0) for x in self.contracts])
         }
         self.records.append(to_add)
 

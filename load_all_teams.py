@@ -87,7 +87,7 @@ team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 
              'yankees', 'athletics', 'phillies', 'pirates', 'padres', 'giants', 'mariners', 'cardinals',
              'rays', 'rangers', 'bluejays', 'nationals']
 team_list1 = ['dodgers']
-#
+
 teams = []
 for team in team_list:
     teams.append(create_team(team))
