@@ -14,6 +14,7 @@ def get_total_war_by_year(file_data):
             wars[i] += team_records[team][i]['Total WAR']
     return wars
 
+# Looks at EXPECTED wl, not actual wl
 def get_avg_wl_by_year(file_data):
     wars = get_total_war_by_year(file_data)
     wls = dict()

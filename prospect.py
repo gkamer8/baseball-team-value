@@ -31,15 +31,15 @@ class Prospect:
         # Evolve FV
         # Random walk with probabilities below
         # -2    -1    0    1    2
-        # .125 .25  .35  .25 .125
+        # .15 .25  .40  .15 .05
         fv_draw = random.random()
-        if fv_draw < .125:
+        if fv_draw < .15:
             self.fv = max(self.fv - 10, 20)
-        elif fv_draw < .125 + .25:
+        elif fv_draw < .15 + .25:
             self.fv = max(self.fv - 5, 20)
-        elif fv_draw < .125 + .25 + .35:
+        elif fv_draw < .15 + .25 + .40:
             pass
-        elif fv_draw < .125 + .25 + .35 + .25:
+        elif fv_draw < .15 + .25 + .40 + .15:
             self.fv = min(self.fv + 5, 80)
         else:
             self.fv = min(self.fv + 10, 80)
@@ -50,26 +50,26 @@ class Prospect:
         """
             [,1] [,2] [,3] [,4] [,5] [,6] [,7]
         [1,] 1.00 0.00 0.00 0.00 0.00 0.00  0.0
-        [2,] 0.75 0.15 0.00 0.00 0.00 0.00  0.1
-        [3,] 0.25 0.35 0.30 0.00 0.00 0.00  0.1
-        [4,] 0.05 0.25 0.35 0.25 0.00 0.00  0.1
-        [5,] 0.01 0.05 0.25 0.35 0.24 0.00  0.1
-        [6,] 0.01 0.01 0.05 0.25 0.35 0.23  0.1
+        [2,] 0.70 0.15 0.00 0.00 0.00 0.00  0.15
+        [3,] 0.20 0.35 0.30 0.00 0.00 0.00  0.15
+        [4,] 0.05 0.20 0.35 0.25 0.00 0.00  0.15
+        [5,] 0.01 0.05 0.20 0.35 0.24 0.00  0.15
+        [6,] 0.01 0.01 0.05 0.20 0.35 0.23  0.15
         [7,] 0.00 0.00 0.00 0.00 0.00 0.00  1.0
 
         """
         eta_draw = random.random()
         if self.eta == 1:
-            if eta_draw < .75:
+            if eta_draw < .70:
                 self.eta = 0
-            elif eta_draw > .9:
+            elif eta_draw > .85:
                 self.dead = True
         elif self.eta == 2:
-            if eta_draw < .25:
+            if eta_draw < .20:
                 self.eta = 0
             elif eta_draw < .25 + .35:
                 self.eta = 1
-            elif eta_draw > .9:
+            elif eta_draw > .85:
                 self.dead = True
         elif self.eta == 3:
             if eta_draw < .05:
@@ -78,18 +78,18 @@ class Prospect:
                 self.eta = 1
             elif eta_draw < .05 + .25 + .35:
                 self.eta = 2
-            elif eta_draw > .9:
+            elif eta_draw > .85:
                 self.dead = True
         elif self.eta == 4:
             if eta_draw < .01:
                 eta_draw = 0
             elif eta_draw < .01 + .05:
                 self.eta = 1
-            elif eta_draw < .01 + .05 + .25:
+            elif eta_draw < .01 + .05 + .20:
                 self.eta = 2
-            elif eta_draw < .01 + .05 + .25 + .35:
+            elif eta_draw < .01 + .05 + .20 + .35:
                 self.eta = 3
-            elif eta_draw > .9:
+            elif eta_draw > .85:
                 self.dead = True
         elif self.eta == 5:
             if eta_draw < .01:
@@ -98,9 +98,9 @@ class Prospect:
                 eta_draw = 1
             elif eta_draw < .01 + .01 + .05:
                 self.eta = 2
-            elif eta_draw < .01 + .01 + .05 + .25:
+            elif eta_draw < .01 + .01 + .05 + .20:
                 self.eta = 3
-            elif eta_draw < .01 + .01 + .05 + .25 + .35:
+            elif eta_draw < .01 + .01 + .05 + .20 + .35:
                 self.eta = 4
-            elif eta_draw > .9:
+            elif eta_draw > .85:
                 self.dead = True
