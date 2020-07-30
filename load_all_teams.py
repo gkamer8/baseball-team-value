@@ -80,7 +80,7 @@ def create_team(name):
                     new_contracts.append(contract)
             team.contracts = new_contracts
             team.add_prospect(pros)
-    team.max_payroll = team.get_contract_values()
+
     return team
 
 team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 'reds', 'indians', 'rockies',
