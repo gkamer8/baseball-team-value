@@ -51,10 +51,10 @@ def new_floor(num):
 
 
 def get_residual_dict(df1):
-    print(len(df1))
+    # print(len(df1))
     df1['residuals'] = df1['residuals'].apply(new_floor)
     # df1 = df1[df1['residuals'] < 3]
-    print(len(df1))
+    # print(len(df1))
     dict1 = {}
     df0 = df1[df1['war'] < 0]
     df01 = df1[df1['war'] < 1]
@@ -323,9 +323,9 @@ residualsb = pickle.load(open(b_resid, 'rb'))
 residualsp = pickle.load(open(p_resid, 'rb'))
 
 
-for key in residualsp.keys():
-    print(len(residualsp[key]))
-    print(sum(residualsp[key]) / len(residualsp[key]))
+# for key in residualsp.keys():
+#     print(len(residualsp[key]))
+#     print(sum(residualsp[key]) / len(residualsp[key]))
 
 # plt.hist(residualsb, bins=300)
 # plt.show()

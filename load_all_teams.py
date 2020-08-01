@@ -69,7 +69,7 @@ def create_team(name):
         next(reader)  # skips header line
         for r in reader:
             fv = int(r[7].replace("+", ""))  # future value
-            fv -= 5  # NERF Board prospects
+            # fv -= 5  # NERF Board prospects
 
             pitcher = r[2] == "RHP" or r[2] == "LHP"
 
