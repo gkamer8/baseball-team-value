@@ -45,27 +45,29 @@ BATTER_FV_DICT = {
     80: 7
 }
 
-
+"""
 # PROSPECT ADJUSTMENTS - decrease AVG WAR by 30%
 for key in PITCHER_FV_DICT:
     PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .70
 for key in BATTER_FV_DICT:
     BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .70
+"""
 
 # function based on model from arbitration.r
 def get_arb_salary(war, age, arb_years_remaining=1):
-    new_salary = 17_672_395  # intercept
-    new_salary = new_salary - age * -327_883
-    new_salary = new_salary + war * 25_139_764 + war ** 2 * 2_614_674 - war ** 3 * 7_249_097
+    new_salary = 16_639_108  # intercept
+    new_salary = new_salary - age * 357_730
+    new_salary = new_salary + war * 1_180_929
 
     if arb_years_remaining == 0:
-        new_salary -= 2_553_530
+        new_salary -= 2_729_314
     elif arb_years_remaining == 1:
-        new_salary -= 3_765_152
+        new_salary -= 3_840_663
     elif arb_years_remaining >= 2:
-        new_salary -= 5_676_351
+        new_salary -= 5_810_577
 
     return new_salary
+
 
 class Team:
 
@@ -291,11 +293,13 @@ class Team:
                 fv = 40
 
             # Loosely based off of 2020 figures so far
+            # Original probs, in case they change: [6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124]
             age = np.random.choice(np.arange(17, 24), 1, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])[0]
             # Different ETA rules for college vs. high school
             if age < 20:
                 eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
             else:
+                # In case they change, original probs were: [.06, .13, 0.25, 0.56, 0]
                 eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
 
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100_000)) + " D" + str(r))
