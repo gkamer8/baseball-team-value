@@ -46,8 +46,8 @@ def get_war_by_source_percentage_by_year(file_data):
         wars2[year] = dict()
         total = wars[year]['FA'] + wars[year]['Prospects'] + wars[year]['Contracts']
         wars2[year]['FA'] = wars[year]['FA'] / total
-        wars2[year]['Prospects'] = wars[year]['Prospects'] / total
-        wars2[year]['Contracts'] = wars[year]['Contracts'] / total
+        wars2[year]['Prospects'] = wars[year]['Prospects'] # / total
+        wars2[year]['Contracts'] = wars[year]['Contracts'] # / total
     return wars2
 
 if __name__ == "__main__":
