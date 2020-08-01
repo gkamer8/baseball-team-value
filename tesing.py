@@ -1,7 +1,12 @@
 # from player import Player
+import math
 
-lst = [1,2,3]
-lst[-1] += 2
+
+
+
+
+lst = [1,2,3.5, -2.5]
+lst = [new_floor(ele) for ele in lst]
 print(lst)
 
 # data1 = []

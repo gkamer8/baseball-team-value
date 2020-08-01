@@ -69,7 +69,7 @@ def create_team(name):
         next(reader)  # skips header line
         for r in reader:
             fv = int(r[7].replace("+", ""))  # future value
-            fv -= 5  # NERF Board prospects
+            # fv -= 5  # NERF Board prospects
 
             pitcher = r[2] == "RHP" or r[2] == "LHP"
 
@@ -104,11 +104,15 @@ if __name__ == "__main__":
     def sim_run(filename):
         team_records = dict()
         teams = [create_team(team) for team in team_list]
-        num_years = 10
+        num_years = 30
 
         for team in teams:
             team.run_years(num_years)
             team_records[team.name] = team.records
+        # for team in teams:
+        #     for player in team.contracts:
+        #         print(player['player'].name)
+        #         print(player['player'].wars)
         
         with open(f"Sim Records/{filename}", "w") as outfile:
             json.dump({'teams': team_records}, outfile)

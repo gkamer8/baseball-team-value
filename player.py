@@ -1,4 +1,4 @@
-from aging_regression import war_predictor, average, error_predictor
+from aging_regression import war_predictor, average, error_predictor, injury_predictor
 
 
 class Player:
@@ -30,7 +30,12 @@ class Player:
         self.wars.append(war_predictor(self.age, self.wars[-1], average(self.wars), self.pitcher, self.start_ratio))
 
     def add_variance(self):
-        self.wars[-1] += error_predictor(self.pitcher)
+        # self.wars[-1] *= injury_predictor()
+        # self.wars[-1] *= error_predictor(self.pitcher)
+        self.wars[-1] += error_predictor(self.pitcher, self.wars[-1])
+
+    def backup(self):
+        self.wars[-1] = .25 * self.wars[-1]
 
     def get_war(self):
         return self.wars[-1]

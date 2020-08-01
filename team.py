@@ -96,6 +96,7 @@ class Team:
         self.contracts = contracts
         self.prospects = prospects
         self.roster = []
+        self.backups = []
 
         self.records = []
 
@@ -129,8 +130,10 @@ class Team:
             player['player'].progress()
 
     def add_player_variance(self):
-        for player in self.contracts:
-            player['player'].add_variance()
+        for player in self.roster:
+            player.add_variance()
+        for player in self.backups:
+            player.backup()
 
     def age_prospects(self):
         # Replaces prospect list with new list, excluding new MLB players and dead prospects
@@ -142,7 +145,7 @@ class Team:
                 new_id = prospect.name.lower().replace(" ", "") + str(random.randint(0, 1_000_000))
                 new_war = PITCHER_FV_DICT[prospect.fv] if prospect.pitcher else BATTER_FV_DICT[prospect.fv]
                 starts = predict_start_ratio(new_war)
-                new_war = [adjust_prospect_war(new_war, prospect.age, prospect.pitcher)]
+                new_war = [adjust_prospect_war(new_war, prospect.age, prospect.pitcher) - .25]
                 new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, starts, name=prospect.name, sim_grown=True)
 
                 # Three years of pre-arb, three years of arb
@@ -166,7 +169,12 @@ class Team:
             roster.append((player['player'].get_war(), player['player']))
         roster.sort(key=lambda x: x[0], reverse=True)
         starters = roster[:26]
+        backups = roster[26:]
         self.roster = list(zip(*starters))[1]
+        if len(backups) > 0:
+            self.backups = list(zip(*backups))[1]
+        else:
+            self.backups = []
 
     def get_team_war(self):
 
@@ -193,7 +201,7 @@ class Team:
         to_add = {
             'Total WAR': self.get_team_war(), 
             'FA WAR': self.last_fa_war,
-            'Sim Prospect WAR': sum([(x['player'].wars[-1] if x['player'].sim_grown else 0) for x in self.contracts]),
+            'Sim Prospect WAR': sum([(x.wars[-1] if x.sim_grown else 0) for x in self.roster]),
             'Max Payroll': self.max_payroll
         }
         self.records.append(to_add)
@@ -309,7 +317,9 @@ class Team:
         self.age_players()  # Ages players by a year, gets new WAR value
         self.age_prospects()  # Ages prospects, develops by a year, adds to MLB if needed
         self.get_roster()  # Creates the roster based off of the top 40 players
-        self.add_player_variance()  # Adds in-season variance
+        # self.add_player_variance()  # Adds in-season variance
+
+
         
         if self.max_payroll is None:
             self.max_payroll = self.get_contract_values()
