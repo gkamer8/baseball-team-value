@@ -204,7 +204,7 @@ class Team:
         for cont in self.contracts:
             try:
                 if cont['payouts'][0]['type'] == "arb" and cont['payouts'][0]['value'] is None:
-                    tots += get_arb_salary(cont['player'].get_war(), cont['player'].age
+                    tots += get_arb_salary(cont['player'].get_war(), cont['player'].age)
                 else:
                     tots += cont['payouts'][0]['value']
             except:  # Sloppy!

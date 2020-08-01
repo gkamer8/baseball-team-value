@@ -15,3 +15,7 @@ lines(data$WAR[ix], predictor[ix], col=2, lwd=2 )
 
 plot(predictor, data$Salary)
 abline(0, 1)
+
+# Note: model can be improved by using a log transformation
+hist(mod$residuals)
+qqnorm(mod$residuals)
