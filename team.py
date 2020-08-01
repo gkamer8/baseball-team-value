@@ -220,10 +220,9 @@ class Team:
 
             # TODO Problems:
             # Pre-arb figures should be checked
-            # Arb model should be compared with empirical data
             # Vesting option model should be compared with empirical data
             # Player and team options automatically execute, so this needs to be worked out
-            # Super 2 should be implemented
+            # Super 2 and other rules should be implemented
 
             # Set salary for pre-arb and arb
             # Pre-arb technically uncessary, but just as a check
