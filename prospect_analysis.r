@@ -79,3 +79,6 @@ hist(data$Age[data$Sign.Mkt == "Draft" & data$Sign.Yr == 2020])
 
 hist(data$Age[data$Sign.Mkt == "J2" & data$Sign.Yr == 2019])  # Almost all age 17
 prop.table(table(data$new.FV[data$Sign.Yr == 2019]))
+
+# What does ETA look like for the whole board?
+barplot(table(data$ETA))

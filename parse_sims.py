@@ -50,6 +50,21 @@ def get_war_by_source_percentage_by_year(file_data):
         wars2[year]['Contracts'] = wars[year]['Contracts'] / total
     return wars2
 
+def average_many_wls(file_datas):
+    new = dict()
+    num_files = len(file_datas)
+    for f in file_datas:
+        wls = get_avg_wl_by_year(f)
+        for year in wls:
+            if year in new:
+                new[year] += wls[year]
+            else:
+                new[year] = wls[year]
+    for k in new:
+        new[k] = new[k] / num_files
+    
+    return new
+
 if __name__ == "__main__":
     
     filename = "Sim Records/v1.json"
@@ -64,5 +79,13 @@ if __name__ == "__main__":
     war_sources = get_war_by_source_percentage_by_year(sim)
     for year in wars:
         print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
+
+    """
+    print("\nAverages:")
+    # Look at averages over the 50 sims
+    all_wls = average_many_wls([json.load(open(f"Sim Records/run{x}.json")) for x in range(50)])
+    for year in all_wls:
+        print(f"{year + 2020}: {all_wls[year]:0.3f}")
+    """
 
 

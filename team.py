@@ -45,23 +45,27 @@ BATTER_FV_DICT = {
     80: 7
 }
 
+
 # PROSPECT ADJUSTMENTS - decrease AVG WAR by 30%
 for key in PITCHER_FV_DICT:
-    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .7
+    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .70
 for key in BATTER_FV_DICT:
-    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .7
+    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .70
 
+# function based on model from arbitration.r
+def get_arb_salary(war, age, arb_years_remaining=1):
+    new_salary = 17_672_395  # intercept
+    new_salary = new_salary - age * -327_883
+    new_salary = new_salary + war * 25_139_764 + war ** 2 * 2_614_674 - war ** 3 * 7_249_097
 
-# Linear conversion from WAR to arb $, depending on how many years of arb left
-# Values at the moment are arbitrary but should be replaced with empirically correct values
-def get_arb_salary(war, arb_years_remaining=1):
     if arb_years_remaining == 0:
-        dol_per_war = 6_000_000
+        new_salary -= 2_553_530
     elif arb_years_remaining == 1:
-        dol_per_war = 4_500_000
+        new_salary -= 3_765_152
     elif arb_years_remaining >= 2:
-        dol_per_war = 3_000_000
-    return dol_per_war * war
+        new_salary -= 5_676_351
+
+    return new_salary
 
 class Team:
 
@@ -200,7 +204,7 @@ class Team:
         for cont in self.contracts:
             try:
                 if cont['payouts'][0]['type'] == "arb" and cont['payouts'][0]['value'] is None:
-                    tots += get_arb_salary(cont['player'].get_war())
+                    tots += get_arb_salary(cont['player'].get_war(), cont['player'].age
                 else:
                     tots += cont['payouts'][0]['value']
             except:  # Sloppy!
@@ -227,7 +231,7 @@ class Team:
                 remaining_payouts[0]['value'] = PRE_ARB
             elif remaining_payouts[0]['type'] == 'arb':
                 arb_years_remaining = sum(x['type'] == 'arb' for x in remaining_payouts)
-                remaining_payouts[0]['value'] = min(get_arb_salary(player['player'].get_war(), arb_years_remaining=arb_years_remaining), PRE_ARB)
+                remaining_payouts[0]['value'] = min(get_arb_salary(player['player'].get_war(), player['player'].age, arb_years_remaining=arb_years_remaining), PRE_ARB)
             elif remaining_payouts[0]['type'] == 'vesting option':
                 if player['player'].get_war() < VESTING_THRESHOLD:
                     continue
@@ -287,7 +291,7 @@ class Team:
             else:
                 eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
 
-            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " D" + str(r))
+            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100_000)) + " D" + str(r))
             self.prospects.append(prospect)
         
         # Based on analysis, draft prospects outnumber J2 signings close to 2-1

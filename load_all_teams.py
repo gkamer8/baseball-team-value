@@ -92,10 +92,10 @@ team_list1 = ['dodgers']
 if __name__ == "__main__":
 
     def sim_wrapper(func):
-        def wrapper(*args, **kwargs):
+        def wrapper(filename):
             tic = time.perf_counter()
-            print("Running sim...")
-            func(*args, **kwargs)
+            print(f"Running sim for {filename}...")
+            func(filename)
             print(f"Sim complete in {time.perf_counter() - tic:0.3f} seconds")
         return wrapper
 

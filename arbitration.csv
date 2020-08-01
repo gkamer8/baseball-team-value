@@ -1,0 +1,153 @@
+﻿Name,Position,Team,Age,Length,Salary,Type,Years,WAR
+George Springer,CF,HOU,30,1,"$21,000,000 ",Avoided,2017-2020,6.4
+"Kris Bryant, ARB 4",3B,CHC,28,1,"$18,600,000 ",Avoided,2018-2021,3.7
+"Francisco Lindor, ARB 3",SS,CLE,26,1,"$17,500,000 ",Avoided,2019-2021,5
+Trevor Bauer,SP,CIN,29,1,"$17,500,000 ",Avoided,2017-2020,1.1
+Marcus Semien,SS,OAK,29,1,"$13,000,000 ",Avoided,2018-2020,8.9
+James Paxton,SP,NYY,31,1,"$12,500,000 ",Avoided,2017-2020,2.4
+Marcus Stroman,SP,NYM,29,1,"$12,000,000 ",Avoided,2017-2020,1.4
+"Cody Bellinger, ARB 2",OF,LAD,24,1,"$11,500,000 ",Avoided,2020-2023,9.1
+Jackie Bradley Jr.,CF,BOS,30,1,"$11,000,000 ",Avoided,2017-2020,1.9
+Alex Colome,RP,CHW,31,1,"$10,532,500 ",Avoided,2018-2020,1.1
+"Javier Baez, ARB 3",SS,CHC,27,1,"$10,000,000 ",Avoided,2019-2021,6
+"Roberto Osuna, ARB 4",RP,HOU,25,1,"$10,000,000 ",Avoided,2018-2021,1.8
+J.T. Realmuto,C,PHI,29,1,"$10,000,000 ",Settlement,2018-2020,4.5
+"Noah Syndergaard, ARB 4",SP,NYM,27,1,"$9,700,000 ",Avoided,2018-2021,2.6
+Ken Giles,RP,TOR,29,1,"$9,600,000 ",Avoided,2018-2020,2.5
+Robbie Ray,SP,ARI,28,1,"$9,430,000 ",Avoided,2018-2020,1.4
+"Aaron Judge, ARB 2",RF,NYY,28,1,"$8,500,000 ",Avoided,2020-2022,5.5
+"Eduardo Rodriguez, ARB 4",SP,BOS,27,1,"$8,300,000 ",Settlement,2018-2021,5.9
+Jonathan Villar,OF,MIA,29,1,"$8,200,000 ",Avoided,2018-2020,3.9
+"Michael Conforto, ARB 3",RF,NYM,27,1,"$8,000,000 ",Avoided,2019-2021,3.4
+"Carlos Correa, ARB 3",SS,HOU,25,1,"$8,000,000 ",Avoided,2019-2021,3.4
+"Tommy Pham, ARB 3",CF,SD,32,1,"$7,900,000 ",Avoided,2019-2021,3.8
+Joc Pederson,LF,LAD,28,1,"$7,750,000 ",Settlement,2018-2020,3.2
+"Eddie Rosario, ARB 3",LF,MIN,28,1,"$7,750,000 ",Avoided,2019-2021,1.7
+"Corey Seager, ARB 3",SS,LAD,26,1,"$7,600,000 ",Avoided,2019-2021,3.3
+"Trea Turner, ARB 3",SS,WSH,27,1,"$7,450,000 ",Avoided,2019-2022,3.3
+"Jorge Soler, ARB 2",DH,KC,28,1,"$7,300,000 ",Avoided,2020-2021,3.6
+Kirby Yates,RP,SD,33,1,"$7,062,500 ",Avoided,2018-2020,3
+"Kyle Schwarber, ARB 3",LF,CHC,27,1,"$7,010,000 ",Avoided,2019-2021,2.1
+Shane Greene,RP,ATL,31,1,"$6,250,000 ",Settlement,2018-2020,0.3
+Enrique Hernandez,CF,LAD,28,1,"$5,900,000 ",Avoided,2018-2020,2.2
+Anthony DeSclafani,SP,CIN,30,1,"$5,900,000 ",Avoided,2018-2020,2.7
+Jurickson Profar,2B,SD,27,1,"$5,700,000 ",Avoided,2017-2020,0.3
+"Jon Gray, ARB 3",SP,COL,28,1,"$5,600,000 ",Avoided,2019-2021,4.1
+"Nomar Mazara, ARB 3",RF,CHW,25,1,"$5,560,000 ",Avoided,2019-2021,0.7
+Jake Lamb,1B,ARI,29,1,"$5,515,000 ",Avoided,2018-2020,0.2
+James McCann,C,CHW,30,1,"$5,400,000 ",Avoided,2018-2020,3.7
+Liam Hendriks,RP,OAK,31,1,"$5,300,000 ",Avoided,2017-2020,3.5
+"Matt Boyd, ARB 3",SP,DET,29,1,"$5,300,000 ",Avoided,2019-2022,3.6
+"Zach Davies, ARB 3",SP,SD,27,1,"$5,250,000 ",Avoided,2019-2021,2.6
+"Corey Knebel, ARB 4",RP,MIL,28,1,"$5,125,000 ",Avoided,2018-2021,0.4
+"Edwin Diaz, ARB 2",RP,NYM,26,1,"$5,100,000 ",Avoided,2020-2022,-0.5
+"Steven Matz, ARB 3",SP,NYM,29,1,"$5,000,000 ",Avoided,2019-2021,2.2
+"Dylan Bundy, ARB 3",SP,LAA,27,1,"$5,000,000 ",Avoided,2019-2021,2.5
+"Gary Sanchez, ARB 2",C,NYY,27,1,"$5,000,000 ",Avoided,2020-2022,3.1
+"Josh Bell, ARB 2",1B,PIT,27,1,"$4,800,000 ",Avoided,2020-2022,2.7
+Mark Canha,LF,OAK,31,1,"$4,800,000 ",Avoided,2019-2020,4.3
+"Trey Mancini, ARB 2",1B,BAL,28,1,"$4,750,000 ",Avoided,2020-2022,3.5
+"Hector Neris, ARB 3",RP,PHI,31,1,"$4,600,000 ",Settlement,2019-2021,1.8
+Mike Zunino,C,TB,29,1,"$4,500,000 ",Avoided,2017-2020,-0.2
+"Willson Contreras, ARB 2",C,CHC,28,1,"$4,500,000 ",Avoided,2020-2022,3.1
+"Carlos Rodon, ARB 4",SP,CHW,27,1,"$4,450,000 ",Avoided,2018-2021,0.1
+"Taylor Rogers, ARB 3",RP,MIN,29,1,"$4,450,000 ",Avoided,2019-2022,2.5
+"Joey Gallo, ARB 2",LF,TEX,26,1,"$4,400,000 ",Avoided,2020-2022,3.1
+"Andrew Heaney, ARB 4",SP,LAA,29,1,"$4,300,000 ",Avoided,2018-2021,1
+Matt Shoemaker,SP,TOR,33,1,"$4,200,000 ",Avoided,2017-2020,1.2
+"Archie Bradley, ARB 3",RP,ARI,27,1,"$4,100,000 ",Settlement,2019-2021,0.9
+"Lance McCullers, ARB 4",SP,HOU,26,1,"$4,100,000 ",Avoided,2018-2021,1.7
+"Mike Clevinger, ARB 2",SP,CLE,29,1,"$4,100,000 ",Avoided,2020-2022,4.1
+"Josh Hader, ARB 2",RP,MIL,26,1,"$4,100,000 ",Settlement,2020-2023,2.7
+"Jose Berrios, ARB 2",SP,MIN,26,1,"$4,025,000 ",Settlement,2020-2022,3.3
+Brad Peacock,SP,HOU,32,1,"$3,900,000 ",Avoided,2017-2020,1.1
+Hansel Robles,RP,LAA,29,1,"$3,850,000 ",Avoided,2018-2020,2.6
+"Jose Urena, ARB 3",SP,MIA,28,1,"$3,750,000 ",Avoided,2019-2021,-0.2
+"Sean Manaea, ARB 3",SP,OAK,28,1,"$3,750,000 ",Avoided,2019-2022,1.5
+Keone Kela,RP,PIT,27,1,"$3,725,000 ",Avoided,2018-2020,1.2
+"Michael Lorenzen, ARB 4",RP,CIN,28,1,"$3,725,000 ",Avoided,2018-2021,2
+Robbie Grossman,OF,OAK,30,1,"$3,725,000 ",Avoided,2018-2020,1
+"Vincent Velasquez, ARB 3",SP,PHI,28,1,"$3,600,000 ",Avoided,2019-2021,0.1
+"Daniel Santana, ARB 4",OF,TEX,29,1,"$3,600,000 ",Avoided,2018-2021,2
+Brandon Workman,RP,BOS,31,1,"$3,500,000 ",Avoided,2018-2020,3.2
+Michael Taylor,CF,WSH,29,1,"$3,325,000 ",Avoided,2018-2020,0
+Jake Marisnick,CF,NYM,29,1,"$3,312,500 ",Avoided,2017-2020,1.4
+"Hunter Renfroe, ARB 2",RF,TB,28,1,"$3,300,000 ",Avoided,2020-2023,2.7
+Tommy La Stella,2B,LAA,31,1,"$3,250,000 ",Avoided,2018-2020,2
+"Adam Duvall, ARB 3",RF,ATL,31,1,"$3,250,000 ",Avoided,2019-2021,0.6
+Leury Garcia,OF,CHW,29,1,"$3,250,000 ",Avoided,2018-2020,1.3
+"Mychal Givens, ARB 3",RP,BAL,30,1,"$3,225,000 ",Avoided,2019-2021,0.7
+"Dansby Swanson, ARB 2",SS,ATL,26,1,"$3,150,000 ",Avoided,2020-2022,0.7
+"Matt Barnes, ARB 3",RP,BOS,30,1,"$3,100,000 ",Avoided,2019-2021,1.3
+"Mike Montgomery, ARB 3",SP,KC,31,1,"$3,100,000 ",Avoided,2019-2021,0.5
+"Byron Buxton, ARB 3",CF,MIN,26,1,"$3,075,000 ",Avoided,2019-2022,3.1
+Andrew Chafin,RP,ARI,30,1,"$3,045,000 ",Avoided,2018-2020,0.7
+"Mitch Haniger, ARB 2",RF,SEA,29,1,"$3,010,000 ",Avoided,2020-2022,1.3
+"Austin Hedges, ARB 3",C,SD,27,1,"$3,000,000 ",Avoided,2019-2022,-0.7
+"Daniel Norris, ARB 3",SP,DET,27,1,"$2,960,000 ",Avoided,2019-2021,2.9
+Jose Alvarez,RP,PHI,31,1,"$2,950,000 ",Avoided,2018-2020,0.8
+"Kyle Freeland, ARB 2",SP,COL,27,1,"$2,875,000 ",Avoided,2020-2023,-0.8
+"Trevor Williams, ARB 2",SP,PIT,28,1,"$2,825,000 ",Avoided,2020-2022,0.5
+"Cam Bedrosian, ARB 4",RP,LAA,28,1,"$2,800,000 ",Avoided,2018-2021,0.6
+"Joe Musgrove, ARB 2",SP,PIT,27,1,"$2,800,000 ",Avoided,2020-2022,1.8
+"Adam Frazier, ARB 2",2B,PIT,28,1,"$2,800,000 ",Avoided,2020-2022,2
+"Michael Fulmer, ARB 3",SP,DET,27,1,"$2,800,000 ",Avoided,2019-2022,1
+"Omar Narvaez, ARB 2",C,MIL,28,1,"$2,725,000 ",Avoided,2020-2022,2.3
+"Tommy Kahnle, ARB 4",RP,NYY,30,1,"$2,650,000 ",Avoided,2018-2021,0.8
+"Zach Eflin, ARB 2",SP,PHI,26,1,"$2,625,000 ",Avoided,2020-2022,1.5
+"Aledmys Diaz, ARB 2",SS,HOU,29,1,"$2,600,000 ",Settlement,2020-2022,1.1
+"Jesus Aguilar, ARB 2",1B,MIA,30,1,"$2,575,000 ",Settlement,2020-2022,-0.3
+"Manuel Margot, ARB 2",CF,TB,25,1,"$2,475,000 ",Avoided,2020-2022,1.8
+"David Dahl, ARB 2",OF,COL,26,1,"$2,475,000 ",Avoided,2020-2023,0.4
+"Jameson Taillon, ARB 2",SP,PIT,28,1,"$2,250,000 ",Avoided,2020-2022,0.3
+"Chris Bassitt, ARB 2",SP,OAK,31,1,"$2,250,000 ",Avoided,2020-2022,1.9
+Trevor May,RP,MIN,30,1,"$2,205,000 ",Avoided,2018-2020,1.3
+"Brian Goodwin, ARB 2",RF,LAA,29,1,"$2,200,000 ",Settlement,2020-2022,2.2
+"Chaz Roe, ARB 3",RP,TB,33,1,"$2,185,200 ",Avoided,2019-2021,0
+"Brandon Nimmo, ARB 2",CF,NYM,27,1,"$2,175,000 ",Avoided,2020-2022,0.7
+"Ross Stripling, ARB 2",RP,LAD,30,1,"$2,100,000 ",Avoided,2020-2022,0.7
+"Brandon Drury, ARB 3",3B,TOR,27,1,"$2,050,000 ",Avoided,2019-2022,-1.2
+"Chad Pinder, ARB 2",LF,OAK,28,1,"$2,025,000 ",Avoided,2020-2022,1.4
+Sandy Leon,C,CLE,31,1,"$2,000,000 ",Avoided,2017-2020,-0.6
+"Seth Lugo, ARB 2",RP,NYM,30,1,"$2,000,000 ",Avoided,2020-2022,2.3
+"Chris Devenski, ARB 3",RP,HOU,29,1,"$2,000,000 ",Avoided,2019-2021,-0.1
+"Tony Wolters, ARB 3",C,COL,28,1,"$1,900,000 ",Settlement,2019-2022,1.5
+"Delino DeShields, ARB 3",CF,CLE,27,1,"$1,875,000 ",Avoided,2019-2021,1.5
+"Luke Jackson, ARB 2",RP,ATL,28,1,"$1,825,000 ",Avoided,2020-2022,0.1
+T.J. McFarland,RP,OAK,31,1,"$1,800,000 ",Avoided,2017-2020,-0.1
+"Tyler Anderson, ARB 3",SP,SF,30,1,"$1,775,000 ",Avoided,2019-2021,0.1
+"Hanser Alberto, ARB 2",2B,BAL,27,1,"$1,650,000 ",Avoided,2020-2022,2.9
+"Heath Hembree, ARB 3",RP,BOS,31,1,"$1,612,500 ",Avoided,2019-2021,0.5
+Ehire Adrianza,SS,MIN,30,1,"$1,600,000 ",Avoided,2017-2020,0.8
+"Jacoby Jones, ARB 2",CF,DET,28,1,"$1,575,000 ",Avoided,2020-2023,-0.1
+"Albert Almora, ARB 2",CF,CHC,26,1,"$1,575,000 ",Avoided,2020-2022,-1
+"Adam Morgan, ARB 3",RP,PHI,30,1,"$1,575,000 ",Avoided,2019-2021,0.4
+"Adam Conley, ARB 3",RP,MIA,30,1,"$1,525,000 ",Avoided,2019-2022,-1.2
+"Greg Garcia, ARB 3",2B,SD,30,1,"$1,500,000 ",Avoided,2019-2021,0.9
+"Curt Casali, ARB 3",C,CIN,31,1,"$1,462,500 ",Avoided,2019-2021,1.2
+"Matthew Strahm, ARB 2",RP,SD,28,1,"$1,400,000 ",Avoided,2020-2022,1
+"Ben Gamel, ARB 2",LF,MIL,28,1,"$1,400,000 ",Avoided,2020-2021,0.6
+"Matt Andriese, ARB 3",RP,LAA,30,1,"$1,395,000 ",Avoided,2019-2021,0
+"Donovan Solano, ARB 3",2B,SF,32,1,"$1,375,000 ",Avoided,2019-2021,1.4
+"John Gant, ARB 2",RP,STL,27,1,"$1,300,000 ",Avoided,2020-2022,0.6
+"Chad Green, ARB 2",RP,NYY,29,1,"$1,275,000 ",Avoided,2020-2022,0.5
+"Robert Gsellman, ARB 2",RP,NYM,26,1,"$1,225,000 ",Avoided,2020-2022,-0.2
+"Tyler Duffey, ARB 2",RP,MIN,29,1,"$1,200,000 ",Avoided,2020-2022,0.1
+"Buck Farmer, ARB 2",RP,DET,29,1,"$1,150,000 ",Avoided,2020-2022,1.5
+"Nick Wittgren, ARB 2",RP,CLE,29,1,"$1,125,000 ",Avoided,2020-2022,0.9
+"Austin Barnes, ARB 2",C,LAD,30,1,"$1,100,000 ",Avoided,2020-2022,0.2
+"Evan Marshall, ARB 2",RP,CHW,30,1,"$1,100,000 ",Avoided,2020-2022,1.8
+"Michael Feliz, ARB 3",RP,PIT,27,1,"$1,100,000 ",Avoided,2019-2021,0.7
+"Carlos Estevez, ARB 2",RP,COL,27,1,"$1,080,000 ",Avoided,2020-2022,1.5
+"Miguel Castro, ARB 2",RP,BAL,25,1,"$1,050,000 ",Avoided,2020-2022,0.7
+"Oliver Drake, ARB 2",RP,TB,33,1,"$1,025,000 ",Avoided,2020-2022,1.2
+"Wilmer Difo, ARB 2",SS,WSH,28,1,"$1,000,000 ",Avoided,2020-2022,-1.1
+"Alex Dickerson, ARB 3",LF,SF,30,1,"$925,000 ",Avoided,2019-2022,1
+"Richard Bleier, ARB 2",RP,BAL,33,1,"$915,000 ",Avoided,2020-2022,0.4
+"Nick Goody, ARB 3",RP,TEX,28,1,"$915,000 ",Avoided,2019-2022,0.4
+"Max Stassi, ARB 2",C,LAA,29,1,"$800,000 ",Avoided,2020-2022,-0.8
+"Keynan Middleton, ARB 2",RP,LAA,26,1,"$800,000 ",Avoided,2020-2023,0.4
+"Rafael Montero, ARB 3",RP,TEX,29,1,"$785,000 ",Avoided,2019-2022,1.2
+"Matt Wisler, ARB 2",RP,MIN,27,1,"$725,000 ",Avoided,2020-2022,-0.1
+"Erik Gonzalez, ARB 2",2B,PIT,28,1,"$725,000 ",Avoided,2020-2022,0.5
+"Andrew Knapp, ARB 2",C,PHI,28,1,"$710,000 ",Avoided,2020-2022,0.1
