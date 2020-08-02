@@ -9,3 +9,4 @@
 [0725/200630.601:ERROR:process_info.cc(556)] ReadMemoryInfo failed
 [0725/200630.601:ERROR:process_memory_win.cc(39)] Failed to initialize ProcessInfo.
 [0725/200630.601:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: An attempt was made to access an exiting process. (0xc000010a)
+[0801/213826.838:ERROR:file_io.cc(89)] ReadExactly: expected 36, observed 0
