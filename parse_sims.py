@@ -1,7 +1,7 @@
 import json
 from load_all_teams import team_list
 
-def get_total_war_by_year(file_data):
+def get_total_stat_by_year(file_data, key):
     team_records = file_data['teams']
 
     years = len(team_records[team_list[0]])  # uses the first team to get how many years the sim lasted
@@ -11,8 +11,11 @@ def get_total_war_by_year(file_data):
 
     for team in team_records:
         for i in range(years):
-            wars[i] += team_records[team][i]['Total WAR']
+            wars[i] += team_records[team][i][key]
     return wars
+
+def get_total_war_by_year(file_data):
+    return get_total_stat_by_year(file_data, 'Total WAR')
 
 # Looks at EXPECTED wl, not actual wl
 def get_avg_wl_by_year(file_data):
@@ -65,8 +68,35 @@ def average_many_wls(file_datas):
     
     return new
 
+def get_avg_stat_by_year(file_data, key):
+    stats = get_total_stat_by_year(file_data, key)
+    for year in stats:
+        stats[year] = stats[year] / 30
+    return stats
+
+# Average *average* championship probability across multiple files and teams
+def get_avg_championships_by_year(file_data):
+    return get_avg_stat_by_year(file_data, 'Championship Probability')
+
+# Average combined championship probability across multiple files
+def average_many_total_championships(file_datas):
+    new = dict()
+    num_files = len(file_datas)
+    for f in file_datas:
+        champs = get_total_stat_by_year(f, 'Championship Probability')
+        for year in champs:
+            if year in new:
+                new[year] += champs[year]
+            else:
+                new[year] = champs[year]
+    for k in new:
+        new[k] = new[k] / num_files
+    
+    return new
+
 if __name__ == "__main__":
     
+    """
     filename = "Sim Records/v1.json"
     sim = json.load(open(filename))
 
@@ -81,10 +111,15 @@ if __name__ == "__main__":
         print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
     
     print("\nAverages:")
-    # Look at averages over the 50 sims
     all_wls = average_many_wls([json.load(open(f"Sim Records/run{x}.json")) for x in range(10)])
     for year in all_wls:
         print(f"{year + 2020}: {all_wls[year]:0.3f}")
+    """
+
+    print("\nAverage Total Champs:")
+    champs = average_many_total_championships([json.load(open(f"Sim Records/run{x}.json")) for x in range(10)])
+    for year in champs:
+        print(f"{year + 2020}: {champs[year]:0.3f}")
 
     
     
