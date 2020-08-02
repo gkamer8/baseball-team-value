@@ -4,7 +4,10 @@ data <- read.csv("arbitration.csv")
 
 data$Salary <- as.numeric(gsub('[$,]', '', data$Salary))
 
-mod <- lm(data$Salary ~ poly(data$WAR, 3) + factor(data$Years) + data$Age); summary(mod)
+mod <- lm(data$Salary ~ data$WAR + factor(data$Years) + data$Age); summary(mod)
+
+# Alternative with polynomial
+mod2 <- lm(data$Salary ~ poly(data$WAR, 3) + factor(data$Years) + data$Age); summary(mod)
 
 plot(data$WAR, data$Salary)
 

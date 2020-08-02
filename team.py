@@ -1,6 +1,7 @@
 import random
 import string
 import numpy as np
+import math
 from player import Player
 from prospect import Prospect
 from aging_regression import adjust_prospect_war, predict_start_ratio
@@ -46,21 +47,14 @@ BATTER_FV_DICT = {
 }
 
 """
-# PROSPECT ADJUSTMENTS - decrease AVG WAR by 30%
+# PROSPECT ADJUSTMENTS - decrease AVG WAR by 25%
 for key in PITCHER_FV_DICT:
-    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .7
+    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .75
 for key in BATTER_FV_DICT:
-    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .70
+    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .75
 """
 
 # function based on model from arbitration.r
-def get_arb_salary(war, age, arb_years_remaining=1):
-    new_salary = 16_639_108  # intercept
-    new_salary = new_salary - age * 357_730
-    new_salary = new_salary + war * 1_180_929
-
-# Linear conversion from WAR to arb $, depending on how many years of arb left
-# Values at the moment are arbitrary but should be replaced with empirically correct values
 def get_arb_salary(war, age, arb_years_remaining=1):
     new_salary = 16_639_108  # intercept
     new_salary = new_salary - age * 357_730
@@ -74,8 +68,7 @@ def get_arb_salary(war, age, arb_years_remaining=1):
         new_salary -= 5_810_577
 
     return new_salary
-
-
+    
 
 class Team:
     """
@@ -205,13 +198,28 @@ class Team:
         self.last_fa_war = self.get_fa_war()
         war += self.last_fa_war
         return war
+    
+    # Uses analytical method – not comparison to other teams in the sim
+    def get_championship_prob(self, team_war):
+        mu, sigma = (team_war + (162 * .294)) / 162, 0.0309  # mean and standard deviation of WL%
+        x = 0  # placeholder
+        win_div = 1 / (1 + math.exp(-(-31 + 53 * x)))
+        wildcard = 1 / (1 + math.exp(-(-54.7 + 100 * x))) - win_div
+
+        first_round = win_div + .5 * wildcard  # assumes 50% chance of winning wildcard game
+
+        world_series = 1 / (1 + math.exp(-(-4.14 + 0.0472 * x)))
+
+        return 0  # placeholder
 
     def record_year(self):
+        tots = self.get_team_war()
         to_add = {
-            'Total WAR': self.get_team_war(),
+            'Total WAR': tots,
             'FA WAR': self.last_fa_war,
             'Sim Prospect WAR': sum([(x.wars[-1] if x.sim_grown else 0) for x in self.roster]),
-            'Max Payroll': self.max_payroll
+            'Max Payroll': self.max_payroll,
+            'Championship Probability': self.get_championship_prob(tots)
         }
         self.records.append(to_add)
 
@@ -221,7 +229,7 @@ class Team:
         for cont in self.contracts:
             try:
                 if cont['payouts'][0]['type'] == "arb" and cont['payouts'][0]['value'] is None:
-                    tots += get_arb_salary(cont['player'].get_war())
+                    tots += get_arb_salary(cont['player'].get_war(), cont['player'].age)
                 else:
                     tots += cont['payouts'][0]['value']
             except:  # Sloppy!
@@ -322,7 +330,7 @@ class Team:
             self.prospects.append(prospect)
 
         # Based on analysis, draft prospects outnumber J2 signings close to 2-1
-        for _ in range(2):
+        for _ in range(3):
             age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
 
             if age < 20:
