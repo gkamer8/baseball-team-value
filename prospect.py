@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 class Prospect:
 
@@ -48,21 +49,68 @@ class Prospect:
         # Markov process with matrix below
         # 1 is MLB, 7 is Dead
         """
+        matrix for new code: 
+
             [,1] [,2] [,3] [,4] [,5] [,6] [,7]
         [1,] 1.00 0.00 0.00 0.00 0.00 0.00  0.0
-        [2,] 0.70 0.15 0.00 0.00 0.00 0.00  0.15
-        [3,] 0.20 0.35 0.30 0.00 0.00 0.00  0.15
-        [4,] 0.05 0.20 0.35 0.25 0.00 0.00  0.15
-        [5,] 0.01 0.05 0.20 0.35 0.24 0.00  0.15
-        [6,] 0.01 0.01 0.05 0.20 0.35 0.23  0.15
+        [2,] 0.50 0.35 0.00 0.00 0.00 0.00  0.15
+        [3,] 0.05 0.50 0.15 0.00 0.00 0.00  0.15
+        [4,] 0.05 0.20 0.50 0.10 0.00 0.00  0.15
+        [5,] 0.01 0.05 0.20 0.49 0.10 0.00  0.15
+        [6,] 0.01 0.01 0.05 0.20 0.48 0.10  0.15
         [7,] 0.00 0.00 0.00 0.00 0.00 0.00  1.0
 
         """
+        
+        """
+        eta_draw = random.random()
+        death = .15  # probability of death
+        if random.random() < death:
+            self.dead = True
+        elif self.eta == 1:
+            if eta_draw < death + .50:
+                self.eta = 0
+        elif self.eta == 2:
+            if eta_draw < death + .05:
+                self.eta = 0
+            elif eta_draw < death + .05 + .50:
+                self.eta = 1
+        elif self.eta == 3:
+            if eta_draw < death + .05:
+                self.eta = 0
+            elif eta_draw < death + .05 + .20:
+                self.eta = 1
+            elif eta_draw < death + .05 + .20 + .50:
+                self.eta = 2 
+        elif self.eta == 4:
+            if eta_draw < death + .01:
+                self.eta = 0
+            elif eta_draw < death + .01 + .05:
+                self.eta = 1
+            elif eta_draw < death + .01 + .05 + .20:
+                self.eta = 2 
+            elif eta_draw < death + .01 + .05 + .20 + .49:
+                self.eta = 3
+        elif self.eta == 5:
+            if eta_draw < death + .01:
+                self.eta = 0
+            elif eta_draw < death + .01 + .01:
+                self.eta = 1
+            elif eta_draw < death + .01 + .01 + .05:
+                self.eta = 2 
+            elif eta_draw < death + .01 + .01 + .05 + .20:
+                self.eta = 3
+            elif eta_draw < death + .01 + .01 + .05 + .48:
+                self.eta = 4
+
+        """
+        # OLD CODE
+
         eta_draw = random.random()
         if self.eta == 1:
             if eta_draw < .70:
                 self.eta = 0
-            elif eta_draw > .85:
+            elif eta_draw > .70 + .15:
                 self.dead = True
         elif self.eta == 2:
             if eta_draw < .20:
@@ -104,3 +152,5 @@ class Prospect:
                 self.eta = 4
             elif eta_draw > .85:
                 self.dead = True
+        
+        

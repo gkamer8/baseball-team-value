@@ -7,7 +7,7 @@ import numpy as np
 from war_wl import get_war_wl_regr
 import json
 import time
-from collections import Counter
+import random
 
 current_year = 2019
 
@@ -80,7 +80,19 @@ def create_team(name):
             # fv -= 5  # NERF Board prospects
 
             pitcher = r[2] == "RHP" or r[2] == "LHP"
+
             eta = int(r[8]) - current_year
+
+            """
+            # targeted FV adjustment
+            if eta <= 2 and random.random() < .90:
+                fv -= random.randint(1, 3) * 5
+
+            # ETA Adjustment
+            if eta <= 2 and random.random() < .75:
+                eta += random.randint(1, 3)
+            """
+
             pros = Prospect(eta, fv, int(round(float(r[10]))), pitcher, name=r[0])
             new_contracts = []
             for contract in team.contracts:
@@ -111,7 +123,7 @@ if __name__ == "__main__":
     def sim_run(filename):
         team_records = dict()
         teams = [create_team(team) for team in team_list]
-        num_years = 30
+        num_years = 15
 
         for team in teams:
             team.run_years(num_years)
@@ -120,11 +132,16 @@ if __name__ == "__main__":
         #     for player in team.contracts:
         #         print(player['player'].name)
         #         print(player['player'].wars)
-        
+
         with open(f"Sim Records/{filename}", "w") as outfile:
             json.dump({'teams': team_records}, outfile)
-    
-    sim_run('v1.json')
+
+    sim_run("v1.json")
+
+    """
+    for i in range(50):
+        sim_run(f'run{i}.json')
+    """
 
     """
 
@@ -173,8 +190,5 @@ if __name__ == "__main__":
     # rangers.run_year()
     # for contract in rangers.contracts:
     #     print(contract['player'].name + ", " + str(contract['player'].wars[-1]))
-    
+
     """
-
-
-

@@ -45,23 +45,30 @@ BATTER_FV_DICT = {
     80: 7
 }
 
+"""
 # PROSPECT ADJUSTMENTS - decrease AVG WAR by 30%
 for key in PITCHER_FV_DICT:
     PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .7
 for key in BATTER_FV_DICT:
-    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .7
+    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .70
+"""
 
+# function based on model from arbitration.r
+def get_arb_salary(war, age, arb_years_remaining=1):
+    new_salary = 16_639_108  # intercept
+    new_salary = new_salary - age * 357_730
+    new_salary = new_salary + war * 1_180_929
 
 # Linear conversion from WAR to arb $, depending on how many years of arb left
 # Values at the moment are arbitrary but should be replaced with empirically correct values
 def get_arb_salary(war, arb_years_remaining=1):
     if arb_years_remaining == 0:
-        dol_per_war = 6_000_000
+        new_salary -= 2_729_314
     elif arb_years_remaining == 1:
-        dol_per_war = 4_500_000
+        new_salary -= 3_840_663
     elif arb_years_remaining >= 2:
-        dol_per_war = 3_000_000
-    return dol_per_war * war
+        new_salary -= 5_810_577
+
 
 
 class Team:
@@ -296,13 +303,13 @@ class Team:
                 fv = 40
 
             # Loosely based off of 2020 figures so far
-            age = \
-            np.random.choice(np.arange(17, 24), 1, p=[6 / 124, 34 / 124, 4 / 124, 8 / 124, 69 / 124, 2 / 124, 1 / 124])[
-                0]
+            # Original probs, in case they change: [6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124]
+            age = np.random.choice(np.arange(17, 24), 1, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])[0]
             # Different ETA rules for college vs. high school
             if age < 20:
                 eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
             else:
+                # In case they change, original probs were: [.06, .13, 0.25, 0.56, 0]
                 eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
 
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " D" + str(r))
