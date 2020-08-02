@@ -8,6 +8,9 @@ mod <- lm(Wtm ~ WARtot, data=total); summary(mod)
   abline(47, 1, col="blue")
 }
 
+hist(mod$residuals)
+sd(mod$residuals)
+
 # ETA vs. real ETA
 
 # Adding in actual ETA based on leaderboards

@@ -5,6 +5,7 @@ import math
 from player import Player
 from prospect import Prospect
 from aging_regression import adjust_prospect_war, predict_start_ratio
+from scipy import integrate
 
 PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
@@ -202,15 +203,32 @@ class Team:
     # Uses analytical method – not comparison to other teams in the sim
     def get_championship_prob(self, team_war):
         mu, sigma = (team_war + (162 * .294)) / 162, 0.0309  # mean and standard deviation of WL%
-        x = 0  # placeholder
-        win_div = 1 / (1 + math.exp(-(-31 + 53 * x)))
-        wildcard = 1 / (1 + math.exp(-(-54.7 + 100 * x))) - win_div
 
-        first_round = win_div + .5 * wildcard  # assumes 50% chance of winning wildcard game
+        # Argument is wl
+        def integrand_wl(x):
+            y = 1 / (sigma * math.sqrt(2 * math.pi)) * math.exp(-.5 * ((x - mu) / sigma) ** 2)
+            return y
 
-        world_series = 1 / (1 + math.exp(-(-4.14 + 0.0472 * x)))
+        # Argument is wl
+        def integrand_div(x):
+            return 1 / (1 + math.exp(-(-31 + 53 * x)))
 
-        return 0  # placeholder
+        # Argument is wl
+        def integrand_ploffs(x):
+            return 1 / (1 + math.exp(-(-54.7 + 100 * x)))
+
+        def integrand_div_round(x):
+            d = integrand_div(x)
+            return d + .5 * (integrand_ploffs(x) - d)
+
+        # Argument is WAR
+        def integrand_ws(x):
+            return 1 / (1 + math.exp(-(-4.14 + 0.0472 * x)))
+
+        ws = integrand_ws(team_war)
+        div_round = integrate.quad(lambda x: integrand_div_round(x) * integrand_wl(x), 0, 1)[0]
+
+        return ws * div_round
 
     def record_year(self):
         tots = self.get_team_war()
