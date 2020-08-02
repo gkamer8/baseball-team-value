@@ -48,12 +48,19 @@ BATTER_FV_DICT = {
 """
 # PROSPECT ADJUSTMENTS - decrease AVG WAR by 30%
 for key in PITCHER_FV_DICT:
-    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .70
+    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .7
 for key in BATTER_FV_DICT:
     BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .70
 """
 
 # function based on model from arbitration.r
+def get_arb_salary(war, age, arb_years_remaining=1):
+    new_salary = 16_639_108  # intercept
+    new_salary = new_salary - age * 357_730
+    new_salary = new_salary + war * 1_180_929
+
+# Linear conversion from WAR to arb $, depending on how many years of arb left
+# Values at the moment are arbitrary but should be replaced with empirically correct values
 def get_arb_salary(war, age, arb_years_remaining=1):
     new_salary = 16_639_108  # intercept
     new_salary = new_salary - age * 357_730
@@ -69,10 +76,9 @@ def get_arb_salary(war, age, arb_years_remaining=1):
     return new_salary
 
 
+
 class Team:
-
     """
-
     A team has, for variables:
     1. name (string) | Name of MLB team
     2. division (int) | MLB division - 6 total
@@ -87,7 +93,6 @@ class Team:
         c) div_place (int)
         d) outcome (string - empty or WC or DS or CS or WS)
     7. max_payroll (float) | Total team payroll
-
     """
 
     def __init__(self, name, division, league, contracts, prospects, max_payroll=None):
@@ -104,7 +109,7 @@ class Team:
 
         # if max_payroll isn't set, it becomes whatever the initial payroll is in the first year - set in run_year()
         self.max_payroll = max_payroll
-        
+
         self.last_fa_war = 0  # For record keeping
 
     def add_prospect(self, new_prospect):
@@ -148,10 +153,13 @@ class Team:
                 new_war = PITCHER_FV_DICT[prospect.fv] if prospect.pitcher else BATTER_FV_DICT[prospect.fv]
                 starts = predict_start_ratio(new_war)
                 new_war = [adjust_prospect_war(new_war, prospect.age, prospect.pitcher) - .25]
-                new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, starts, name=prospect.name, sim_grown=True)
+                new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, starts, name=prospect.name,
+                                    sim_grown=True)
 
                 # Three years of pre-arb, three years of arb
-                new_payouts = [{'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}]
+                new_payouts = [{'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB},
+                               {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'arb', 'value': None},
+                               {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}]
 
                 self.contracts.append({'player': new_player, 'payouts': new_payouts})
             elif not prospect.dead:
@@ -187,7 +195,6 @@ class Team:
             roster.append((player['player'].get_war(), player['player']))
         roster.sort(key=lambda x: x[0], reverse=True)
         backup = roster[5:]
-
         for backup_player in backup:
             backup_player[1].wars[-1] = backup_player[1].wars[-1] * .5  # chop backup player war in half
         """
@@ -201,7 +208,7 @@ class Team:
 
     def record_year(self):
         to_add = {
-            'Total WAR': self.get_team_war(), 
+            'Total WAR': self.get_team_war(),
             'FA WAR': self.last_fa_war,
             'Sim Prospect WAR': sum([(x.wars[-1] if x.sim_grown else 0) for x in self.roster]),
             'Max Payroll': self.max_payroll
@@ -214,7 +221,7 @@ class Team:
         for cont in self.contracts:
             try:
                 if cont['payouts'][0]['type'] == "arb" and cont['payouts'][0]['value'] is None:
-                    tots += get_arb_salary(cont['player'].get_war(), cont['player'].age)
+                    tots += get_arb_salary(cont['player'].get_war())
                 else:
                     tots += cont['payouts'][0]['value']
             except:  # Sloppy!
@@ -230,9 +237,10 @@ class Team:
 
             # TODO Problems:
             # Pre-arb figures should be checked
+            # Arb model should be compared with empirical data
             # Vesting option model should be compared with empirical data
             # Player and team options automatically execute, so this needs to be worked out
-            # Super 2 and other rules should be implemented
+            # Super 2 should be implemented
 
             # Set salary for pre-arb and arb
             # Pre-arb technically uncessary, but just as a check
@@ -240,10 +248,18 @@ class Team:
                 remaining_payouts[0]['value'] = PRE_ARB
             elif remaining_payouts[0]['type'] == 'arb':
                 arb_years_remaining = sum(x['type'] == 'arb' for x in remaining_payouts)
-                remaining_payouts[0]['value'] = min(get_arb_salary(player['player'].get_war(), player['player'].age, arb_years_remaining=arb_years_remaining), PRE_ARB)
+                remaining_payouts[0]['value'] = min(get_arb_salary(player['player'].get_war(), player['player'].age,
+                                                                   arb_years_remaining=arb_years_remaining), PRE_ARB)
             elif remaining_payouts[0]['type'] == 'vesting option':
                 if player['player'].get_war() < VESTING_THRESHOLD:
                     continue
+            elif remaining_payouts[0]['type'] == 'team option':
+                if player['player'].get_war() / remaining_payouts[0]['value'] < DOLLAR_PER_WAR:
+                    continue
+            elif remaining_payouts[0]['type'] == 'mutual option':
+                continue
+
+
             # Player and team options automatically execute
 
             player['payouts'] = remaining_payouts
@@ -262,7 +278,7 @@ class Team:
 
         # Note: this line should be replaced with the real win loss if that's calculated in the sim
         wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
-        
+
         # Based on analysis in prospect_analysis.r
         if wl < .395:
             pick = 1  # Is actually the first or second
@@ -274,7 +290,7 @@ class Team:
             pick = 17  # is actually 17-27
         else:
             pick = 28  # is actually 28-30
-        
+
         # Assumes each team picks 6 players - only looking for top prospects here (simulating Fangraphs' The Board)
         for r in range(6):
             # Pitchers and position players on The Board are about evenly split
@@ -302,13 +318,13 @@ class Team:
                 # In case they change, original probs were: [.06, .13, 0.25, 0.56, 0]
                 eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
 
-            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100_000)) + " D" + str(r))
+            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " D" + str(r))
             self.prospects.append(prospect)
-        
+
         # Based on analysis, draft prospects outnumber J2 signings close to 2-1
         for _ in range(2):
             age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
-            
+
             if age < 20:
                 eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
             else:
@@ -321,17 +337,15 @@ class Team:
         self.age_players()  # Ages players by a year, gets new WAR value
         self.age_prospects()  # Ages prospects, develops by a year, adds to MLB if needed
         self.get_roster()  # Creates the roster based off of the top 40 players
-        # self.add_player_variance()  # Adds in-season variance
+        self.add_player_variance()  # Adds in-season variance
 
-
-        
         if self.max_payroll is None:
             self.max_payroll = self.get_contract_values()
 
         self.record_year()  # Collects WAR for players, prospects, and FA
         self.update_contracts()  # Progresses contracts by a year
         self.add_new_prospects()  # Conducts draft and J2 signings
-    
+
     def run_years(self, num_years):
         for _ in range(num_years):
             self.run_year()

@@ -11,63 +11,70 @@ import random
 
 current_year = 2019
 
+
 war_wl = get_war_wl_regr()
+
+
 def convert_wars_to_probabilities(war):
     return war_wl.predict([[war]])[0][0]
 
-def parse_contract_year(entry):
-    if entry == "":
-        return {'type': 'pre-arb', 'value': None}
-    if "[" in entry:  # DOESN'T PROCESS OPTIONS; TODO
-        return None
-    if entry == "FA":
-        return None
-    if "Arb" in entry:
-        if "$" in entry:
-            num_string = entry[entry.find("$") + 1:entry.find(")")]
-            if "M" in num_string:
-                value = float(num_string[0:num_string.find("M")]) * 1_000_000
-                return {'type': 'arb', 'value': value}
-            elif "k" in num_string:
-                value = float(num_string[0:num_string.find("k")]) * 1_000
-                return {'type': 'arb', 'value': value}
-            else:
-                return {'type': 'arb', 'value': float(num_string)}
-        else:
-            return {'type': 'arb', 'value': None}
-    if '$' in entry:
-        # true if value is in millions, false if thousands
-        millions = 'm' in entry.lower()
-        num = float(entry.lower().replace("$", "").replace("m", "").replace("k", ""))
-        if millions:
-            num = 1_000_000 * num
-        else:
-            num = 1000 * num
-        return {'type': 'salary', 'value': num}
-    if "Pre-Arb" in entry:
-        return {'type': 'pre-arb', 'value': None}
+
+# def parse_contract_year(entry):
+#     if entry == "":
+#         return {'type': 'pre-arb', 'value': None}
+#     if "[FA-*]" in entry or "[*]" in entry or "[Arb-*]" in entry:  # DOESN'T PROCESS OPTIONS; TODO
+#         print(entry)
+#         millions = 'm' in entry.lower()
+#         num = float(entry.lower().replace("$", "").replace("m", "").replace("k", "").replace(" [fa-*]", "").replace(" [*]", "").replace(" [arb-*]", ""))
+#         if millions:
+#             num = 1_000_000 * num
+#         else:
+#             num = 1000 * num
+#         return {'type': 'team option', 'value': num}
+#     if entry == "FA":
+#         return None
+#     if "Arb" in entry:
+#         if "$" in entry:
+#             num_string = entry[entry.find("$") + 1:entry.find(")")]
+#             if "M" in num_string:
+#                 value = float(num_string[0:num_string.find("M")]) * 1_000_000
+#                 return {'type': 'arb', 'value': value}
+#             elif "k" in num_string:
+#                 value = float(num_string[0:num_string.find("k")]) * 1_000
+#                 return {'type': 'arb', 'value': value}
+#             else:
+#                 return {'type': 'arb', 'value': float(num_string)}
+#         else:
+#             return {'type': 'arb', 'value': None}
+#     if '$' in entry:
+#         # true if value is in millions, false if thousands
+#         millions = 'm' in entry.lower()
+#         num = float(entry.lower().replace("$", "").replace("m", "").replace("k", ""))
+#         if millions:
+#             num = 1_000_000 * num
+#         else:
+#             num = 1000 * num
+#         return {'type': 'salary', 'value': num}
+#     if "Pre-Arb" in entry:
+#         return {'type': 'pre-arb', 'value': None}
 
 # Creates a team and fills it with players and prospects
 def create_team(name):
-    df = pd.read_csv("Full Team Data/" + name + "_data.csv", converters={'career': eval})
+    df = pd.read_csv("Full Team Data & Contracts/" + name + "_data.csv", converters={'career': eval, 'contracts': eval})
     team = Team(name, 3, "NL", [], [])
     for i in range(len(df)):
         wars = df.loc[i, 'career']
-        payouts = []
-        for year in df.iloc[i][8:-1]:
-            parsed = parse_contract_year(str(year))
-            if parsed is not None:
-                payouts.append(parsed)
+        payouts = df.loc[i, 'contracts']
         player_name = df.loc[i, 'Name'].split("\\")
         age = df.loc[i, 'Age']
         position = df.loc[i, 'pitcher']
         starts = df.loc[i, 'start_ratio']
         play = Player(player_name[1], wars, age, position, starts, player_name[0])
         team.add_contract(play, payouts)
-
     with open('prospect_data/' + name + '-board-data.csv') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)  # skips header line
+
         for r in reader:
             fv = int(r[7].replace("+", ""))  # future value
             # fv -= 5  # NERF Board prospects
@@ -80,7 +87,7 @@ def create_team(name):
             # targeted FV adjustment
             if eta <= 2 and random.random() < .90:
                 fv -= random.randint(1, 3) * 5
-            
+
             # ETA Adjustment
             if eta <= 2 and random.random() < .75:
                 eta += random.randint(1, 3)
@@ -93,7 +100,6 @@ def create_team(name):
                     new_contracts.append(contract)
             team.contracts = new_contracts
             team.add_prospect(pros)
-
     return team
 
 team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 'reds', 'indians', 'rockies',
@@ -117,7 +123,7 @@ if __name__ == "__main__":
     def sim_run(filename):
         team_records = dict()
         teams = [create_team(team) for team in team_list]
-        num_years = 15
+        num_years = 25
 
         for team in teams:
             team.run_years(num_years)
@@ -126,17 +132,18 @@ if __name__ == "__main__":
         #     for player in team.contracts:
         #         print(player['player'].name)
         #         print(player['player'].wars)
-        
+
         with open(f"Sim Records/{filename}", "w") as outfile:
             json.dump({'teams': team_records}, outfile)
-    
+
     sim_run("v1.json")
 
-    """
-    for i in range(50):
-        sim_run(f'run{i}.json')
-    """
 
+    """
+    for i in range(10):
+        sim_run(f'run{i}.json')
+
+    """
     """
 
     JARED'S CODE:
@@ -184,8 +191,5 @@ if __name__ == "__main__":
     # rangers.run_year()
     # for contract in rangers.contracts:
     #     print(contract['player'].name + ", " + str(contract['player'].wars[-1]))
-    
+
     """
-
-
-
