@@ -61,13 +61,19 @@ def get_arb_salary(war, age, arb_years_remaining=1):
 
 # Linear conversion from WAR to arb $, depending on how many years of arb left
 # Values at the moment are arbitrary but should be replaced with empirically correct values
-def get_arb_salary(war, arb_years_remaining=1):
+def get_arb_salary(war, age, arb_years_remaining=1):
+    new_salary = 16_639_108  # intercept
+    new_salary = new_salary - age * 357_730
+    new_salary = new_salary + war * 1_180_929
+
     if arb_years_remaining == 0:
         new_salary -= 2_729_314
     elif arb_years_remaining == 1:
         new_salary -= 3_840_663
     elif arb_years_remaining >= 2:
         new_salary -= 5_810_577
+
+    return new_salary
 
 
 
@@ -242,15 +248,15 @@ class Team:
                 remaining_payouts[0]['value'] = PRE_ARB
             elif remaining_payouts[0]['type'] == 'arb':
                 arb_years_remaining = sum(x['type'] == 'arb' for x in remaining_payouts)
-                remaining_payouts[0]['value'] = min(
-                    get_arb_salary(player['player'].get_war(), arb_years_remaining=arb_years_remaining), PRE_ARB)
+                remaining_payouts[0]['value'] = min(get_arb_salary(player['player'].get_war(), player['player'].age,
+                                                                   arb_years_remaining=arb_years_remaining), PRE_ARB)
             elif remaining_payouts[0]['type'] == 'vesting option':
                 if player['player'].get_war() < VESTING_THRESHOLD:
                     continue
             elif remaining_payouts[0]['type'] == 'team option':
                 if player['player'].get_war() / remaining_payouts[0]['value'] < DOLLAR_PER_WAR:
                     continue
-            elif remaining_payouts[0]['type'] == 'team option':
+            elif remaining_payouts[0]['type'] == 'mutual option':
                 continue
 
 

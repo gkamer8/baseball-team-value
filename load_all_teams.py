@@ -123,7 +123,7 @@ if __name__ == "__main__":
     def sim_run(filename):
         team_records = dict()
         teams = [create_team(team) for team in team_list]
-        num_years = 15
+        num_years = 25
 
         for team in teams:
             team.run_years(num_years)
@@ -138,11 +138,12 @@ if __name__ == "__main__":
 
     sim_run("v1.json")
 
-    """
-    for i in range(50):
-        sim_run(f'run{i}.json')
-    """
 
+    """
+    for i in range(10):
+        sim_run(f'run{i}.json')
+
+    """
     """
 
     JARED'S CODE:
