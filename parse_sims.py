@@ -94,6 +94,24 @@ def average_many_total_championships(file_datas):
     
     return new
 
+# Looks at multiple sims and gets an average of championship probability for each team
+def get_final_numbers(file_datas, discount_rate):
+    new = dict()
+    num_files = len(file_datas)
+    for f in file_datas:
+        for team in f['teams']:
+            stat = 0
+            years = f['teams'][team]
+            for year in range(len(years)):
+                stat += years[year]['Championship Probability'] / (1 + discount_rate) ** year
+            if team not in new:
+                new[team] = stat
+            else:
+                new[team] = new[team] + stat
+    for team in new:
+        new[team] = new[team] / num_files
+    return new
+
 if __name__ == "__main__":
     
     """
@@ -109,18 +127,26 @@ if __name__ == "__main__":
     war_sources = get_war_by_source_percentage_by_year(sim)
     for year in wars:
         print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
-    
-    print("\nAverages:")
+
+    print("\nAverage WL:")
     all_wls = average_many_wls([json.load(open(f"Sim Records/run{x}.json")) for x in range(10)])
     for year in all_wls:
         print(f"{year + 2020}: {all_wls[year]:0.3f}")
-    """
 
     print("\nAverage Total Champs:")
     champs = average_many_total_championships([json.load(open(f"Sim Records/run{x}.json")) for x in range(10)])
     for year in champs:
         print(f"{year + 2020}: {champs[year]:0.3f}")
+    """
 
+    fs = [json.load(open(f"Sim Records/run{x}.json")) for x in range(10)]
+    probs = get_final_numbers(fs, .25)
+    probs = {k: v for k, v in sorted(probs.items(), key=lambda item: item[1], reverse=True)}
+    fhand = open('results.csv', 'w')
+    fhand.write("Team,Value\n")
+    for team in probs:
+        fhand.write(f"{team.capitalize()},{probs[team]:0.3}\n")
+    fhand.close()
     
     
 
