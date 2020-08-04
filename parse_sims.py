@@ -170,6 +170,8 @@ if __name__ == "__main__":
     
     print_average_wl([f'Sim Records/run{x}.json' for x in range(10)])
     print_average_sources([f'Sim Records/run{x}.json' for x in range(10)])
+
+    print_average_championships([f'Sim Records/run{x}.json' for x in range(10)])
     
 
 

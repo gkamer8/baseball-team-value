@@ -10,7 +10,7 @@ from scipy import integrate
 PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-DOLLAR_PER_WAR = 9_500_000  # market value for WAR
+DOLLAR_PER_WAR = 9_100_000  # market value for WAR
 # ^^^ based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
 # Based on Fangraphs FV to average WAR values
@@ -47,11 +47,13 @@ BATTER_FV_DICT = {
     80: 7
 }
 
-# PROSPECT ADJUSTMENTS - decrease AVG WAR by 25%
+"""
+# PROSPECT ADJUSTMENTS
 for key in PITCHER_FV_DICT:
-    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .75
+    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .80
 for key in BATTER_FV_DICT:
-    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .75
+    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .80
+"""
 
 # function based on model from arbitration.r
 def get_arb_salary(war, age, arb_years_remaining=1):

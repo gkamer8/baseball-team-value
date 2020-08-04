@@ -35,25 +35,15 @@ def create_team(name):
 
         for r in reader:
             fv = int(r[7].replace("+", ""))  # future value
-            # fv -= 5  # NERF Board prospects
             pitcher = r[2] == "RHP" or r[2] == "LHP"
             eta = int(r[8]) - current_year
-
-            """
-            # targeted FV adjustment
-            if eta >= 3 and random.random() < .8:
-                fv -= random.randint(1, 3) * 5
-            # ETA Adjustment
-            if eta <= 2 and random.random() < .50:
-                eta += random.randint(1, 3)
-            """
 
             pros = Prospect(eta, fv, int(round(float(r[10]))), pitcher, name=r[0])
             new_contracts = []
             for contract in team.contracts:
                 if contract['player'].name != pros.name:
                     new_contracts.append(contract)
-            team.contracts = new_contracts[:32]
+            team.contracts = new_contracts
             team.add_prospect(pros)
     return team
 
