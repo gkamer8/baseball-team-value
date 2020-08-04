@@ -112,6 +112,61 @@ def get_final_numbers(file_datas, discount_rate):
         new[team] = new[team] / num_files
     return new
 
+# Exports csv with final team value numbers
+def export_team_values(fnames, outfile='results.csv', discount=0.25):
+
+    fs = [json.load(open(fname)) for fname in fnames]
+    probs = get_final_numbers(fs, discount)
+    probs = {k: v for k, v in sorted(probs.items(), key=lambda item: item[1], reverse=True)}
+    fhand = open(outfile, 'w')
+    fhand.write("Team,Value\n")
+    for team in probs:
+        fhand.write(f"{team.capitalize()},{probs[team]:0.3}\n")
+    fhand.close()
+
+def print_average_championships(fnames):
+    print("\nAverage Total Champs:")
+    champs = average_many_total_championships([json.load(open(fname)) for fname in fnames])
+    for year in champs:
+        print(f"{year + 2020}: {champs[year]:0.3f}")
+
+def print_average_wl(fnames):
+    print("\nAverage WL:")
+    all_wls = average_many_wls([json.load(open(fname)) for fname in fnames])
+    for year in all_wls:
+        print(f"{year + 2020}: {all_wls[year]:0.3f}")
+
+def average_many_sources(file_datas):
+    sources = dict()
+    num_files = len(file_datas)
+    for data in file_datas:
+        war_sources = get_war_by_source_percentage_by_year(data)
+        for key in war_sources:
+            if key in sources:
+                sources[key]['FA'] += war_sources[key]['FA']
+                sources[key]['Prospects'] += war_sources[key]['Prospects']
+                sources[key]['Contracts'] += war_sources[key]['Contracts']
+            else:
+                sources[key] = dict(
+                            {
+                                'FA': war_sources[key]['FA'],
+                                'Prospects':  war_sources[key]['Prospects'],
+                                'Contracts': war_sources[key]['Contracts']
+                            })
+
+    for key in sources:
+        sources[key]['FA'] = sources[key]['FA'] / num_files
+        sources[key]['Prospects'] = sources[key]['Prospects'] / num_files
+        sources[key]['Contracts'] = sources[key]['Contracts'] / num_files
+    return sources
+
+def print_average_sources(fnames):
+    print("\nAverage Sources:")
+    war_sources = average_many_sources([json.load(open(fname)) for fname in fnames])
+    for year in war_sources:
+        print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
+
+
 if __name__ == "__main__":
     
     """
@@ -128,26 +183,10 @@ if __name__ == "__main__":
     for year in wars:
         print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
 
-    print("\nAverage WL:")
-    all_wls = average_many_wls([json.load(open(f"Sim Records/run{x}.json")) for x in range(10)])
-    for year in all_wls:
-        print(f"{year + 2020}: {all_wls[year]:0.3f}")
-
-    print("\nAverage Total Champs:")
-    champs = average_many_total_championships([json.load(open(f"Sim Records/run{x}.json")) for x in range(10)])
-    for year in champs:
-        print(f"{year + 2020}: {champs[year]:0.3f}")
     """
 
-    fs = [json.load(open(f"Sim Records/run{x}.json")) for x in range(10)]
-    probs = get_final_numbers(fs, .25)
-    probs = {k: v for k, v in sorted(probs.items(), key=lambda item: item[1], reverse=True)}
-    fhand = open('results.csv', 'w')
-    fhand.write("Team,Value\n")
-    for team in probs:
-        fhand.write(f"{team.capitalize()},{probs[team]:0.3}\n")
-    fhand.close()
-    
+    print_average_wl([f'Sim Records/run{x}.json' for x in range(15)])
+    print_average_sources([f'Sim Records/run{x}.json' for x in range(15)])
     
 
 

@@ -370,6 +370,7 @@ class Team:
 
         self.record_year()  # Collects WAR for players, prospects, and FA
         self.update_contracts()  # Progresses contracts by a year
+
         self.add_new_prospects()  # Conducts draft and J2 signings
 
     def run_years(self, num_years):

@@ -89,6 +89,6 @@ if __name__ == "__main__":
 
     # sim_run("v1.json")
 
-    for i in range(10):
+    for i in range(15):
         sim_run(f'run{i}.json')
 
