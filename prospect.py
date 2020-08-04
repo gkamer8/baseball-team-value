@@ -47,72 +47,35 @@ class Prospect:
 
         # Evolve ETA
         # Markov process with matrix below
-        # 1 is MLB, 7 is Dead
-        """
-        matrix for new code: 
 
-            [,1] [,2] [,3] [,4] [,5] [,6] [,7]
-        [1,] 1.00 0.00 0.00 0.00 0.00 0.00  0.0
-        [2,] 0.50 0.35 0.00 0.00 0.00 0.00  0.15
-        [3,] 0.05 0.50 0.15 0.00 0.00 0.00  0.15
-        [4,] 0.05 0.20 0.50 0.10 0.00 0.00  0.15
-        [5,] 0.01 0.05 0.20 0.49 0.10 0.00  0.15
-        [6,] 0.01 0.01 0.05 0.20 0.48 0.10  0.15
-        [7,] 0.00 0.00 0.00 0.00 0.00 0.00  1.0
+        eta_matrix = [[] for _ in range(8)]
+        #                MLB     1       2       3       4       5       6       DEAD
+        eta_matrix[0] = [1.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00]  # MLB
+        eta_matrix[1] = [0.75,   0.15,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 1 year out
+        eta_matrix[2] = [0.20,   0.40,   0.30,   0.00,   0.00,   0.00,   0.00,   0.10]  # 2 years out
+        eta_matrix[3] = [0.05,   0.25,   0.45,   0.15,   0.00,   0.00,   0.00,   0.10]  # 3 years out
+        eta_matrix[4] = [0.00,   0.05,   0.30,   0.40,   0.15,   0.00,   0.00,   0.10]  # 4 years out
+        eta_matrix[5] = [0.00,   0.00,   0.05,   0.30,   0.40,   0.15,   0.00,   0.10]  # 5 years out
+        eta_matrix[6] = [0.00,   0.00,   0.00,   0.05,   0.30,   0.40,   0.15,   0.10]  # 6 years out
+        eta_matrix[7] = [0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   1.00]  # Dead
 
-        """
-        
-        """
-        eta_draw = random.random()
-        death = .15  # probability of death
-        if random.random() < death:
+        # Make sure rows sum to 1
+        for i in range(len(eta_matrix)):
+            assert round(sum(eta_matrix[i]), 5) == 1, f"Eta matrix {i} doesn't sum to one."  # round is because of an error where the sum was .999999999
+
+        self.eta = np.random.choice(8, 1, p=eta_matrix[self.eta])[0]
+        if self.eta == 7:
             self.dead = True
-        elif self.eta == 1:
-            if eta_draw < death + .50:
-                self.eta = 0
-        elif self.eta == 2:
-            if eta_draw < death + .05:
-                self.eta = 0
-            elif eta_draw < death + .05 + .50:
-                self.eta = 1
-        elif self.eta == 3:
-            if eta_draw < death + .05:
-                self.eta = 0
-            elif eta_draw < death + .05 + .20:
-                self.eta = 1
-            elif eta_draw < death + .05 + .20 + .50:
-                self.eta = 2 
-        elif self.eta == 4:
-            if eta_draw < death + .01:
-                self.eta = 0
-            elif eta_draw < death + .01 + .05:
-                self.eta = 1
-            elif eta_draw < death + .01 + .05 + .20:
-                self.eta = 2 
-            elif eta_draw < death + .01 + .05 + .20 + .49:
-                self.eta = 3
-        elif self.eta == 5:
-            if eta_draw < death + .01:
-                self.eta = 0
-            elif eta_draw < death + .01 + .01:
-                self.eta = 1
-            elif eta_draw < death + .01 + .01 + .05:
-                self.eta = 2 
-            elif eta_draw < death + .01 + .01 + .05 + .20:
-                self.eta = 3
-            elif eta_draw < death + .01 + .01 + .05 + .48:
-                self.eta = 4
 
         """
         # OLD CODE
-
         eta_draw = random.random()
-        if self.eta == 1:
+        if self.eta == 1:  # 70% MLB, 15% stay, 15% dead
             if eta_draw < .70:
                 self.eta = 0
             elif eta_draw > .70 + .15:
                 self.dead = True
-        elif self.eta == 2:
+        elif self.eta == 2:  # 20% MLB, 10% 
             if eta_draw < .20:
                 self.eta = 0
             elif eta_draw < .25 + .35:
@@ -152,5 +115,6 @@ class Prospect:
                 self.eta = 4
             elif eta_draw > .85:
                 self.dead = True
+        """
         
         

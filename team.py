@@ -1,14 +1,16 @@
 import random
 import string
 import numpy as np
+import math
 from player import Player
 from prospect import Prospect
 from aging_regression import adjust_prospect_war, predict_start_ratio
+from scipy import integrate
 
 PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-DOLLAR_PER_WAR = 10_000_000  # market value for WAR
+DOLLAR_PER_WAR = 9_100_000  # market value for WAR
 # ^^^ based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
 # Based on Fangraphs FV to average WAR values
@@ -46,21 +48,14 @@ BATTER_FV_DICT = {
 }
 
 """
-# PROSPECT ADJUSTMENTS - decrease AVG WAR by 30%
+# PROSPECT ADJUSTMENTS
 for key in PITCHER_FV_DICT:
-    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .7
+    PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .80
 for key in BATTER_FV_DICT:
-    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .70
+    BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .80
 """
 
 # function based on model from arbitration.r
-def get_arb_salary(war, age, arb_years_remaining=1):
-    new_salary = 16_639_108  # intercept
-    new_salary = new_salary - age * 357_730
-    new_salary = new_salary + war * 1_180_929
-
-# Linear conversion from WAR to arb $, depending on how many years of arb left
-# Values at the moment are arbitrary but should be replaced with empirically correct values
 def get_arb_salary(war, age, arb_years_remaining=1):
     new_salary = 16_639_108  # intercept
     new_salary = new_salary - age * 357_730
@@ -74,8 +69,7 @@ def get_arb_salary(war, age, arb_years_remaining=1):
         new_salary -= 5_810_577
 
     return new_salary
-
-
+    
 
 class Team:
     """
@@ -205,13 +199,45 @@ class Team:
         self.last_fa_war = self.get_fa_war()
         war += self.last_fa_war
         return war
+    
+    # Uses analytical method – not comparison to other teams in the sim
+    def get_championship_prob(self, team_war):
+        mu, sigma = (team_war + (162 * .294)) / 162, 0.0309  # mean and standard deviation of WL%
+
+        # Argument is wl
+        def integrand_wl(x):
+            y = 1 / (sigma * math.sqrt(2 * math.pi)) * math.exp(-.5 * ((x - mu) / sigma) ** 2)
+            return y
+
+        # Argument is wl
+        def integrand_div(x):
+            return 1 / (1 + math.exp(-(-31 + 53 * x)))
+
+        # Argument is wl
+        def integrand_ploffs(x):
+            return 1 / (1 + math.exp(-(-54.7 + 100 * x)))
+
+        def integrand_div_round(x):
+            d = integrand_div(x)
+            return d + .5 * (integrand_ploffs(x) - d)
+
+        # Argument is WAR
+        def integrand_ws(x):
+            return 1 / (1 + math.exp(-(-4.14 + 0.0472 * x)))
+
+        ws = integrand_ws(team_war)
+        div_round = integrate.quad(lambda x: integrand_div_round(x) * integrand_wl(x), 0, 1)[0]
+
+        return ws * div_round
 
     def record_year(self):
+        tots = self.get_team_war()
         to_add = {
-            'Total WAR': self.get_team_war(),
+            'Total WAR': tots,
             'FA WAR': self.last_fa_war,
             'Sim Prospect WAR': sum([(x.wars[-1] if x.sim_grown else 0) for x in self.roster]),
-            'Max Payroll': self.max_payroll
+            'Max Payroll': self.max_payroll,
+            'Championship Probability': self.get_championship_prob(tots)
         }
         self.records.append(to_add)
 
@@ -221,7 +247,7 @@ class Team:
         for cont in self.contracts:
             try:
                 if cont['payouts'][0]['type'] == "arb" and cont['payouts'][0]['value'] is None:
-                    tots += get_arb_salary(cont['player'].get_war())
+                    tots += get_arb_salary(cont['player'].get_war(), cont['player'].age)
                 else:
                     tots += cont['payouts'][0]['value']
             except:  # Sloppy!
@@ -313,22 +339,23 @@ class Team:
             age = np.random.choice(np.arange(17, 24), 1, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])[0]
             # Different ETA rules for college vs. high school
             if age < 20:
-                eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.0, .005, .005, .05, 0.09, 0.85])[0]
             else:
-                # In case they change, original probs were: [.06, .13, 0.25, 0.56, 0]
-                eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
+                # Original probs were: [.06, .13, 0.25, 0.56, 0]
+                # R for 2020: 0.01612903 0.02419355 0.08064516 0.17741935 0.38709677 0.31451613 
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.015, .025, 0.08, 0.18, .39, .31])[0]
 
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " D" + str(r))
             self.prospects.append(prospect)
 
         # Based on analysis, draft prospects outnumber J2 signings close to 2-1
-        for _ in range(2):
+        for _ in range(3):
             age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
 
             if age < 20:
-                eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.0, .005, .005, .05, 0.09, 0.85])[0]
             else:
-                eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.015, .025, 0.08, 0.18, .39, .31])[0]
 
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " J2")
             self.prospects.append(prospect)
@@ -344,6 +371,7 @@ class Team:
 
         self.record_year()  # Collects WAR for players, prospects, and FA
         self.update_contracts()  # Progresses contracts by a year
+
         self.add_new_prospects()  # Conducts draft and J2 signings
 
     def run_years(self, num_years):
