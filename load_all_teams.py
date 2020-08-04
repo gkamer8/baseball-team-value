@@ -63,14 +63,16 @@ def create_team(name):
     df = pd.read_csv("Full Team Data & Contracts/" + name + "_data.csv", converters={'career': eval, 'contracts': eval})
     team = Team(name, 3, "NL", [], [])
     for i in range(len(df)):
-        wars = df.loc[i, 'career']
-        payouts = df.loc[i, 'contracts']
-        player_name = df.loc[i, 'Name'].split("\\")
-        age = df.loc[i, 'Age']
-        position = df.loc[i, 'pitcher']
-        starts = df.loc[i, 'start_ratio']
-        play = Player(player_name[1], wars, age, position, starts, player_name[0])
-        team.add_contract(play, payouts)
+        srv = df.loc[i, 'SrvTm']
+        if float(srv) > 1:
+            wars = df.loc[i, 'career']
+            payouts = df.loc[i, 'contracts']
+            player_name = df.loc[i, 'Name'].split("\\")
+            age = df.loc[i, 'Age']
+            position = df.loc[i, 'pitcher']
+            starts = df.loc[i, 'start_ratio']
+            play = Player(player_name[1], wars, age, position, starts, player_name[0])
+            team.add_contract(play, payouts)
     with open('prospect_data/' + name + '-board-data.csv') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)  # skips header line
