@@ -166,27 +166,10 @@ def print_average_sources(fnames):
     for year in war_sources:
         print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
 
-
 if __name__ == "__main__":
     
-    """
-    filename = "Sim Records/v1.json"
-    sim = json.load(open(filename))
-
-    print("League WL by Year:")
-    wars = get_avg_wl_by_year(sim)
-    for year in wars:
-        print(f"{year + 2020}: {wars[year]:0.3f}")
-    
-    print("\nLeague WAR Sources by Year")
-    war_sources = get_war_by_source_percentage_by_year(sim)
-    for year in wars:
-        print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
-
-    """
-
-    print_average_wl([f'Sim Records/run{x}.json' for x in range(15)])
-    print_average_sources([f'Sim Records/run{x}.json' for x in range(15)])
+    print_average_wl([f'Sim Records/run{x}.json' for x in range(10)])
+    print_average_sources([f'Sim Records/run{x}.json' for x in range(10)])
     
 
 

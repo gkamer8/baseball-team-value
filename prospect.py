@@ -48,22 +48,23 @@ class Prospect:
         # Evolve ETA
         # Markov process with matrix below
 
-        eta_matrix = [[] for _ in range(7)]
-        #                MLB     1       2       3       4       5       DEAD
-        eta_matrix[0] = [1.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00]  # MLB
-        eta_matrix[1] = [0.70,   0.15,   0.00,   0.00,   0.00,   0.00,   0.15]  # 1 year out
-        eta_matrix[2] = [0.20,   0.35,   0.30,   0.00,   0.00,   0.00,   0.15]  # 2 years out
-        eta_matrix[3] = [0.05,   0.25,   0.35,   0.20,   0.00,   0.00,   0.15]  # 3 years out
-        eta_matrix[4] = [0.00,   0.05,   0.20,   0.35,   0.25,   0.00,   0.15]  # 4 years out
-        eta_matrix[5] = [0.00,   0.00,   0.05,   0.20,   0.35,   0.25,   0.15]  # 5 years out
-        eta_matrix[6] = [0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   1.00]  # Dead
+        eta_matrix = [[] for _ in range(8)]
+        #                MLB     1       2       3       4       5       6       DEAD
+        eta_matrix[0] = [1.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00]  # MLB
+        eta_matrix[1] = [0.75,   0.15,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 1 year out
+        eta_matrix[2] = [0.20,   0.40,   0.30,   0.00,   0.00,   0.00,   0.00,   0.10]  # 2 years out
+        eta_matrix[3] = [0.05,   0.25,   0.45,   0.15,   0.00,   0.00,   0.00,   0.10]  # 3 years out
+        eta_matrix[4] = [0.00,   0.05,   0.30,   0.40,   0.15,   0.00,   0.00,   0.10]  # 4 years out
+        eta_matrix[5] = [0.00,   0.00,   0.05,   0.30,   0.40,   0.15,   0.00,   0.10]  # 5 years out
+        eta_matrix[6] = [0.00,   0.00,   0.00,   0.05,   0.30,   0.40,   0.15,   0.10]  # 6 years out
+        eta_matrix[7] = [0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   1.00]  # Dead
 
         # Make sure rows sum to 1
         for i in range(len(eta_matrix)):
             assert round(sum(eta_matrix[i]), 5) == 1, f"Eta matrix {i} doesn't sum to one."  # round is because of an error where the sum was .999999999
 
-        self.eta = np.random.choice(7, 1, p=eta_matrix[self.eta])[0]
-        if self.eta == 6:
+        self.eta = np.random.choice(8, 1, p=eta_matrix[self.eta])[0]
+        if self.eta == 7:
             self.dead = True
 
         """

@@ -53,7 +53,7 @@ def create_team(name):
             for contract in team.contracts:
                 if contract['player'].name != pros.name:
                     new_contracts.append(contract)
-            team.contracts = new_contracts
+            team.contracts = new_contracts[:32]
             team.add_prospect(pros)
     return team
 
@@ -89,6 +89,6 @@ if __name__ == "__main__":
 
     # sim_run("v1.json")
 
-    for i in range(15):
+    for i in range(10):
         sim_run(f'run{i}.json')
 

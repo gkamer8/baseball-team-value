@@ -10,7 +10,7 @@ from scipy import integrate
 PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-DOLLAR_PER_WAR = 10_000_000  # market value for WAR
+DOLLAR_PER_WAR = 9_500_000  # market value for WAR
 # ^^^ based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
 # Based on Fangraphs FV to average WAR values
@@ -47,13 +47,11 @@ BATTER_FV_DICT = {
     80: 7
 }
 
-"""
 # PROSPECT ADJUSTMENTS - decrease AVG WAR by 25%
 for key in PITCHER_FV_DICT:
     PITCHER_FV_DICT[key] = PITCHER_FV_DICT[key] * .75
 for key in BATTER_FV_DICT:
     BATTER_FV_DICT[key] = BATTER_FV_DICT[key] * .75
-"""
 
 # function based on model from arbitration.r
 def get_arb_salary(war, age, arb_years_remaining=1):
@@ -339,10 +337,11 @@ class Team:
             age = np.random.choice(np.arange(17, 24), 1, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])[0]
             # Different ETA rules for college vs. high school
             if age < 20:
-                eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.0, .005, .005, .05, 0.09, 0.85])[0]
             else:
-                # In case they change, original probs were: [.06, .13, 0.25, 0.56, 0]
-                eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
+                # Original probs were: [.06, .13, 0.25, 0.56, 0]
+                # R for 2020: 0.01612903 0.02419355 0.08064516 0.17741935 0.38709677 0.31451613 
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.015, .025, 0.08, 0.18, .39, .31])[0]
 
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " D" + str(r))
             self.prospects.append(prospect)
@@ -352,9 +351,9 @@ class Team:
             age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
 
             if age < 20:
-                eta = np.random.choice(np.arange(1, 6), 1, p=[.005, .005, .05, 0.09, 0.85])[0]
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.0, .005, .005, .05, 0.09, 0.85])[0]
             else:
-                eta = np.random.choice(np.arange(1, 6), 1, p=[.06, .13, 0.25, 0.56, 0])[0]
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.015, .025, 0.08, 0.18, .39, .31])[0]
 
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " J2")
             self.prospects.append(prospect)
