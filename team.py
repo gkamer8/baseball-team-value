@@ -131,10 +131,10 @@ class Team:
             player['player'].progress()
 
     def add_player_variance(self):
-        for player in self.roster:
-            player.add_variance()
-        for player in self.backups:
-            player.backup()
+        for player in self.contracts:
+            player['player'].add_variance()
+        # for player in self.backups:
+        #     player.backup()
 
     def age_prospects(self):
         # Replaces prospect list with new list, excluding new MLB players and dead prospects
@@ -167,18 +167,18 @@ class Team:
         fa_std_dev = fa_mu / 4  # 4 is arbitrary - goal is to scale with the mu WAR
         return np.random.normal(fa_mu, abs(fa_std_dev), 1)[0]
 
-    def get_roster(self):
-        roster = []
-        for player in self.contracts:
-            roster.append((player['player'].get_war(), player['player']))
-        roster.sort(key=lambda x: x[0], reverse=True)
-        starters = roster[:26]
-        backups = roster[26:]
-        self.roster = list(zip(*starters))[1]
-        if len(backups) > 0:
-            self.backups = list(zip(*backups))[1]
-        else:
-            self.backups = []
+    # def get_roster(self):
+    #     roster = []
+    #     for player in self.contracts:
+    #         roster.append((player['player'].get_war(), player['player']))
+    #     roster.sort(key=lambda x: x[0], reverse=True)
+    #     starters = roster[:26]
+    #     backups = roster[26:]
+    #     self.roster = list(zip(*starters))[1]
+    #     if len(backups) > 0:
+    #         self.backups = list(zip(*backups))[1]
+    #     else:
+    #         self.backups = []
 
     def get_team_war(self):
 
@@ -194,8 +194,8 @@ class Team:
         """
 
         war = 0
-        for player in self.roster:
-            war += player.get_war()
+        for player in self.contracts:
+            war += player['player'].get_war()
         self.last_fa_war = self.get_fa_war()
         war += self.last_fa_war
         return war
@@ -363,7 +363,7 @@ class Team:
     def run_year(self):
         self.age_players()  # Ages players by a year, gets new WAR value
         self.age_prospects()  # Ages prospects, develops by a year, adds to MLB if needed
-        self.get_roster()  # Creates the roster based off of the top 40 players
+        # self.get_roster()  # Creates the roster based off of the top 40 players
         self.add_player_variance()  # Adds in-season variance
 
         if self.max_payroll is None:
