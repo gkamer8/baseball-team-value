@@ -96,7 +96,6 @@ class Team:
 
         self.contracts = contracts
         self.prospects = prospects
-        self.roster = []
         self.backups = []
 
         self.records = []
@@ -164,21 +163,8 @@ class Team:
         # note: fa_allocation could be negative!
         fa_allocation = self.max_payroll - self.get_contract_values()
         fa_mu = fa_allocation / DOLLAR_PER_WAR
-        fa_std_dev = fa_mu / 4  # 4 is arbitrary - goal is to scale with the mu WAR
+        fa_std_dev = fa_mu / 1.8  # the constant is arbitrary - goal is to scale with the mu WAR
         return np.random.normal(fa_mu, abs(fa_std_dev), 1)[0]
-
-    # def get_roster(self):
-    #     roster = []
-    #     for player in self.contracts:
-    #         roster.append((player['player'].get_war(), player['player']))
-    #     roster.sort(key=lambda x: x[0], reverse=True)
-    #     starters = roster[:26]
-    #     backups = roster[26:]
-    #     self.roster = list(zip(*starters))[1]
-    #     if len(backups) > 0:
-    #         self.backups = list(zip(*backups))[1]
-    #     else:
-    #         self.backups = []
 
     def get_team_war(self):
 
@@ -235,7 +221,7 @@ class Team:
         to_add = {
             'Total WAR': tots,
             'FA WAR': self.last_fa_war,
-            'Sim Prospect WAR': sum([(x.wars[-1] if x.sim_grown else 0) for x in self.roster]),
+            'Sim Prospect WAR': sum([(x['player'].wars[-1] if x['player'].sim_grown else 0) for x in self.contracts]),
             'Max Payroll': self.max_payroll,
             'Championship Probability': self.get_championship_prob(tots)
         }
@@ -294,13 +280,29 @@ class Team:
 
         self.contracts = new_contracts
 
-    # Adds new prospects from draft and J2 – only top prospects
-    def add_new_prospects(self):
+    # Add july 2nd signings
+    def add_ifas(self, num_signings):
+        for _ in range(num_signings):
+            age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
+            if age < 20:
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.0, .005, .005, .05, 0.09, 0.85])[0]
+            else:
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.015, .025, 0.08, 0.18, .39, .31])[0]
+            position = random.random() > .5
+            # Based on The Board distribution
+            fv = 5 * np.random.choice(np.arange(7, 14), 1, p=[.31, .50, 0.10, 0.06, .015, .01, .005])[0]
+            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " J2")
+            self.prospects.append(prospect)
+
+    def add_draft_picks(self, num_picks):
         # Values inferred from: https://blogs.fangraphs.com/an-update-to-prospect-valuation/
         # and https://academicworks.cuny.edu/cgi/viewcontent.cgi?article=1759&context=cc_etds_theses
 
-        # Go through draft:
-        most_recent_war = self.records[-1]['Total WAR']
+        try:
+            most_recent_war = self.records[-1]['Total WAR']
+        except IndexError:
+            # Probably because you're adding fake draft prospects before sim
+            most_recent_war = 35  # average team
 
         # Note: this line should be replaced with the real win loss if that's calculated in the sim
         wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
@@ -317,9 +319,8 @@ class Team:
         else:
             pick = 28  # is actually 28-30
 
-        # Assumes each team picks 6 players - only looking for top prospects here (simulating Fangraphs' The Board)
-        for r in range(6):
-            # Pitchers and position players on The Board are about evenly split
+        for r in range(num_picks):
+
             position = random.random() > .5
 
             pick_num = pick * r
@@ -335,35 +336,28 @@ class Team:
                 fv = 40
 
             # Loosely based off of 2020 figures so far
-            # Original probs, in case they change: [6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124]
             age = np.random.choice(np.arange(17, 24), 1, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])[0]
             # Different ETA rules for college vs. high school
             if age < 20:
                 eta = np.random.choice(np.arange(1, 7), 1, p=[.0, .005, .005, .05, 0.09, 0.85])[0]
             else:
-                # Original probs were: [.06, .13, 0.25, 0.56, 0]
-                # R for 2020: 0.01612903 0.02419355 0.08064516 0.17741935 0.38709677 0.31451613 
                 eta = np.random.choice(np.arange(1, 7), 1, p=[.015, .025, 0.08, 0.18, .39, .31])[0]
 
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " D" + str(r))
             self.prospects.append(prospect)
 
-        # Based on analysis, draft prospects outnumber J2 signings close to 2-1
-        for _ in range(3):
-            age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
+    # Adds new prospects from draft and J2 – only top prospects
+    def add_new_prospects(self):
 
-            if age < 20:
-                eta = np.random.choice(np.arange(1, 7), 1, p=[.0, .005, .005, .05, 0.09, 0.85])[0]
-            else:
-                eta = np.random.choice(np.arange(1, 7), 1, p=[.015, .025, 0.08, 0.18, .39, .31])[0]
+        # Assumes each team picks 6 players - only looking for top prospects here (simulating Fangraphs' The Board)
+        self.add_draft_picks(6)
 
-            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " J2")
-            self.prospects.append(prospect)
+        # Based on analysis, draft prospects outnumber J2 signings close to 1.7-1
+        self.add_ifas(random.randint(3, 4))
 
     def run_year(self):
         self.age_players()  # Ages players by a year, gets new WAR value
         self.age_prospects()  # Ages prospects, develops by a year, adds to MLB if needed
-        # self.get_roster()  # Creates the roster based off of the top 40 players
         self.add_player_variance()  # Adds in-season variance
 
         if self.max_payroll is None:

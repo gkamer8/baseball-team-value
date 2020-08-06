@@ -60,27 +60,6 @@ barplot(table(board_2018$debut[board_2018$ETA == 2018]))
 barplot(table(board_2018$debut[board_2018$ETA == 2019]))
 barplot(table(board_2018$debut[board_2018$ETA > 2019]))
 
-# Development matrix by inspection
-
-development_matrix <- matrix(
-  c(
-    1, .75, .25, .05, .01, .01, 0,
-    0, .15, .35, .25, .05, .01, 0,
-    0,   0, .30, .35, .25, .05, 0,
-    0,   0,   0, .25, .35, .25, 0,
-    0,   0,   0,   0, .24, .35, 0,
-    0,   0,   0,   0,   0, .23, 0,
-    0,  .1,  .1,  .1, .1,  .1,  1
-  ),
-  nrow=7,
-  ncol=7,
-  byrow=TRUE
-)
-t(development_matrix)
-
-library(expm) 
-(development_matrix %^% 100) %*% c(0, 0, 0, 1, 0, 0, 0)
-
 # FV Drift
 
 board_2019 = read.csv("ETA Data/2019-board-data.csv")

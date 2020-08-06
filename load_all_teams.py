@@ -47,6 +47,10 @@ def create_team(name):
                     new_contracts.append(contract)
             team.contracts = new_contracts
             team.add_prospect(pros)
+
+        # Add 2020 july 2nd signings
+        team.add_ifas(random.randint(3, 4))
+
     return team
 
 team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 'reds', 'indians', 'rockies',
@@ -81,6 +85,6 @@ if __name__ == "__main__":
 
     # sim_run("v1.json")
 
-    for i in range(10):
+    for i in range(15):
         sim_run(f'run{i}.json')
 

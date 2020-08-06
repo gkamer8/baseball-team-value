@@ -31,19 +31,11 @@ class Prospect:
 
         # Evolve FV
         # Random walk with probabilities below
-        # -2    -1    0    1    2
-        # .15 .30  .50  .04 .01
-        fv_draw = random.random()
-        if fv_draw < .15:
-            self.fv = max(self.fv - 10, 20)
-        elif fv_draw < .15 + .30:
-            self.fv = max(self.fv - 5, 20)
-        elif fv_draw < .15 + .30 + .50:
-            pass
-        elif fv_draw < .15 + .30 + .50 + .04:
-            self.fv = min(self.fv + 5, 80)
-        else:
-            self.fv = min(self.fv + 10, 80)
+        #           -2     -1      0      1      2
+        fv_walk = [.15,   .30,   .50,   .04,   .01]
+        fv_draw = np.random.choice(5, 1, p=fv_walk)[0]
+        fv_draw -= 2
+        self.fv = min(max(self.fv + fv_draw * 5, 20), 80)
 
         # Evolve ETA
         # Markov process with matrix below
@@ -52,11 +44,11 @@ class Prospect:
         #                MLB     1       2       3       4       5       6       DEAD
         eta_matrix[0] = [1.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00]  # MLB
         eta_matrix[1] = [0.75,   0.15,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 1 year out
-        eta_matrix[2] = [0.20,   0.40,   0.30,   0.00,   0.00,   0.00,   0.00,   0.10]  # 2 years out
-        eta_matrix[3] = [0.05,   0.25,   0.45,   0.15,   0.00,   0.00,   0.00,   0.10]  # 3 years out
-        eta_matrix[4] = [0.00,   0.05,   0.30,   0.40,   0.15,   0.00,   0.00,   0.10]  # 4 years out
-        eta_matrix[5] = [0.00,   0.00,   0.05,   0.30,   0.40,   0.15,   0.00,   0.10]  # 5 years out
-        eta_matrix[6] = [0.00,   0.00,   0.00,   0.05,   0.30,   0.40,   0.15,   0.10]  # 6 years out
+        eta_matrix[2] = [0.15,   .625,   .125,   0.00,   0.00,   0.00,   0.00,   0.10]  # 2 years out
+        eta_matrix[3] = [0.00,   0.20,   0.70,   0.00,   0.00,   0.00,   0.00,   0.10]  # 3 years out
+        eta_matrix[4] = [0.00,   0.00,   0.20,   0.70,   0.00,   0.00,   0.00,   0.10]  # 4 years out
+        eta_matrix[5] = [0.00,   0.00,   0.00,   0.20,   0.70,   0.00,   0.00,   0.10]  # 5 years out
+        eta_matrix[6] = [0.00,   0.00,   0.00,   0.00,   0.20,   0.70,   0.00,   0.10]  # 6 years out
         eta_matrix[7] = [0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   1.00]  # Dead
 
         # Make sure rows sum to 1

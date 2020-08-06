@@ -1,5 +1,9 @@
 data <- read.csv("prospect_data/total-board-data.csv")
 
+# How big is the board?
+
+lengths(data)
+
 # How many prospects per draft?
 picks_2020 <- data[data$Sign.Mkt == "Draft" & data$Sign.Yr == 2020,]
 lengths(picks_2020)[1]; 124 / 30  # There are 124 from 2020 - not all have signed yet, though, and the draft was smaller
@@ -15,6 +19,13 @@ lengths(picks_2018)[1]; 174 / 30  # There are 174 in 2018 - expected, because so
 table(data$Sign.Mkt)
 print("From J2: "); 472 / (831 + 472)
 print("From Draft: "); 831 / (831 + 472)
+
+831/472
+6 / 3.5
+
+# FV Distribution for J2 signings
+
+prop.table(table(data$FV[data$Sign.Mkt == "J2"]))
 
 # What is the FV distribution for a draft year?
 
