@@ -1,24 +1,14 @@
 import pandas as pd
 from selenium import webdriver
 import selenium
-import re
-from math import isnan
 
 """
 
-This script scrapes data from baseballreference on career war by year,
-career games played by year, position, and percent of games started
-as pitcher for each player under contract
+This script scrapes full contract data from baseballreference for all current MLB players
 
 """
 
 driver = webdriver.Chrome("C:\\Users\\jsimp\\Downloads\\chromedriver_win32\\chromedriver.exe")
-
-
-# def get_service_time(lst):
-#     for item in lst:
-#         if "Service Time" in item:
-#             return re.findall("[0-9]+\.[0-9]+", item)[0]
 
 
 def format_correctly(lst):
@@ -134,5 +124,5 @@ team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 
 
 
 if __name__ == "__main__":
-    for team in team_list[6:]:
+    for team in team_list:
         construct_contracts(team)
