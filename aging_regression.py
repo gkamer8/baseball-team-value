@@ -37,19 +37,14 @@ p_resid = 'Player Models/pitcher_model_residuals.sav'
 st_model = 'Player Models/pitcher_start_model.sav'
 st_scaler = 'Player Models/pitcher_start_data_scaler.sav'
 
-
-
-
 def average(list1):
     return sum(list1[-4:]) / len(list1[-4:])
-
 
 def new_floor(num):
     if num > 0:
         return math.floor(num)
     else:
         return math.ceil(num)
-
 
 def get_residual_dict(df1):
     df1['residuals'] = df1['residuals'].apply(new_floor)
@@ -75,7 +70,6 @@ def get_residual_dict(df1):
     dict1['6'] = df6['residuals'].to_list()
     return dict1
 
-
 def war_mapper(war):
     if war < 0:
         return '0'
@@ -91,7 +85,6 @@ def war_mapper(war):
         return '45'
     else:
         return '6'
-
 
 def filter_data(df, pitcher):
     df_list = []
@@ -117,7 +110,6 @@ def filter_data(df, pitcher):
     else:
         return pd.DataFrame(df_list).drop('ratio', axis=1)
 
-
 def prospect_conversion_data(df, pitcher):
     dct = {}
     indexes = list(df.index)
@@ -137,7 +129,6 @@ def prospect_conversion_data(df, pitcher):
             dct[age] = 0
     return dct
 
-
 def pitcher_start_data(df):
     df_list = []
     indexes = list(df.index)
@@ -147,7 +138,6 @@ def pitcher_start_data(df):
             start_ratio = df.loc[i, 'start_ratio']
             df_list.append({"Average WAR": sum(wars[:6]) / len(wars[:6]), "ratio": start_ratio})
     return pd.DataFrame(df_list)
-
 
 def getNeighbors(df):
     neigh = KNeighborsRegressor(n_neighbors=10)
@@ -164,7 +154,6 @@ def getNeighbors(df):
     resid_df = pd.DataFrame(list(zip(residuals, wars)),
                             columns=['residuals', 'war'])
     return neigh, sc, resid_df
-
 
 def getNeural(df):
     regr = MLPRegressor(max_iter=500, hidden_layer_sizes=(50,100,50), alpha=0.05, learning_rate='constant')
@@ -183,7 +172,6 @@ def getNeural(df):
                columns =['residuals', 'war'])
     return regr, sc, resid_df
 
-
 def getForest(df):
     regr = RandomForestRegressor(random_state=0, min_samples_leaf=5)
     y = df["WAR"]
@@ -199,7 +187,6 @@ def getForest(df):
     resid_df = pd.DataFrame(list(zip(residuals, wars)),
                             columns=['residuals', 'war'])
     return regr, sc, resid_df
-
 
 def getLinear(df):
     regr = LinearRegression()
@@ -217,7 +204,6 @@ def getLinear(df):
                             columns=['residuals', 'war'])
     return regr, sc, resid_df
 
-
 def getPoly(df):
     regr = LinearRegression()
     y = df["WAR"]
@@ -233,7 +219,6 @@ def getPoly(df):
     resid_df = pd.DataFrame(list(zip(residuals, wars)),
                             columns=['residuals', 'war'])
     return regr, sc, resid_df
-
 
 def getSVR(df):
     regr = SVR(kernel = 'rbf')
@@ -251,11 +236,9 @@ def getSVR(df):
                             columns=['residuals', 'war'])
     return regr, sc, resid_df
 
-
 # Decides which model type the player progression is built on
 def getModel(df):
     return getNeural(df)
-
 
 def getModelforStarts(df):
     regr = MLPRegressor(max_iter=1000, hidden_layer_sizes=(50, 100, 50), alpha=0.05, learning_rate='constant')
@@ -268,7 +251,6 @@ def getModelforStarts(df):
     regr.fit(X_train, y_train)
     print(regr.score(X_test, y_test))
     return regr, sc
-
 
 if __name__ == "__main__":
     df = pd.read_csv('Aging Data/historical_WAR_by_age_data.csv', converters={'WAR': eval, 'Age': eval, "Games": eval})
@@ -303,7 +285,6 @@ if __name__ == "__main__":
     pickle.dump(start_model, open(st_model, 'wb'))
     pickle.dump(start_scaler, open(st_scaler, 'wb'))
 
-
 bat_model = pickle.load(open(b_model, 'rb'))
 pitch_model = pickle.load(open(p_model, 'rb'))
 scb = pickle.load(open(b_sc, 'rb'))
@@ -317,13 +298,11 @@ adjust_pitchers = pickle.load(open(p_prospect_adjust, 'rb'))
 start_model = pickle.load(open(st_model, 'rb'))
 start_scaler = pickle.load(open(st_scaler, 'rb'))
 
-
 def war_predictor(age, war, average, pitching, start_ratio):
     if pitching:
         return pitch_model.predict(scp.transform([[age, war, average, start_ratio]]))[0]
     else:
         return bat_model.predict(scb.transform([[age, war, average]]))[0]
-
 
 def error_predictor(pitcher, war):
     num = random.uniform(0, 1)
@@ -335,7 +314,6 @@ def error_predictor(pitcher, war):
             return random.choice(residualsb[war])
     else:
         return 0
-
 
 def adjust_prospect_war(war, age, pitcher):
     if pitcher:

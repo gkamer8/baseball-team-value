@@ -164,6 +164,7 @@ class Team:
         fa_allocation = self.max_payroll - self.get_contract_values()
         fa_mu = fa_allocation / DOLLAR_PER_WAR
         fa_std_dev = fa_mu / 1.8  # the constant is arbitrary - goal is to scale with the mu WAR
+        # Note: FA standard deviation is a major tool to affect late-sim WS probability while keeping WL% constant
         return np.random.normal(fa_mu, abs(fa_std_dev), 1)[0]
 
     def get_team_war(self):
@@ -307,7 +308,7 @@ class Team:
         # Note: this line should be replaced with the real win loss if that's calculated in the sim
         wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
 
-        # Based on analysis in prospect_analysis.r
+        # Based on empirical analysis
         if wl < .395:
             pick = 1  # Is actually the first or second
         elif wl < .451:

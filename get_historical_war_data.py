@@ -10,9 +10,7 @@ This script scrapes data from baseball reference for players active between athl
 years 2000 and 2019 on career war by year, career games played by year, position,
 and percent of games started as pitcher for each player under contract
 
-
 """
-
 
 def data_scraper(name):
     link = "https://www.baseball-reference.com/players/" + name[1][0] + "/" + name[1][:5] + name[0][:2] + "01.shtml"
@@ -73,7 +71,6 @@ def data_scraper(name):
 
     return war_list, age_list, games_list, pitcher, start_ratio, found
 
-
 # Takes a list of names and formats it for construction of urls
 def format_player_list(players):
     players = np.array(players)
@@ -81,8 +78,6 @@ def format_player_list(players):
     player_names = list(map(lambda x: re.sub(r'[^\w\s]', '', x), players))
     player_names = list(map(lambda x: x.lower().split(" "), player_names))
     return player_names
-
-
 
 def get_data(name_list):
     ages = []
@@ -99,7 +94,6 @@ def get_data(name_list):
             pitchers.append(pitcher)
             start_ratios.append(start_ratio)
     return ages, wars, games, pitchers, start_ratios
-
 
 if __name__ == "__main__":
     # Takes player names from csvs, merges into one list, and eliminates duplicates
@@ -128,7 +122,6 @@ if __name__ == "__main__":
     pitchers = pitchers2020 + pitchers2015 + pitchers2010 + pitchers2005 + pitchers2000
 
     players = batters + pitchers
-
 
     ages1, wars1, games, positions, ratios = get_data(players)
     df_b = pd.DataFrame(list(zip(wars1, ages1, games, positions, ratios)),
