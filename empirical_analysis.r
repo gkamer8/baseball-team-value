@@ -216,6 +216,13 @@ mod <- lm(Wtm ~ WARtot, data=total); summary(mod)
   abline(47, 1, col="blue")
 }
 
-hist(mod$residuals)
+h <- hist(mod$residuals)
 sd(mod$residuals)
+
+# Overlayed normal distribution
+x <- mod$residuals
+xfit <- seq(min(x), max(x), length=600)
+yfit <- dnorm(xfit, mean=mean(x), sd=sd(x))
+yfit <- yfit * diff(h$mids[1:2]) * length(x)
+lines(xfit, yfit, col="blue", lwd=2)
 
