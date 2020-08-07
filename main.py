@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser(description='Value franchises by discounting ch
 parser.add_argument('-n', type=int, nargs='?', default=15,
                     help='number of sims to run')
 
-parser.add_argument('-o', type=str, nargs='?', default='value.csv',
+parser.add_argument('-o', type=str, nargs='?', default='values.csv',
                     help='path of csv outfile')
 
 parser.add_argument('-s', type=str, nargs='?',
@@ -21,6 +21,9 @@ parser.add_argument('-y', type=int, nargs='?', default=15,
 
 parser.add_argument('-r', type=float, nargs='?', default=.25,
                     help='discount rate for championships')
+
+parser.add_argument('--discount', action='store_true',
+                    help='use previous sims but change discount rate')
 
 args = parser.parse_args()
 
@@ -57,7 +60,10 @@ def sim_run(filename):
     with open(f"{args.s}/{filename}", "w") as outfile:
         json.dump({'teams': team_records}, outfile)
 
-for i in range(args.n):
-    sim_run(f'run{i}.json')
+# If the discount flag is activated, new sims aren't run, but export_team values redos the discount
+if not args.discount:
+    for i in range(args.n):
+        sim_run(f'run{i}.json')
 
 export_team_values([f'{args.s}/run{i}.json' for i in range(args.n)], outfile=args.o, discount=args.r)
+print(f'Finished exporting values to {args.o}.')
