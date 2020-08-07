@@ -3,7 +3,7 @@ import os
 from load_all_teams import create_team, team_list
 import time
 import json
-from parse_sims import export_team_values, print_average_sources
+from parse_sims import *
 
 parser = argparse.ArgumentParser(description='Value franchises by discounting championships')
 
@@ -27,6 +27,13 @@ parser.add_argument('--discount', action='store_true',
 
 parser.add_argument('--sources', action='store_true',
                     help='print sources of WAR per year (use with --discount to prevent re-running sims)')
+
+parser.add_argument('--winloss', action='store_true',
+                    help='print yearly WL percentage')
+
+parser.add_argument('--champs', action='store_true',
+                    help='print yearly total championship probability')
+
 
 args = parser.parse_args()
 
@@ -73,6 +80,12 @@ fnames = [f'{args.s}/run{i}.json' for i in range(args.n)]
 
 if args.sources:
     print_average_sources(fnames)
+
+if args.winloss:
+    print_average_wl(fnames)
+
+if args.champs:
+    print_average_championships(fnames)
 
 export_team_values(fnames, outfile=args.o, discount=args.r)
 print(f'Finished exporting values to {args.o}.')
