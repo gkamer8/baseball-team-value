@@ -41,8 +41,6 @@ def create_team(name):
 
         # Add 2020 july 2nd signings
         team.add_ifas(random.randint(3, 4))
-        # Add a couple 2020 prospects to make up for shortened draft
-        team.add_draft_picks(2, starting_round=5)
 
     return team
 
