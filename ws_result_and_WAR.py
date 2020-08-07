@@ -19,7 +19,6 @@ if __name__ == "__main__":
                 return d['war']
         return -1
 
-
     playoff_results = dict()  # dictionary linking team id (i.e., 2015_NYM), war, and playoff series wins
     for t in team_names:
         for y in range(2000, 2020):
