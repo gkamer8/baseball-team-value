@@ -26,8 +26,8 @@ def get_war_wl_regr():
 
     return regr
 
-# Returns list of residuals
 
+# Returns list of residuals
 def get_war_wl_resids():
     
     resids = []
@@ -37,6 +37,7 @@ def get_war_wl_resids():
     resids = np.array(resids)
 
     return resids
+
 
 # Creates graphs
 # Includes duplicate code

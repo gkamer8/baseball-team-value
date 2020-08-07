@@ -71,6 +71,7 @@ def data_scraper(name):
 
     return war_list, age_list, games_list, pitcher, start_ratio, found
 
+
 # Takes a list of names and formats it for construction of urls
 def format_player_list(players):
     players = np.array(players)
@@ -78,6 +79,7 @@ def format_player_list(players):
     player_names = list(map(lambda x: re.sub(r'[^\w\s]', '', x), players))
     player_names = list(map(lambda x: x.lower().split(" "), player_names))
     return player_names
+
 
 def get_data(name_list):
     ages = []

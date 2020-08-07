@@ -3,7 +3,7 @@ import os
 from load_all_teams import create_team, team_list
 import time
 import json
-from parse_sims import export_team_values
+from parse_sims import export_team_values, print_average_sources
 
 parser = argparse.ArgumentParser(description='Value franchises by discounting championships')
 
@@ -25,6 +25,9 @@ parser.add_argument('-r', type=float, nargs='?', default=.25,
 parser.add_argument('--discount', action='store_true',
                     help='use previous sims but change discount rate')
 
+parser.add_argument('--sources', action='store_true',
+                    help='print sources of WAR per year (use with --discount to prevent re-running sims)')
+
 args = parser.parse_args()
 
 DEFAULT_SIM_PATH = 'simulations'
@@ -38,6 +41,7 @@ if args.s is None:
         except OSError:
             print("Creation of the default sim directory failed")
 
+
 def sim_wrapper(func):
     def wrapper(filename):
         tic = time.perf_counter()
@@ -45,6 +49,7 @@ def sim_wrapper(func):
         func(filename)
         print(f"Sim complete in {time.perf_counter() - tic:0.3f} seconds")
     return wrapper
+
 
 # Creates JSON file with records for each year of the sim stored by team
 @sim_wrapper
@@ -64,6 +69,10 @@ def sim_run(filename):
 if not args.discount:
     for i in range(args.n):
         sim_run(f'run{i}.json')
+fnames = [f'{args.s}/run{i}.json' for i in range(args.n)]
 
-export_team_values([f'{args.s}/run{i}.json' for i in range(args.n)], outfile=args.o, discount=args.r)
+if args.sources:
+    print_average_sources(fnames)
+
+export_team_values(fnames, outfile=args.o, discount=args.r)
 print(f'Finished exporting values to {args.o}.')
