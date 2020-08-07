@@ -3,7 +3,6 @@ from team import Team
 from prospect import Prospect
 import pandas as pd
 import csv
-import numpy as np
 from war_wl import get_war_wl_regr
 import random
 
@@ -11,8 +10,10 @@ current_year = 2019
 
 war_wl = get_war_wl_regr()
 
+
 def convert_wars_to_probabilities(war):
     return war_wl.predict([[war]])[0][0]
+
 
 # Creates a team and fills it with players and prospects
 def create_team(name):
@@ -50,6 +51,7 @@ def create_team(name):
         team.add_ifas(random.randint(3, 4))
 
     return team
+
 
 team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 'reds', 'indians', 'rockies',
              'tigers', 'astros', 'royals', 'angels', 'dodgers', 'marlins', 'brewers', 'twins', 'mets',

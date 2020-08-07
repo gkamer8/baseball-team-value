@@ -19,17 +19,11 @@ driver = webdriver.Chrome("C:\\Users\\jsimp\\Downloads\\chromedriver_win32\\chro
 
 
 def zip_sum(list1, list2):
-    sum_list = []
-    for (item1, item2) in zip(list1, list2):
-        sum_list.append(item1 + item2)
-    return sum_list
+    return [x + y for x,y in zip(list1, list2)]
 
 
 def extract_age(list):
-    list_new = []
-    for item in list:
-        list_new.append(item.text)
-    return list_new
+    return [item.text for item in list]
 
 
 def extract_war(list):
@@ -69,7 +63,6 @@ def data_scraper(name):
     link = "https://www.baseball-reference.com/players/" + name[0] + "/" + name + ".shtml"
     driver.get(link)
     war_list = []
-    age_list = []
     games_list = []
     pitcher = False
     found = True
@@ -98,7 +91,6 @@ def data_scraper(name):
                 start_ratio = float(gs) / float(gp)
             except selenium.common.exceptions.NoSuchElementException:
                 print("no pitching stats")
-                found = False
             else:
                 try:
                     tmp = driver.find_element_by_id('batting_value').find_element_by_tag_name('tbody')
@@ -120,7 +112,6 @@ def data_scraper(name):
                 games_list, _ = merge_batting_pitching(list(zip(tmp1_age, tmp1_games)), [])
             except selenium.common.exceptions.NoSuchElementException:
                 print("no batting stats")
-                found = False
 
     return war_list, games_list, pitcher, start_ratio
 

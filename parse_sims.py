@@ -1,6 +1,7 @@
 import json
 from load_all_teams import team_list
 
+
 def get_total_stat_by_year(file_data, key):
     team_records = file_data['teams']
 
@@ -14,8 +15,10 @@ def get_total_stat_by_year(file_data, key):
             wars[i] += team_records[team][i][key]
     return wars
 
+
 def get_total_war_by_year(file_data):
     return get_total_stat_by_year(file_data, 'Total WAR')
+
 
 # Looks at EXPECTED wl, not actual wl
 def get_avg_wl_by_year(file_data):
@@ -24,6 +27,7 @@ def get_avg_wl_by_year(file_data):
     for year in wars:
         wls[year] = ((.294 * 162) + (wars[year] / 30)) / 162
     return wls
+
 
 def get_war_by_source_by_year(file_data):
     team_records = file_data['teams']
@@ -41,6 +45,7 @@ def get_war_by_source_by_year(file_data):
         
     return wars
 
+
 def get_war_by_source_percentage_by_year(file_data):
     wars = get_war_by_source_by_year(file_data)
 
@@ -52,6 +57,7 @@ def get_war_by_source_percentage_by_year(file_data):
         wars2[year]['Prospects'] = wars[year]['Prospects'] / total
         wars2[year]['Contracts'] = wars[year]['Contracts'] / total
     return wars2
+
 
 def average_many_wls(file_datas):
     new = dict()
@@ -68,15 +74,18 @@ def average_many_wls(file_datas):
     
     return new
 
+
 def get_avg_stat_by_year(file_data, key):
     stats = get_total_stat_by_year(file_data, key)
     for year in stats:
         stats[year] = stats[year] / 30
     return stats
 
+
 # Average *average* championship probability across multiple files and teams
 def get_avg_championships_by_year(file_data):
     return get_avg_stat_by_year(file_data, 'Championship Probability')
+
 
 # Average combined championship probability across multiple files
 def average_many_total_championships(file_datas):
@@ -93,6 +102,7 @@ def average_many_total_championships(file_datas):
         new[k] = new[k] / num_files
     
     return new
+
 
 # Looks at multiple sims and gets an average of championship probability for each team
 def get_final_numbers(file_datas, discount_rate):
@@ -112,6 +122,7 @@ def get_final_numbers(file_datas, discount_rate):
         new[team] = new[team] / num_files
     return new
 
+
 # Exports csv with final team value numbers
 def export_team_values(fnames, outfile='results.csv', discount=0.25):
 
@@ -124,17 +135,20 @@ def export_team_values(fnames, outfile='results.csv', discount=0.25):
         fhand.write(f"{team.capitalize()},{probs[team]:0.3}\n")
     fhand.close()
 
+
 def print_average_championships(fnames):
     print("\nAverage Total Champs:")
     champs = average_many_total_championships([json.load(open(fname)) for fname in fnames])
     for year in champs:
         print(f"{year + 2020}: {champs[year]:0.3f}")
 
+
 def print_average_wl(fnames):
     print("\nAverage WL:")
     all_wls = average_many_wls([json.load(open(fname)) for fname in fnames])
     for year in all_wls:
         print(f"{year + 2020}: {all_wls[year]:0.3f}")
+
 
 def average_many_sources(file_datas):
     sources = dict()
@@ -160,11 +174,13 @@ def average_many_sources(file_datas):
         sources[key]['Contracts'] = sources[key]['Contracts'] / num_files
     return sources
 
+
 def print_average_sources(fnames):
     print("\nAverage Sources:")
     war_sources = average_many_sources([json.load(open(fname)) for fname in fnames])
     for year in war_sources:
         print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
+
 
 if __name__ == "__main__":
     
