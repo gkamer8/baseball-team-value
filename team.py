@@ -161,7 +161,7 @@ class Team:
         # note: fa_allocation could be negative!
         fa_allocation = self.max_payroll - self.get_contract_values()
         fa_mu = fa_allocation / DOLLAR_PER_WAR
-        fa_std_dev = fa_mu / 1.8  # the constant is arbitrary - goal is to scale with the mu WAR
+        fa_std_dev = fa_mu / 1.5  # the constant is arbitrary - goal is to scale with the mu WAR
         # Note: FA standard deviation is a major tool to affect late-sim WS probability while keeping WL% constant
         return np.random.normal(fa_mu, abs(fa_std_dev), 1)[0]
 
@@ -236,10 +236,8 @@ class Team:
             remaining_payouts = player['payouts'][1:]
 
             # TODO Problems:
-            # Pre-arb figures should be checked
-            # Arb model should be compared with empirical data
             # Vesting option model should be compared with empirical data
-            # Player and team options automatically execute, so this needs to be worked out
+            # Player options automatically execute, so this needs to be worked out
             # Super 2 should be implemented
 
             # Set salary for pre-arb and arb
@@ -248,19 +246,17 @@ class Team:
                 remaining_payouts[0]['value'] = PRE_ARB
             elif remaining_payouts[0]['type'] == 'arb':
                 arb_years_remaining = sum(x['type'] == 'arb' for x in remaining_payouts)
-                remaining_payouts[0]['value'] = min(get_arb_salary(player['player'].get_war(), player['player'].age,
+                remaining_payouts[0]['value'] = max(get_arb_salary(player['player'].get_war(), player['player'].age,
                                                                    arb_years_remaining=arb_years_remaining), PRE_ARB)
             elif remaining_payouts[0]['type'] == 'vesting option':
                 if player['player'].get_war() < VESTING_THRESHOLD:
                     continue
             elif remaining_payouts[0]['type'] == 'team option':
-                if player['player'].get_war() / remaining_payouts[0]['value'] < DOLLAR_PER_WAR:
+                # Uses previous year WAR, not prediction
+                if remaining_payouts[0]['value'] / player['player'].get_war() > DOLLAR_PER_WAR:
                     continue
             elif remaining_payouts[0]['type'] == 'mutual option':
                 continue
-
-
-            # Player and team options automatically execute
 
             player['payouts'] = remaining_payouts
 
@@ -282,7 +278,7 @@ class Team:
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " J2")
             self.prospects.append(prospect)
 
-    def add_draft_picks(self, num_picks):
+    def add_draft_picks(self, num_picks, starting_round=1):
         # Values inferred from: https://blogs.fangraphs.com/an-update-to-prospect-valuation/
         # and https://academicworks.cuny.edu/cgi/viewcontent.cgi?article=1759&context=cc_etds_theses
 
@@ -307,7 +303,7 @@ class Team:
         else:
             pick = 28  # is actually 28-30
 
-        for r in range(num_picks):
+        for r in range(starting_round - 1, num_picks):
             position = random.random() > .5
 
             pick_num = pick * r

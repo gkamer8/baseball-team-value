@@ -32,7 +32,7 @@ class Prospect:
         # Evolve FV
         # Random walk with probabilities below
         #           -2     -1      0      1      2
-        fv_walk = [.15,   .30,   .50,   .04,   .01]
+        fv_walk = [.15,   .30,   .40,   .14,   .01]
         fv_draw = np.random.choice(5, 1, p=fv_walk)[0]
         fv_draw -= 2
         self.fv = min(max(self.fv + fv_draw * 5, 20), 80)
