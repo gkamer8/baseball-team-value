@@ -20,7 +20,7 @@ class Player:
         self.wars = wars
         self.age = age
         self.pitcher = position
-        self.id = id  # baseball reference id
+        self.id = id  # baseball reference id or fake prospect name
         self.name = name
         self.start_ratio = start_ratio
 

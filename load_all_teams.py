@@ -10,7 +10,7 @@ current_year = 2019
 # Creates a team and fills it with players and prospects
 def create_team(name):
     df = pd.read_csv("Full Team Data & Contracts/" + name + "_data.csv", converters={'career': eval, 'contracts': eval})
-    team = Team(name, 3, "NL", [], [])
+    team = Team(name, 3, "NL", [], [])  # note: division and leage are currently unused
     for i in range(len(df)):
         srv = df.loc[i, 'SrvTm']
         if float(srv) > 1:

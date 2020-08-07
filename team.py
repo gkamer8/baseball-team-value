@@ -82,10 +82,11 @@ class Team:
         b) payouts (list of dictionaries) | Type of year (option, normal salary, etc.) and value for year in $
     5. prospects (list of Prospect objects) | Farm system
     6. records (list of dictionaries with -) | Season outcomes
-        a) wins (int)
-        b) losses (int)
-        c) div_place (int)
-        d) outcome (string - empty or WC or DS or CS or WS)
+        a) Team WAR (float)
+        b) FA WAR (float)
+        c) Sim Prospect WAR (float)
+        d) Max Payroll (float)
+        e) Championship Probability (float)
     7. max_payroll (float) | Total team payroll
     """
 
@@ -132,8 +133,6 @@ class Team:
     def add_player_variance(self):
         for player in self.contracts:
             player['player'].add_variance()
-        # for player in self.backups:
-        #     player.backup()
 
     def age_prospects(self):
         # Replaces prospect list with new list, excluding new MLB players and dead prospects
@@ -141,8 +140,7 @@ class Team:
         for prospect in self.prospects:
             prospect.develop()
             if prospect.eta == 0:
-                # ID is made up of a random number and the name
-                new_id = prospect.name.lower().replace(" ", "") + str(random.randint(0, 1_000_000))
+                new_id = prospect.name
                 new_war = PITCHER_FV_DICT[prospect.fv] if prospect.pitcher else BATTER_FV_DICT[prospect.fv]
                 starts = predict_start_ratio(new_war)
                 new_war = [adjust_prospect_war(new_war, prospect.age, prospect.pitcher) - .25]
@@ -168,17 +166,6 @@ class Team:
         return np.random.normal(fa_mu, abs(fa_std_dev), 1)[0]
 
     def get_team_war(self):
-
-        """
-        # Nerf
-        roster = []
-        for player in self.contracts:
-            roster.append((player['player'].get_war(), player['player']))
-        roster.sort(key=lambda x: x[0], reverse=True)
-        backup = roster[5:]
-        for backup_player in backup:
-            backup_player[1].wars[-1] = backup_player[1].wars[-1] * .5  # chop backup player war in half
-        """
 
         war = 0
         for player in self.contracts:
@@ -321,7 +308,6 @@ class Team:
             pick = 28  # is actually 28-30
 
         for r in range(num_picks):
-
             position = random.random() > .5
 
             pick_num = pick * r
@@ -349,17 +335,15 @@ class Team:
 
     # Adds new prospects from draft and J2 – only top prospects
     def add_new_prospects(self):
-
         # Assumes each team picks 6 players - only looking for top prospects here (simulating Fangraphs' The Board)
         self.add_draft_picks(6)
-
         # Based on analysis, draft prospects outnumber J2 signings close to 1.7-1
         self.add_ifas(random.randint(3, 4))
 
     def run_year(self):
         self.age_players()  # Ages players by a year, gets new WAR value
         self.age_prospects()  # Ages prospects, develops by a year, adds to MLB if needed
-        self.add_player_variance()  # Adds in-season variance
+        self.add_player_variance()  # Adds in-season noise
 
         if self.max_payroll is None:
             self.max_payroll = self.get_contract_values()
