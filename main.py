@@ -3,7 +3,7 @@ import os
 from load_all_teams import create_team, team_list
 import time
 import json
-from parse_sims import *
+from parse_sims import print_average_championships, print_average_sources, print_average_wl, export_championships_per_team_per_year, export_team_values
 
 parser = argparse.ArgumentParser(description='Value franchises by discounting championships')
 
