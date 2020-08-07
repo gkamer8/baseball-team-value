@@ -34,6 +34,8 @@ parser.add_argument('--winloss', action='store_true',
 parser.add_argument('--champs', action='store_true',
                     help='print yearly total championship probability')
 
+parser.add_argument('--champs_table', type=str, nargs='?', const='champs_table.csv',
+                    help='export csv of championship probability per team per year')
 
 args = parser.parse_args()
 
@@ -86,6 +88,10 @@ if args.winloss:
 
 if args.champs:
     print_average_championships(fnames)
+
+if args.champs_table is not None:
+    export_championships_per_team_per_year(fnames, outfile=args.champs_table)
+    print(f'Finished exporting championships by year to {args.champs_table}.')
 
 export_team_values(fnames, outfile=args.o, discount=args.r)
 print(f'Finished exporting values to {args.o}.')

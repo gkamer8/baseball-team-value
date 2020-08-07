@@ -104,6 +104,45 @@ def average_many_total_championships(file_datas):
     return new
 
 
+# Gets championship probabilities for each year for each team
+def get_championships_per_team_per_year(file_datas):
+    new = dict()
+    num_files = len(file_datas)
+    for f in file_datas:
+        for team in f['teams']:
+            prob_by_year = [f['teams'][team][i]['Championship Probability'] for i in range(len(f['teams'][team]))]
+            if team not in new:
+                new[team] = prob_by_year
+            else:
+                new[team] = [prob_by_year[i] + new[team][i] for i in range(len(new[team]))]
+    for team in new:
+        new[team] = [new[team][i] / num_files for i in range(len(new[team]))]
+    return new
+
+
+def export_championships_per_team_per_year(fnames, outfile='champs.csv'):
+    file_datas = [json.load(open(fname)) for fname in fnames]
+    teams = get_championships_per_team_per_year(file_datas)
+    
+    # Sort by first year championship value
+    teams = {k: v for k, v in sorted(teams.items(), key=lambda item: item[1][0], reverse=True)}
+
+    fhand = open(outfile, 'w')
+    num_years = len(teams[list(teams.keys())[0]])
+    header = 'Team,'
+    for i in range(num_years):
+        header += f'Year {i + 1},'
+    header = header[:-1] + '\n'
+    fhand.write(header)
+    for team in teams:
+        to_add = f"{team.capitalize()},"
+        for i in range(num_years):
+            to_add += str(f"{teams[team][i]:0.3}") + ','
+        to_add = to_add[:-1] + '\n'
+        fhand.write(to_add)
+    fhand.close()
+
+
 # Looks at multiple sims and gets an average of championship probability for each team
 def get_final_numbers(file_datas, discount_rate):
     new = dict()
