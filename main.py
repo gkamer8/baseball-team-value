@@ -23,10 +23,10 @@ parser.add_argument('-r', type=float, nargs='?', default=.25,
                     help='discount rate for championships')
 
 parser.add_argument('--discount', action='store_true',
-                    help='use previous sims but change discount rate')
+                    help="don't re-run sims but use currently set discount rate")
 
 parser.add_argument('--sources', action='store_true',
-                    help='print sources of WAR per year (use with --discount to prevent re-running sims)')
+                    help='print sources of WAR per year')
 
 parser.add_argument('--winloss', action='store_true',
                     help='print yearly WL percentage')

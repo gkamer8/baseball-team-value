@@ -1,4 +1,5 @@
 from aging_regression import war_predictor, average, error_predictor
+import cython
 
 
 class Player:
