@@ -180,12 +180,3 @@ def print_average_sources(fnames):
     war_sources = average_many_sources([json.load(open(fname)) for fname in fnames])
     for year in war_sources:
         print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
-
-
-if __name__ == "__main__":
-    
-    num_sims = 15
-    print_average_wl([f'Sim Records/run{x}.json' for x in range(num_sims)])
-    print_average_sources([f'Sim Records/run{x}.json' for x in range(num_sims)])
-    print_average_championships([f'Sim Records/run{x}.json' for x in range(num_sims)])
-
