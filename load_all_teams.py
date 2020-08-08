@@ -14,7 +14,7 @@ def create_team(name):
     team = Team(name, 3, "NL", [], [])  # note: division and leage are currently unused
     for i in range(len(df)):
         srv = df.loc[i, 'SrvTm']
-        if float(srv) > .045 and i < 32:  # exeeded rookie limits and is in the top of the roster
+        if float(srv) > .045 and i < 30:  # exeeded rookie limits and is in the top of the roster
             wars = df.loc[i, 'career']
             payouts = df.loc[i, 'contracts']
             player_name = df.loc[i, 'Name'].split("\\")

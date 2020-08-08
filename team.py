@@ -10,7 +10,7 @@ from scipy import integrate
 PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-DOLLAR_PER_WAR = 8_000_000  # market value for WAR
+DOLLAR_PER_WAR = 7_500_000  # market value for WAR
 # ^^^ loosely based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
 # Based on Fangraphs FV to average WAR values
