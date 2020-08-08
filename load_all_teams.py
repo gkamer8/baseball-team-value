@@ -7,13 +7,14 @@ import random
 
 current_year = 2019
 
+
 # Creates a team and fills it with players and prospects
 def create_team(name):
     df = pd.read_csv("Full Team Data & Contracts/" + name + "_data.csv", converters={'career': eval, 'contracts': eval})
     team = Team(name, 3, "NL", [], [])  # note: division and leage are currently unused
     for i in range(len(df)):
         srv = df.loc[i, 'SrvTm']
-        if float(srv) > 1:
+        if float(srv) > .045 and i < 32:  # exeeded rookie limits and is in the top of the roster
             wars = df.loc[i, 'career']
             payouts = df.loc[i, 'contracts']
             player_name = df.loc[i, 'Name'].split("\\")
@@ -50,4 +51,3 @@ team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 
              'yankees', 'athletics', 'phillies', 'pirates', 'padres', 'giants', 'mariners', 'cardinals',
              'rays', 'rangers', 'bluejays', 'nationals']
 team_list1 = ['dodgers']
-

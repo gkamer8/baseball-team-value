@@ -3,7 +3,7 @@ import os
 from load_all_teams import create_team, team_list
 import time
 import json
-from parse_sims import print_average_championships, print_average_sources, print_average_wl, export_championships_per_team_per_year, export_team_values
+from parse_sims import print_first_year_payrolls, print_average_championships, print_average_sources, print_average_wl, export_championships_per_team_per_year, export_team_values
 
 parser = argparse.ArgumentParser(description='Value franchises by discounting championships')
 
@@ -34,8 +34,12 @@ parser.add_argument('--winloss', action='store_true',
 parser.add_argument('--champs', action='store_true',
                     help='print yearly total championship probability')
 
+parser.add_argument('--payrolls', action='store_true',
+                    help='print first year max payrolls')
+
 parser.add_argument('--champs_table', type=str, nargs='?', const='champs_table.csv',
                     help='export csv of championship probability per team per year')
+
 
 args = parser.parse_args()
 
@@ -88,6 +92,9 @@ if args.winloss:
 
 if args.champs:
     print_average_championships(fnames)
+
+if args.payrolls:
+    print_first_year_payrolls(fnames[0])
 
 if args.champs_table is not None:
     export_championships_per_team_per_year(fnames, outfile=args.champs_table)

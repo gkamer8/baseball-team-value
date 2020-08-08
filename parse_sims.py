@@ -2,6 +2,15 @@ import json
 from load_all_teams import team_list
 
 
+def print_first_year_payrolls(fname):
+    team_records = json.load(open(fname))['teams']
+    teams = {k: v for k, v in sorted(team_records.items(), key=lambda item: item[1][0]['Max Payroll'], reverse=True)}
+
+    print('\nPayrolls:')
+    for team in teams:
+        print(f"{team.capitalize()}: ${teams[team][0]['Max Payroll']:,.2f}")
+
+
 def get_total_stat_by_year(file_data, key):
     team_records = file_data['teams']
 
