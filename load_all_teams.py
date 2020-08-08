@@ -14,7 +14,7 @@ def create_team(name):
     team = Team(name, 3, "NL", [], [])  # note: division and leage are currently unused
     for i in range(len(df)):
         srv = df.loc[i, 'SrvTm']
-        if float(srv) > .045 and i < 30:  # exeeded rookie limits and is in the top of the roster
+        if float(srv) >= 1.0:
             wars = df.loc[i, 'career']
             payouts = df.loc[i, 'contracts']
             player_name = df.loc[i, 'Name'].split("\\")
@@ -41,7 +41,7 @@ def create_team(name):
             team.add_prospect(pros)
 
         # Add 2020 july 2nd signings
-        team.add_ifas(random.randint(3, 4))
+        team.add_ifas(3)
 
     return team
 

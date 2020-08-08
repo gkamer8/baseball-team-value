@@ -7,10 +7,10 @@ from prospect import Prospect
 from aging_regression import adjust_prospect_war, predict_start_ratio
 from scipy import integrate
 
-PRE_ARB = 563_500  # salary for players in pre-arbitration, currently just the MLB minimum
+PRE_ARB = 563_500  # salary for players in pre-arbitration
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-DOLLAR_PER_WAR = 7_500_000  # market value for WAR
+DOLLAR_PER_WAR = 9_100_000  # market value for WAR
 # ^^^ loosely based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
 # Based on Fangraphs FV to average WAR values
@@ -47,6 +47,10 @@ BATTER_FV_DICT = {
     80: 7
 }
 
+# Prospect Nerf
+nerf = 0.00
+PITCHER_FV_DICT = {k: v * (1 - nerf) for k, v in PITCHER_FV_DICT.items()} 
+BATTER_FV_DICT = {k: v * (1 - nerf) for k, v in BATTER_FV_DICT.items()} 
 
 # function based on model from arbitration.r
 def get_arb_salary(war, age, arb_years_remaining=1):
@@ -159,7 +163,6 @@ class Team:
         return np.random.normal(fa_mu, abs(fa_std_dev), 1)[0]
 
     def get_team_war(self):
-
         war = 0
         for player in self.contracts:
             war += player['player'].get_war()
@@ -209,7 +212,6 @@ class Team:
         self.records.append(to_add)
 
     def get_contract_values(self):
-        # return sum([x['payouts'][0]['value'] for x in self.contracts])
         tots = 0
         for cont in self.contracts:
             try:
@@ -230,11 +232,9 @@ class Team:
 
             # TODO Problems:
             # Vesting option model should be compared with empirical data
-            # Player options automatically execute, so this needs to be worked out
             # Super 2 should be implemented
 
             # Set salary for pre-arb and arb
-            # Pre-arb technically uncessary, but just as a check
             if remaining_payouts[0]['type'] == 'pre-arb':
                 remaining_payouts[0]['value'] = PRE_ARB
             elif remaining_payouts[0]['type'] == 'arb':
@@ -247,6 +247,10 @@ class Team:
             elif remaining_payouts[0]['type'] == 'team option':
                 # Uses previous year WAR, not prediction
                 if remaining_payouts[0]['value'] / player['player'].get_war() > DOLLAR_PER_WAR:
+                    continue
+            elif remaining_payouts[0]['type'] == 'player option':
+                # Opposite of team option
+                if remaining_payouts[0]['value'] / player['player'].get_war() < DOLLAR_PER_WAR:
                     continue
             elif remaining_payouts[0]['type'] == 'mutual option':
                 continue
@@ -262,9 +266,9 @@ class Team:
         for _ in range(num_signings):
             age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
             if age < 20:
-                eta = np.random.choice(np.arange(1, 7), 1, p=[.0, .005, .005, .05, 0.09, 0.85])[0]
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.005, .01, .05, .25, .335, .35])[0]
             else:
-                eta = np.random.choice(np.arange(1, 7), 1, p=[.015, .025, 0.08, 0.18, .39, .31])[0]
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.01, .05, .35, .25, .24, .10])[0]
             position = random.random() > .5
             # Based on The Board distribution
             fv = 5 * np.random.choice(np.arange(7, 14), 1, p=[.31, .50, 0.10, 0.06, .015, .01, .005])[0]
@@ -315,19 +319,19 @@ class Team:
             age = np.random.choice(np.arange(17, 24), 1, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])[0]
             # Different ETA rules for college vs. high school
             if age < 20:
-                eta = np.random.choice(np.arange(1, 7), 1, p=[.0, .005, .005, .05, 0.09, 0.85])[0]
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.005, .01, .05, .25, .335, .35])[0]
             else:
-                eta = np.random.choice(np.arange(1, 7), 1, p=[.015, .025, 0.08, 0.18, .39, .31])[0]
+                eta = np.random.choice(np.arange(1, 7), 1, p=[.01, .05, .35, .25, .24, .10])[0]
 
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " D" + str(r))
             self.prospects.append(prospect)
 
     # Adds new prospects from draft and J2 – only top prospects
     def add_new_prospects(self):
-        # Assumes each team picks 6 players - only looking for top prospects here (simulating Fangraphs' The Board)
-        self.add_draft_picks(6)
+        # Assumes each team picks 5 players - only looking for top prospects here (simulating Fangraphs' The Board)
+        self.add_draft_picks(5)
         # Based on analysis, draft prospects outnumber J2 signings close to 1.7-1
-        self.add_ifas(random.randint(3, 4))
+        self.add_ifas(3)
 
     def run_year(self):
         self.age_players()  # Ages players by a year, gets new WAR value

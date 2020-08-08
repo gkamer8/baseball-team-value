@@ -32,6 +32,8 @@ data <- read.csv("prospect_data/total-board-data.csv")
 
 lengths(data)
 
+barplot(table(data$Sign.Yr))
+
 # How many prospects per draft?
 picks_2020 <- data[data$Sign.Mkt == "Draft" & data$Sign.Yr == 2020,]
 lengths(picks_2020)[1]; 124 / 30  # There are 124 from 2020 - not all have signed yet, though, and the draft was smaller
@@ -171,6 +173,11 @@ prop.table(tab, 1)
 barplot(table(board_2018$debut[board_2018$ETA == 2018]))
 barplot(table(board_2018$debut[board_2018$ETA == 2019]))
 barplot(table(board_2018$debut[board_2018$ETA > 2019]))
+
+lengths(board_2018)
+board_2018$Signed
+
+barplot(table(board_2018$ETA[grep("2018", board_2018$Signed)]))
 
 # FV Drift
 
