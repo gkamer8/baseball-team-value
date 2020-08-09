@@ -1,12 +1,10 @@
 import random
-import string
 import numpy as np
 import math
 from player import Player
 from prospect import Prospect, fv_walk, eta_matrix
 from aging_regression import adjust_prospect_war, predict_start_ratio_fast, predict_start_ratio, average, war_predictor_fast
 from scipy import integrate
-from statistics import mean
 
 PRE_ARB = 563_500  # salary for players in pre-arbitration
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
@@ -14,11 +12,13 @@ VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 DOLLAR_PER_WAR = 9_100_000  # market value for WAR
 # ^^^ loosely based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
+cdef float SQRT2PI = math.sqrt(2 * math.pi)
+
 # Based on Fangraphs FV to average WAR values
 
 PITCHER_FV_DICT = {
-    20: -0.1,
-    25: 0,
+    20: 0.0,
+    25: 0.0,
     30: 0.0,
     35: 0.1,
     40: 0.45,
@@ -33,7 +33,7 @@ PITCHER_FV_DICT = {
 }
 
 BATTER_FV_DICT = {
-    20: -0.1,
+    20: 0.0,
     25: 0.0,
     30: 0.0,
     35: 0.1,
@@ -49,15 +49,16 @@ BATTER_FV_DICT = {
 }
 
 # Prospect Nerf
+"""
 nerf = 0.00
 PITCHER_FV_DICT = {k: v * (1 - nerf) for k, v in PITCHER_FV_DICT.items()} 
 BATTER_FV_DICT = {k: v * (1 - nerf) for k, v in BATTER_FV_DICT.items()} 
+"""
+
 
 # function based on model from arbitration.r
-def get_arb_salary(war, age, arb_years_remaining=1):
-    new_salary = 16_639_108  # intercept
-    new_salary = new_salary - age * 357_730
-    new_salary = new_salary + war * 1_180_929
+cdef get_arb_salary(war, age, arb_years_remaining=1):
+    cdef float new_salary = 16_639_108  - age * 357_730 + war * 1_180_929
 
     if arb_years_remaining == 0:
         new_salary -= 2_729_314
@@ -178,15 +179,13 @@ class Team:
         self.prospects = new_prospects
 
     def age_prospects_fast(self):
-        num_prospects = len(self.prospects)
+        cdef int num_prospects = len(self.prospects)
         # FV Draw
         fv_draws = np.random.choice(np.arange(-2, 3), num_prospects, p=fv_walk)
         
         # ETA Draw
         eta_draws = np.random.random_sample(num_prospects)
 
-        new_prospects = []
-        eta_0s = []
         for i in range(num_prospects):
             pros = self.prospects[i]
             if pros.dead:
@@ -219,20 +218,14 @@ class Team:
                 pros.eta = 6
             else:
                 pros.dead = True
-            
-            if pros.eta == 0:
-                eta_0s.append(pros)
-            else:
-                new_prospects.append(pros)
         
-        self.prospects = new_prospects
-
+        eta_0s = list(filter(lambda x: x.eta == 0, self.prospects))
         num_new_mlbers = len(eta_0s)
         if num_new_mlbers > 0:
             new_wars = [[PITCHER_FV_DICT[pros.fv]] if pros.pitcher else [BATTER_FV_DICT[pros.fv]] for pros in eta_0s]
             startses = predict_start_ratio_fast(new_wars)
 
-            for i in range(len(eta_0s)):
+            for i in range(num_new_mlbers):
                 pros = eta_0s[i]
                 new_id = pros.name
                 new_war = new_wars[i][0]
@@ -247,6 +240,9 @@ class Team:
                                 {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}]
 
                 self.contracts.append({'player': new_player, 'payouts': new_payouts})
+        
+        self.prospects = list(filter(lambda x: x.eta != 0 and not x.dead, self.prospects))
+
 
     def get_fa_war(self):
         # note: fa_allocation could be negative!
@@ -267,11 +263,12 @@ class Team:
     # Uses analytical method – not comparison to other teams in the sim
     def get_championship_prob(self, team_war):
 
-        mu, sigma = (team_war + (162 * .294)) / 162, 0.0309  # mean and standard deviation of WL%
+        cdef float mu = (team_war + (162 * .294)) / 162
+        cdef float sigma = 0.0309  # mean and standard deviation of WL%
 
         # Argument is wl
         def integrand_wl(x):
-            y = 1 / (sigma * math.sqrt(2 * math.pi)) * math.exp(-.5 * ((x - mu) / sigma) ** 2)
+            cdef float y = 1 / (sigma * SQRT2PI) * math.exp(math.pow(-.5 * ((x - mu) / sigma), 2))
             return y
 
         # Argument is wl
@@ -283,21 +280,21 @@ class Team:
             return 1 / (1 + math.exp(-(-54.7 + 100 * x)))
 
         def integrand_div_round(x):
-            d = integrand_div(x)
+            cdef float d = integrand_div(x)
             return d + .5 * (integrand_ploffs(x) - d)
 
         # Argument is WAR
         def integrand_ws(x):
             return 1 / (1 + math.exp(-(-4.14 + 0.0472 * x)))
 
-        ws = integrand_ws(team_war)
+        cdef float ws = integrand_ws(team_war)
         # .35 to .80 for performance reasons (rather than 0 to 1)
-        div_round = integrate.quad(lambda x: integrand_div_round(x) * integrand_wl(x), 0.35, .80)[0]
+        cdef float div_round = integrate.quad(lambda x: integrand_div_round(x) * integrand_wl(x), 0.35, .80)[0]
 
         return ws * div_round
 
     def record_year(self):
-        tots = self.get_team_war()
+        cdef float tots = self.get_team_war()
         to_add = {
             'Total WAR': tots,
             'FA WAR': self.last_fa_war,
@@ -308,7 +305,7 @@ class Team:
         self.records.append(to_add)
 
     def get_contract_values(self):
-        tots = 0
+        cdef float tots = 0
         for cont in self.contracts:
             try:
                 if cont['payouts'][0]['type'] == "arb" and cont['payouts'][0]['value'] is None:
@@ -360,7 +357,7 @@ class Team:
     # Add july 2nd signings
     def add_ifas(self, num_signings):
         
-        ages = np.random.choice(np.arange(17, 24), num_signings, p=[.94, .01, .01, .01, .01, .01, .01])
+        ages = np.random.choice(np.arange(17, 24), num_signings, p=[.94, 0.01, 0.01, 0.01, 0.01, 0.01, 0.01])
         etas_young = np.random.choice(np.arange(1, 7), num_signings, p=[.005, .01, .05, .25, .335, .35])
         etas_old = np.random.choice(np.arange(1, 7), num_signings, p=[.01, .05, .35, .25, .24, .10])
         positions = np.random.random_sample(num_signings)
@@ -379,14 +376,15 @@ class Team:
         # Values inferred from: https://blogs.fangraphs.com/an-update-to-prospect-valuation/
         # and https://academicworks.cuny.edu/cgi/viewcontent.cgi?article=1759&context=cc_etds_theses
 
-        try:
-            most_recent_war = self.records[-1]['Total WAR']
-        except IndexError:
+        cdef float most_recent_war
+        if len(self.records) == 0:
             # Probably because you're adding fake draft prospects before sim
             most_recent_war = 35  # average team
+        else:
+            most_recent_war = self.records[-1]['Total WAR']
 
         # Note: this line should be replaced with the real win loss if that's calculated in the sim
-        wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
+        cdef float wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
 
         # Based on empirical analysis
         if wl < .395:
@@ -400,10 +398,13 @@ class Team:
         else:
             pick = 28  # is actually 28-30
 
-        ages = np.random.choice(np.arange(17, 24), num_picks, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])
+        ages = np.random.choice(np.arange(17, 24), num_picks, p=[.05, .28, .04, .06, .55, .01, .01])
         etas_young = np.random.choice(np.arange(1, 7), num_picks, p=[.005, .01, .05, .25, .335, .35])
         etas_old = np.random.choice(np.arange(1, 7), num_picks, p=[.01, .05, .35, .25, .24, .10])
 
+        cdef int pick_num
+        cdef int age
+        cdef int eta
         for r in range(starting_round - 1, num_picks + starting_round - 1):
             position = random.random() > .5
 
@@ -426,13 +427,6 @@ class Team:
             prospect = Prospect(eta, fv, age, position, name=f"{int(random.random() * 100000)} D{r}")
             self.prospects.append(prospect)
 
-    # Adds new prospects from draft and J2 – only top prospects
-    def add_new_prospects(self):
-        # Assumes each team picks 5 players - only looking for top prospects here (simulating Fangraphs' The Board)
-        self.add_draft_picks(5)
-        # Based on analysis, draft prospects outnumber J2 signings close to 1.7-1
-        self.add_ifas(3)
-
     def run_year(self):
         self.age_players_fast()  # Ages players by a year, gets new WAR value
         self.age_prospects_fast()  # Ages prospects, develops by a year, adds to MLB if needed
@@ -444,7 +438,10 @@ class Team:
         self.record_year()  # Collects WAR for players, prospects, and FA
         self.update_contracts()  # Progresses contracts by a year
 
-        self.add_new_prospects()  # Conducts draft and J2 signings
+        # Assumes each team picks 5 players - only looking for top prospects here (simulating Fangraphs' The Board)
+        self.add_draft_picks(5)
+        # Based on analysis, draft prospects outnumber J2 signings close to 1.7-1
+        self.add_ifas(3)
 
     def run_years(self, num_years):
         for _ in range(num_years):
