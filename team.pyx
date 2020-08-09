@@ -6,7 +6,7 @@ from prospect import Prospect, fv_walk, eta_matrix
 from aging_regression import adjust_prospect_war, predict_start_ratio_fast, predict_start_ratio, average, war_predictor_fast
 from scipy import integrate
 
-cdef int PRE_ARB = 563_500  # salary for players in pre-arbitration
+PRE_ARB = 563_500  # salary for players in pre-arbitration
 cdef float VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
 cdef int DOLLAR_PER_WAR = 9_100_000  # market value for WAR
