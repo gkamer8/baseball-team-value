@@ -6,13 +6,13 @@ from prospect import Prospect, fv_walk, eta_matrix
 from aging_regression import adjust_prospect_war, predict_start_ratio_fast, predict_start_ratio, average, war_predictor_fast
 from scipy import integrate
 
-PRE_ARB = 563_500  # salary for players in pre-arbitration
-VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
+cdef int PRE_ARB = 563_500  # salary for players in pre-arbitration
+cdef float VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-DOLLAR_PER_WAR = 9_100_000  # market value for WAR
+cdef int DOLLAR_PER_WAR = 9_100_000  # market value for WAR
 # ^^^ loosely based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
-SQRT2PI = math.sqrt(2 * math.pi)
+cdef float SQRT2PI = math.sqrt(2 * math.pi)
 
 # Based on Fangraphs FV to average WAR values
 
@@ -179,7 +179,7 @@ class Team:
         self.prospects = new_prospects
 
     def age_prospects_fast(self):
-        cdef int num_prospects = len(self.prospects)
+        num_prospects = len(self.prospects)
         # FV Draw
         fv_draws = np.random.choice(np.arange(-2, 3), num_prospects, p=fv_walk)
         
@@ -400,13 +400,12 @@ class Team:
         ages = np.random.choice(np.arange(17, 24), num_picks, p=[.05, .28, .04, .06, .55, .01, .01])
         etas_young = np.random.choice(np.arange(1, 7), num_picks, p=[.005, .01, .05, .25, .335, .35])
         etas_old = np.random.choice(np.arange(1, 7), num_picks, p=[.01, .05, .35, .25, .24, .10])
+        positions = np.random.random_sample(num_picks)
 
         cdef int pick_num
         cdef int age
         cdef int eta
         for r in range(starting_round - 1, num_picks + starting_round - 1):
-            position = random.random() > .5
-
             pick_num = pick * r
             if pick_num <= 2:
                 fv = 60
@@ -419,10 +418,13 @@ class Team:
             else:
                 fv = 40
 
+            i = r - starting_round + 1
+
+            position = positions[i] > .5
             # Loosely based off of 2020 figures so far
-            age = ages[r - starting_round + 1]
+            age = ages[i]
             # Different ETA rules for college vs. high school
-            eta = etas_young[r - starting_round + 1] if age < 20 else etas_old[r - starting_round + 1]
+            eta = etas_young[i] if age < 20 else etas_old[i]
             prospect = Prospect(eta, fv, age, position, name=f"{int(random.random() * 100000)} D{r}")
             self.prospects.append(prospect)
 
