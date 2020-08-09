@@ -6,6 +6,7 @@ import time
 import json
 from copy import deepcopy
 from parse_sims import print_first_year_payrolls, print_average_championships, print_average_sources, print_average_wl, export_championships_per_team_per_year, export_team_values
+from league import League
 
 parser = argparse.ArgumentParser(description='Value franchises by discounting championships')
 
@@ -72,11 +73,15 @@ def sim_wrapper(func):
 @sim_wrapper
 def sim_run(filename, teams=DEFAULT_TEAMS):
     team_records = dict()
+
     teams = deepcopy(teams)
+    league = League(teams)
+
     num_years = args.y
 
-    for team in teams:
-        team.run_years(num_years)
+    league.run_years(num_years)
+    
+    for team in league.teams:
         team_records[team.name] = team.records
 
     with open(f"{args.s}/{filename}", "w") as outfile:

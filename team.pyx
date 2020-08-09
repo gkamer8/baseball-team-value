@@ -14,6 +14,9 @@ cdef int DOLLAR_PER_WAR = 9_100_000  # market value for WAR
 
 cdef float SQRT2PI = math.sqrt(2 * math.pi)
 
+DRAFT_PICKS = 5
+J2_SIGNINGS = 3
+
 # Based on Fangraphs FV to average WAR values
 
 PITCHER_FV_DICT = {
@@ -440,9 +443,9 @@ class Team:
         self.update_contracts()  # Progresses contracts by a year
 
         # Assumes each team picks 5 players - only looking for top prospects here (simulating Fangraphs' The Board)
-        self.add_draft_picks(5)
+        self.add_draft_picks(DRAFT_PICKS)
         # Based on analysis, draft prospects outnumber J2 signings close to 1.7-1
-        self.add_ifas(3)
+        self.add_ifas(J2_SIGNINGS)
 
     def run_years(self, num_years):
         for _ in range(num_years):
