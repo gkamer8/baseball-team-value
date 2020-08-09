@@ -163,7 +163,7 @@ class Team:
                 new_id = prospect.name
                 new_war = PITCHER_FV_DICT[prospect.fv] if prospect.pitcher else BATTER_FV_DICT[prospect.fv]
                 starts = predict_start_ratio(new_war)
-                new_war = [adjust_prospect_war(new_war, prospect.age, prospect.pitcher) - .25]
+                new_war = [adjust_prospect_war(new_war, prospect.age, prospect.pitcher)]
                 new_player = Player(new_id, new_war, prospect.age, prospect.pitcher, starts, name=prospect.name,
                                     sim_grown=True)
 
@@ -197,23 +197,27 @@ class Team:
             pros.fv = min(max(pros.fv + 5 * fv_draws[i], 20), 80)
             eta_draw = eta_draws[i]
             
-            if eta_draw < eta_matrix[pros.eta][0]:
+            eta_sums = list()
+            prev_sum = 0  # memoization
+            for i in range(8):
+                prev_sum += eta_matrix[pros.eta][i]
+                eta_sums.append(prev_sum)
+
+            if eta_draw < eta_sums[0]:
                 pros.eta = 0
-            elif eta_draw < sum(eta_matrix[pros.eta][0:2]):
+            elif eta_draw < eta_sums[1]:
                 pros.eta = 1
-            elif eta_draw < sum(eta_matrix[pros.eta][0:3]):
+            elif eta_draw < eta_sums[2]:
                 pros.eta = 2
-            elif eta_draw < sum(eta_matrix[pros.eta][0:4]):
+            elif eta_draw < eta_sums[3]:
                 pros.eta = 3
-            elif eta_draw < sum(eta_matrix[pros.eta][0:5]):
+            elif eta_draw < eta_sums[4]:
                 pros.eta = 4
-            elif eta_draw < sum(eta_matrix[pros.eta][0:6]):
+            elif eta_draw < eta_sums[5]:
                 pros.eta = 5
-            elif eta_draw < sum(eta_matrix[pros.eta][0:7]):
+            elif eta_draw < eta_sums[6]:
                 pros.eta = 6
-            elif eta_draw < sum(eta_matrix[pros.eta][0:8]):
-                pros.eta = 7
-            elif eta_draw < sum(eta_matrix[pros.eta][0:]):
+            else:
                 pros.dead = True
             
             if pros.eta == 0:
@@ -233,7 +237,7 @@ class Team:
                 new_id = pros.name
                 new_war = new_wars[i][0]
                 starts = min(startses[i], 1)
-                new_war = [adjust_prospect_war(new_war, pros.age, pros.pitcher) - .25]
+                new_war = [adjust_prospect_war(new_war, pros.age, pros.pitcher)]
                 new_player = Player(new_id, new_war, pros.age, pros.pitcher, starts, name=pros.name,
                                     sim_grown=True)
 
@@ -262,6 +266,7 @@ class Team:
     
     # Uses analytical method – not comparison to other teams in the sim
     def get_championship_prob(self, team_war):
+
         mu, sigma = (team_war + (162 * .294)) / 162, 0.0309  # mean and standard deviation of WL%
 
         # Argument is wl
@@ -286,7 +291,8 @@ class Team:
             return 1 / (1 + math.exp(-(-4.14 + 0.0472 * x)))
 
         ws = integrand_ws(team_war)
-        div_round = integrate.quad(lambda x: integrand_div_round(x) * integrand_wl(x), 0, 1)[0]
+        # .35 to .80 for performance reasons (rather than 0 to 1)
+        div_round = integrate.quad(lambda x: integrand_div_round(x) * integrand_wl(x), 0.35, .80)[0]
 
         return ws * div_round
 
@@ -295,7 +301,7 @@ class Team:
         to_add = {
             'Total WAR': tots,
             'FA WAR': self.last_fa_war,
-            'Sim Prospect WAR': sum([(x['player'].wars[-1] if x['player'].sim_grown else 0) for x in self.contracts]),
+            'Sim Prospect WAR': sum([(x['player'].wars[-1]) for x in self.contracts if x['player'].sim_grown]),
             'Max Payroll': self.max_payroll,
             'Championship Probability': self.get_championship_prob(tots)
         }
@@ -353,15 +359,19 @@ class Team:
 
     # Add july 2nd signings
     def add_ifas(self, num_signings):
-        for _ in range(num_signings):
-            age = np.random.choice(np.arange(17, 24), 1, p=[.94, .01, .01, .01, .01, .01, .01])[0]
-            if age < 20:
-                eta = np.random.choice(np.arange(1, 7), 1, p=[.005, .01, .05, .25, .335, .35])[0]
-            else:
-                eta = np.random.choice(np.arange(1, 7), 1, p=[.01, .05, .35, .25, .24, .10])[0]
-            position = random.random() > .5
+        
+        ages = np.random.choice(np.arange(17, 24), num_signings, p=[.94, .01, .01, .01, .01, .01, .01])
+        etas_young = np.random.choice(np.arange(1, 7), num_signings, p=[.005, .01, .05, .25, .335, .35])
+        etas_old = np.random.choice(np.arange(1, 7), num_signings, p=[.01, .05, .35, .25, .24, .10])
+        positions = np.random.random_sample(num_signings)
+        fvs = np.random.choice(np.arange(7, 14), num_signings, p=[.31, .50, 0.10, 0.06, .015, .01, .005])
+
+        for i in range(num_signings):
+            age = ages[i]
+            eta = etas_young[i] if age < 20 else etas_old[i]
+            position = positions[i] < .5
             # Based on The Board distribution
-            fv = 5 * np.random.choice(np.arange(7, 14), 1, p=[.31, .50, 0.10, 0.06, .015, .01, .005])[0]
+            fv = 5 * fvs[i]
             prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " J2")
             self.prospects.append(prospect)
 
@@ -390,7 +400,11 @@ class Team:
         else:
             pick = 28  # is actually 28-30
 
-        for r in range(starting_round - 1, num_picks):
+        ages = np.random.choice(np.arange(17, 24), num_picks, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])
+        etas_young = np.random.choice(np.arange(1, 7), num_picks, p=[.005, .01, .05, .25, .335, .35])
+        etas_old = np.random.choice(np.arange(1, 7), num_picks, p=[.01, .05, .35, .25, .24, .10])
+
+        for r in range(starting_round - 1, num_picks + starting_round - 1):
             position = random.random() > .5
 
             pick_num = pick * r
@@ -406,14 +420,10 @@ class Team:
                 fv = 40
 
             # Loosely based off of 2020 figures so far
-            age = np.random.choice(np.arange(17, 24), 1, p=[6/124, 34/124, 4/124, 8/124, 69/124, 2/124, 1/124])[0]
+            age = ages[r - starting_round + 1]
             # Different ETA rules for college vs. high school
-            if age < 20:
-                eta = np.random.choice(np.arange(1, 7), 1, p=[.005, .01, .05, .25, .335, .35])[0]
-            else:
-                eta = np.random.choice(np.arange(1, 7), 1, p=[.01, .05, .35, .25, .24, .10])[0]
-
-            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " D" + str(r))
+            eta = etas_young[r - starting_round + 1] if age < 20 else etas_old[r - starting_round + 1]
+            prospect = Prospect(eta, fv, age, position, name=f"{int(random.random() * 100000)} D{r}")
             self.prospects.append(prospect)
 
     # Adds new prospects from draft and J2 – only top prospects

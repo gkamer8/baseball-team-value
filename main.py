@@ -1,8 +1,10 @@
 import argparse
+import multiprocessing as mp
 import os
 from load_all_teams import create_team, team_list
 import time
 import json
+from copy import deepcopy
 from parse_sims import print_first_year_payrolls, print_average_championships, print_average_sources, print_average_wl, export_championships_per_team_per_year, export_team_values
 
 parser = argparse.ArgumentParser(description='Value franchises by discounting championships')
@@ -45,6 +47,8 @@ args = parser.parse_args()
 
 DEFAULT_SIM_PATH = 'simulations'
 
+DEFAULT_TEAMS = [create_team(team) for team in team_list]
+
 # Create folder for sims if needed
 if args.s is None:
     args.s = DEFAULT_SIM_PATH
@@ -66,10 +70,10 @@ def sim_wrapper(func):
 
 # Creates JSON file with records for each year of the sim stored by team
 @sim_wrapper
-def sim_run(filename):
+def sim_run(filename, teams=DEFAULT_TEAMS):
     team_records = dict()
-    teams = [create_team(team) for team in team_list]
-    num_years = 15
+    teams = deepcopy(teams)
+    num_years = args.y
 
     for team in teams:
         team.run_years(num_years)

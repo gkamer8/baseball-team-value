@@ -50,4 +50,5 @@ team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 
              'tigers', 'astros', 'royals', 'angels', 'dodgers', 'marlins', 'brewers', 'twins', 'mets',
              'yankees', 'athletics', 'phillies', 'pirates', 'padres', 'giants', 'mariners', 'cardinals',
              'rays', 'rangers', 'bluejays', 'nationals']
-team_list1 = ['dodgers']
+
+# team_list = ['dodgers']
