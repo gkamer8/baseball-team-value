@@ -297,12 +297,13 @@ class Team:
 
     def record_year(self):
         cdef float tots = self.get_team_war()
+        cdef float cprob = self.get_championship_prob(tots)
         to_add = {
             'Total WAR': tots,
             'FA WAR': self.last_fa_war,
             'Sim Prospect WAR': sum([(x['player'].wars[-1]) for x in self.contracts if x['player'].sim_grown]),
             'Max Payroll': self.max_payroll,
-            'Championship Probability': self.get_championship_prob(tots)
+            'Championship Probability': cprob
         }
         self.records.append(to_add)
 
