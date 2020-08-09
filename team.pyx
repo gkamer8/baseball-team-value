@@ -12,7 +12,7 @@ VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 DOLLAR_PER_WAR = 9_100_000  # market value for WAR
 # ^^^ loosely based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
-cdef float SQRT2PI = math.sqrt(2 * math.pi)
+SQRT2PI = math.sqrt(2 * math.pi)
 
 # Based on Fangraphs FV to average WAR values
 
@@ -58,14 +58,14 @@ BATTER_FV_DICT = {k: v * (1 - nerf) for k, v in BATTER_FV_DICT.items()}
 
 # function based on model from arbitration.r
 cdef get_arb_salary(war, age, arb_years_remaining=1):
-    cdef float new_salary = 16_639_108  - age * 357_730 + war * 1_180_929
+    cdef float new_salary = 16639108  - age * 357730 + war * 1180929
 
     if arb_years_remaining == 0:
-        new_salary -= 2_729_314
+        new_salary -= 2729314
     elif arb_years_remaining == 1:
-        new_salary -= 3_840_663
+        new_salary -= 3840663
     elif arb_years_remaining >= 2:
-        new_salary -= 5_810_577
+        new_salary -= 5810577
 
     return new_salary
     
@@ -263,13 +263,12 @@ class Team:
     # Uses analytical method – not comparison to other teams in the sim
     def get_championship_prob(self, team_war):
 
-        cdef float mu = (team_war + (162 * .294)) / 162
-        cdef float sigma = 0.0309  # mean and standard deviation of WL%
+        mu = (team_war + (162 * .294)) / 162
+        sigma = 0.0309  # mean and standard deviation of WL%
 
         # Argument is wl
         def integrand_wl(x):
-            cdef float y = 1 / (sigma * SQRT2PI) * math.exp(math.pow(-.5 * ((x - mu) / sigma), 2))
-            return y
+            return 1 / (sigma * SQRT2PI) * math.exp(-.5 * math.pow((x - mu) / sigma, 2))
 
         # Argument is wl
         def integrand_div(x):
@@ -280,16 +279,16 @@ class Team:
             return 1 / (1 + math.exp(-(-54.7 + 100 * x)))
 
         def integrand_div_round(x):
-            cdef float d = integrand_div(x)
+            d = integrand_div(x)
             return d + .5 * (integrand_ploffs(x) - d)
 
         # Argument is WAR
         def integrand_ws(x):
             return 1 / (1 + math.exp(-(-4.14 + 0.0472 * x)))
 
-        cdef float ws = integrand_ws(team_war)
+        ws = integrand_ws(team_war)
         # .35 to .80 for performance reasons (rather than 0 to 1)
-        cdef float div_round = integrate.quad(lambda x: integrand_div_round(x) * integrand_wl(x), 0.35, .80)[0]
+        div_round = integrate.quad(lambda x: integrand_div_round(x) * integrand_wl(x), 0.35, .80)[0]
 
         return ws * div_round
 
