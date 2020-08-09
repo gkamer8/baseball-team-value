@@ -13,6 +13,7 @@ import math
 import matplotlib.pyplot as plt
 import scipy
 import pickle
+import numpy as np
 
 """
 
@@ -315,6 +316,7 @@ start_model = pickle.load(open(st_model, 'rb'))
 start_scaler = pickle.load(open(st_scaler, 'rb'))
 
 
+# Note: war_predictor_fast exists
 def war_predictor(age, war, average, pitching, start_ratio):
     if pitching:
         return pitch_model.predict(scp.transform([[age, war, average, start_ratio]]))[0]
@@ -322,16 +324,15 @@ def war_predictor(age, war, average, pitching, start_ratio):
         return bat_model.predict(scb.transform([[age, war, average]]))[0]
 
 
+def war_predictor_fast(pitchers, batters):
+    return pitch_model.predict(scp.transform(pitchers)), bat_model.predict(scb.transform(batters))
+
+
 def error_predictor(pitcher, war):
-    num = random.uniform(0, 1)
-    if num > -1:
-        war = war_mapper(war)
-        if pitcher:
-            return random.choice(residualsp[war])
-        else:
-            return random.choice(residualsb[war])
-    else:
-        return 0
+    war = war_mapper(war)
+    if pitcher:
+        return random.choice(residualsp[war])
+    return random.choice(residualsb[war])    
 
 
 def adjust_prospect_war(war, age, pitcher):
@@ -341,7 +342,11 @@ def adjust_prospect_war(war, age, pitcher):
         return war - adjust_pitchers[age]
 
 
+# Note: predict_start_ratio_fast exists
 def predict_start_ratio(average_war):
     return min(1, start_model.predict(start_scaler.transform([[average_war]]))[0])
 
+
+def predict_start_ratio_fast(average_wars):
+    return start_model.predict(start_scaler.transform(average_wars))
 

@@ -26,6 +26,7 @@ class Player:
 
         self.sim_grown = sim_grown  # For record keeping – whether player comes from sim
 
+    # Note: This function does not get called if using age_players_fast
     def progress(self):
         self.age += 1
         self.wars.append(war_predictor(self.age, self.wars[-1], average(self.wars), self.pitcher, self.start_ratio))

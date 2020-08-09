@@ -1,6 +1,20 @@
 import random
 import numpy as np
 
+#           -2     -1      0      1      2
+fv_walk = [.15,   .25,   .50,   .09,   .01]
+
+eta_matrix = [[] for _ in range(8)]
+#                MLB     1       2       3       4       5       6       DEAD
+eta_matrix[0] = [1.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00]  # MLB
+eta_matrix[1] = [0.75,   0.15,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 1 year out
+eta_matrix[2] = [0.10,   0.80,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 2 years out
+eta_matrix[3] = [0.00,   0.15,   0.75,   0.00,   0.00,   0.00,   0.00,   0.10]  # 3 years out
+eta_matrix[4] = [0.00,   0.00,   0.10,   0.75,   0.00,   0.00,   0.00,   0.15]  # 4 years out
+eta_matrix[5] = [0.00,   0.00,   0.00,   0.10,   0.75,   0.00,   0.00,   0.15]  # 5 years out
+eta_matrix[6] = [0.00,   0.00,   0.00,   0.00,   0.10,   0.75,   0.00,   0.15]  # 6 years out
+eta_matrix[7] = [0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   1.00]  # Dead
+
 class Prospect:
 
     """
@@ -26,30 +40,18 @@ class Prospect:
 
     # Develop one year
     # Process is loosely based on historical data from Fangraphs scouting results
+    # Note: replaced in age_prospects_fast in Team
     def develop(self):
         self.age += 1  # Prospect ages 1 year
 
         # Evolve FV
-        # Random walk with probabilities below
-        #           -2     -1      0      1      2
-        fv_walk = [.15,   .25,   .50,   .09,   .01]
+        # Random walk with probabilities above
         fv_draw = np.random.choice(5, 1, p=fv_walk)[0]
         fv_draw -= 2
         self.fv = min(max(self.fv + fv_draw * 5, 20), 80)
 
         # Evolve ETA
-        # Markov process with matrix below
-
-        eta_matrix = [[] for _ in range(8)]
-        #                MLB     1       2       3       4       5       6       DEAD
-        eta_matrix[0] = [1.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00]  # MLB
-        eta_matrix[1] = [0.75,   0.15,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 1 year out
-        eta_matrix[2] = [0.10,   0.80,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 2 years out
-        eta_matrix[3] = [0.00,   0.15,   0.75,   0.00,   0.00,   0.00,   0.00,   0.10]  # 3 years out
-        eta_matrix[4] = [0.00,   0.00,   0.10,   0.75,   0.00,   0.00,   0.00,   0.15]  # 4 years out
-        eta_matrix[5] = [0.00,   0.00,   0.00,   0.10,   0.75,   0.00,   0.00,   0.15]  # 5 years out
-        eta_matrix[6] = [0.00,   0.00,   0.00,   0.00,   0.10,   0.75,   0.00,   0.15]  # 6 years out
-        eta_matrix[7] = [0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   1.00]  # Dead
+        # Markov process with matrix above
 
         # If a row doesn't sum to one, tell me which
         for i in range(len(eta_matrix)):

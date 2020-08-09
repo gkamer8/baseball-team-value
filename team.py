@@ -3,9 +3,10 @@ import string
 import numpy as np
 import math
 from player import Player
-from prospect import Prospect
-from aging_regression import adjust_prospect_war, predict_start_ratio
+from prospect import Prospect, fv_walk, eta_matrix
+from aging_regression import adjust_prospect_war, predict_start_ratio_fast, predict_start_ratio, average, war_predictor_fast
 from scipy import integrate
+from statistics import mean
 
 PRE_ARB = 563_500  # salary for players in pre-arbitration
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
@@ -126,6 +127,28 @@ class Team:
     def age_players(self):
         for player in self.contracts:
             player['player'].progress()
+    
+    # A version of age players that does not rely on the player.develop() function
+    # Speeds up the process by getting WAR for all players on a team at the same time
+    def age_players_fast(self):
+        
+        # Add one to all ages before getting WAR
+        for cont in self.contracts:
+            cont['player'].age += 1
+
+        pitcher_args = [[x['player'].age, x['player'].wars[-1], average(x['player'].wars), x['player'].start_ratio] for x in self.contracts if x['player'].pitcher]
+        batter_args = [[x['player'].age, x['player'].wars[-1], average(x['player'].wars)] for x in self.contracts if not x['player'].pitcher]
+
+        all_wars = war_predictor_fast(pitcher_args, batter_args)
+        pitcher_i = 0
+        batter_i = 0
+        for i in range(len(self.contracts)):
+            if self.contracts[i]['player'].pitcher:
+                self.contracts[i]['player'].wars.append(all_wars[0][pitcher_i])
+                pitcher_i += 1
+            else:
+                self.contracts[i]['player'].wars.append(all_wars[1][batter_i])
+                batter_i += 1
 
     def add_player_variance(self):
         for player in self.contracts:
@@ -153,6 +176,73 @@ class Team:
             elif not prospect.dead:
                 new_prospects.append(prospect)
         self.prospects = new_prospects
+
+    def age_prospects_fast(self):
+        num_prospects = len(self.prospects)
+        # FV Draw
+        fv_draws = np.random.choice(np.arange(-2, 3), num_prospects, p=fv_walk)
+        
+        # ETA Draw
+        eta_draws = np.random.random_sample(num_prospects)
+
+        new_prospects = []
+        eta_0s = []
+        for i in range(num_prospects):
+            pros = self.prospects[i]
+            if pros.dead:
+                continue
+            
+            pros.age += 1
+
+            pros.fv = min(max(pros.fv + 5 * fv_draws[i], 20), 80)
+            eta_draw = eta_draws[i]
+            
+            if eta_draw < eta_matrix[pros.eta][0]:
+                pros.eta = 0
+            elif eta_draw < sum(eta_matrix[pros.eta][0:2]):
+                pros.eta = 1
+            elif eta_draw < sum(eta_matrix[pros.eta][0:3]):
+                pros.eta = 2
+            elif eta_draw < sum(eta_matrix[pros.eta][0:4]):
+                pros.eta = 3
+            elif eta_draw < sum(eta_matrix[pros.eta][0:5]):
+                pros.eta = 4
+            elif eta_draw < sum(eta_matrix[pros.eta][0:6]):
+                pros.eta = 5
+            elif eta_draw < sum(eta_matrix[pros.eta][0:7]):
+                pros.eta = 6
+            elif eta_draw < sum(eta_matrix[pros.eta][0:8]):
+                pros.eta = 7
+            elif eta_draw < sum(eta_matrix[pros.eta][0:]):
+                pros.dead = True
+            
+            if pros.eta == 0:
+                eta_0s.append(pros)
+            else:
+                new_prospects.append(pros)
+        
+        self.prospects = new_prospects
+
+        num_new_mlbers = len(eta_0s)
+        if num_new_mlbers > 0:
+            new_wars = [[PITCHER_FV_DICT[pros.fv]] if pros.pitcher else [BATTER_FV_DICT[pros.fv]] for pros in eta_0s]
+            startses = predict_start_ratio_fast(new_wars)
+
+            for i in range(len(eta_0s)):
+                pros = eta_0s[i]
+                new_id = pros.name
+                new_war = new_wars[i][0]
+                starts = min(startses[i], 1)
+                new_war = [adjust_prospect_war(new_war, pros.age, pros.pitcher) - .25]
+                new_player = Player(new_id, new_war, pros.age, pros.pitcher, starts, name=pros.name,
+                                    sim_grown=True)
+
+                # Three years of pre-arb, three years of arb
+                new_payouts = [{'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'pre-arb', 'value': PRE_ARB},
+                                {'type': 'pre-arb', 'value': PRE_ARB}, {'type': 'arb', 'value': None},
+                                {'type': 'arb', 'value': None}, {'type': 'arb', 'value': None}]
+
+                self.contracts.append({'player': new_player, 'payouts': new_payouts})
 
     def get_fa_war(self):
         # note: fa_allocation could be negative!
@@ -334,8 +424,8 @@ class Team:
         self.add_ifas(3)
 
     def run_year(self):
-        self.age_players()  # Ages players by a year, gets new WAR value
-        self.age_prospects()  # Ages prospects, develops by a year, adds to MLB if needed
+        self.age_players_fast()  # Ages players by a year, gets new WAR value
+        self.age_prospects_fast()  # Ages prospects, develops by a year, adds to MLB if needed
         self.add_player_variance()  # Adds in-season noise
 
         if self.max_payroll is None:

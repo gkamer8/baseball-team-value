@@ -177,7 +177,7 @@ barplot(table(board_2018$debut[board_2018$ETA > 2019]))
 lengths(board_2018)
 board_2018$Signed
 
-barplot(table(board_2018$ETA[grep("2018", board_2018$Signed)]))
+barplot(table(board_2018$ETA[grep("2017", board_2018$Signed)]))
 
 # FV Drift
 
