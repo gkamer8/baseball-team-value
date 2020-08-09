@@ -2,7 +2,8 @@ from aging_regression import war_predictor, average, error_predictor
 import cython
 
 
-class Player:
+# Note: Converting Player to a cdef class makes a good difference
+cdef class Player:
 
     """
 
@@ -15,6 +16,14 @@ class Player:
     6. start_ratio (float) | Percent of games in which player will/has started at pitcher
 
     """
+
+    cdef public list wars
+    cdef public int age
+    cdef public int pitcher
+    cdef public str id
+    cdef public str name
+    cdef public float start_ratio
+    cdef public int sim_grown
 
     def __init__(self, id, wars, age, position, start_ratio, name="", sim_grown=False):
         self.wars = wars

@@ -28,7 +28,7 @@ class League:
                 else:
                     batter_args.append([play.age, play.wars[-1], average(play.wars)])
 
-        all_wars = war_predictor_fast(pitcher_args, batter_args)
+        all_wars = list(war_predictor_fast(pitcher_args, batter_args))
 
         all_batters_index = 0
         all_pitchers_index = 0
@@ -65,8 +65,8 @@ class League:
 
                 eta_sums = list()
                 prev_sum = 0  # memoization
-                for i in range(8):
-                    prev_sum += eta_matrix[pros.eta][i]
+                for k in range(8):
+                    prev_sum += eta_matrix[pros.eta][k]
                     eta_sums.append(prev_sum)
 
                 if eta_draw < eta_sums[0]:
@@ -91,7 +91,6 @@ class League:
             if num_new_mlbers > 0:
                 new_wars = [[PITCHER_FV_DICT[pros.fv]] if pros.pitcher else [BATTER_FV_DICT[pros.fv]] for pros in eta_0s]
                 startses = predict_start_ratio_fast(new_wars)
-
                 for i in range(num_new_mlbers):
                     pros = eta_0s[i]
                     new_id = pros.name

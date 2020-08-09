@@ -2,20 +2,22 @@ import random
 import numpy as np
 
 #           -2     -1      0      1      2
-fv_walk = [.15,   .25,   .50,   .09,   .01]
+fv_walk = [.15,   .30,   .50,   .0475,   .0025]
 
 eta_matrix = [[] for _ in range(8)]
 #                MLB     1       2       3       4       5       6       DEAD
 eta_matrix[0] = [1.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00]  # MLB
-eta_matrix[1] = [0.75,   0.15,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 1 year out
-eta_matrix[2] = [0.10,   0.80,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 2 years out
+eta_matrix[1] = [0.65,   0.25,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 1 year out
+eta_matrix[2] = [0.05,   0.85,   0.00,   0.00,   0.00,   0.00,   0.00,   0.10]  # 2 years out
 eta_matrix[3] = [0.00,   0.15,   0.75,   0.00,   0.00,   0.00,   0.00,   0.10]  # 3 years out
-eta_matrix[4] = [0.00,   0.00,   0.10,   0.75,   0.00,   0.00,   0.00,   0.15]  # 4 years out
-eta_matrix[5] = [0.00,   0.00,   0.00,   0.10,   0.75,   0.00,   0.00,   0.15]  # 5 years out
-eta_matrix[6] = [0.00,   0.00,   0.00,   0.00,   0.10,   0.75,   0.00,   0.15]  # 6 years out
+eta_matrix[4] = [0.00,   0.00,   0.10,   0.75,   0.00,   0.00,   0.00,   0.10]  # 4 years out
+eta_matrix[5] = [0.00,   0.00,   0.00,   0.10,   0.75,   0.00,   0.00,   0.10]  # 5 years out
+eta_matrix[6] = [0.00,   0.00,   0.00,   0.00,   0.10,   0.75,   0.00,   0.10]  # 6 years out
 eta_matrix[7] = [0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   0.00,   1.00]  # Dead
 
-class Prospect:
+
+# Note: Converting Prospect to a cdef class is a non-trivial improvement
+cdef class Prospect:
 
     """
 
@@ -28,6 +30,13 @@ class Prospect:
     6. name - (string) | Optional name of prospect
 
     """
+
+    cdef public int eta
+    cdef public int fv
+    cdef public int dead
+    cdef public int age
+    cdef public int pitcher
+    cdef public str name
 
     def __init__(self, eta, fv, age, pitcher, name=""):
         self.eta = eta

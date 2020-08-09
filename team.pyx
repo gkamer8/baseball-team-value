@@ -7,9 +7,9 @@ from aging_regression import adjust_prospect_war, predict_start_ratio_fast, pred
 from scipy import integrate
 
 PRE_ARB = 563_500  # salary for players in pre-arbitration
-cdef float VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
+VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
 
-cdef int DOLLAR_PER_WAR = 9_100_000  # market value for WAR
+DOLLAR_PER_WAR = 7_500_000  # market value for WAR
 # ^^^ loosely based on this research: https://blogs.fangraphs.com/the-cost-of-a-win-in-free-agency-in-2020/
 
 cdef float SQRT2PI = math.sqrt(2 * math.pi)
@@ -53,15 +53,14 @@ BATTER_FV_DICT = {
 
 # Prospect Nerf
 """
-nerf = 0.00
+nerf = 0.20
 PITCHER_FV_DICT = {k: v * (1 - nerf) for k, v in PITCHER_FV_DICT.items()} 
 BATTER_FV_DICT = {k: v * (1 - nerf) for k, v in BATTER_FV_DICT.items()} 
 """
 
-
 # function based on model from arbitration.r
-cdef get_arb_salary(war, age, arb_years_remaining=1):
-    cdef float new_salary = 16639108  - age * 357730 + war * 1180929
+def get_arb_salary(war, age, arb_years_remaining=1):
+    new_salary = 16639108  - age * 357730 + war * 1180929
 
     if arb_years_remaining == 0:
         new_salary -= 2729314
@@ -99,7 +98,6 @@ class Team:
 
         self.contracts = contracts
         self.prospects = prospects
-        self.backups = []
 
         self.records = []
 
@@ -270,8 +268,8 @@ class Team:
     # Uses analytical method – not comparison to other teams in the sim
     def get_championship_prob(self, team_war):
 
-        mu = (team_war + (162 * .294)) / 162
-        sigma = 0.0309  # mean and standard deviation of WL%
+        cdef float mu = (team_war + (162 * .294)) / 162
+        cdef float sigma = 0.0309  # mean and standard deviation of WL%
 
         # Argument is wl
         def integrand_wl(x):
@@ -286,22 +284,22 @@ class Team:
             return 1 / (1 + math.exp(-(-54.7 + 100 * x)))
 
         def integrand_div_round(x):
-            d = integrand_div(x)
+            cdef float d = integrand_div(x)
             return d + .5 * (integrand_ploffs(x) - d)
 
         # Argument is WAR
         def integrand_ws(x):
             return 1 / (1 + math.exp(-(-4.14 + 0.0472 * x)))
 
-        ws = integrand_ws(team_war)
+        cdef float ws = integrand_ws(team_war)
         # .35 to .80 for performance reasons (rather than 0 to 1)
-        div_round = integrate.quad(lambda x: integrand_div_round(x) * integrand_wl(x), 0.35, .80)[0]
+        cdef float div_round = integrate.quad(lambda x: integrand_div_round(x) * integrand_wl(x), 0.35, .80)[0]
 
         return ws * div_round
 
     def record_year(self):
-        cdef float tots = self.get_team_war()
-        cdef float cprob = self.get_championship_prob(tots)
+        tots = self.get_team_war()
+        cprob = self.get_championship_prob(tots)
         to_add = {
             'Total WAR': tots,
             'FA WAR': self.last_fa_war,
@@ -324,7 +322,7 @@ class Team:
         return tots
 
     def update_contracts(self):
-        new_contracts = []
+        cdef list new_contracts = []
         for player in self.contracts:
             if len(player['payouts']) <= 1:
                 continue
@@ -335,22 +333,23 @@ class Team:
             # Super 2 should be implemented
 
             # Set salary for pre-arb and arb
-            if remaining_payouts[0]['type'] == 'pre-arb':
-                remaining_payouts[0]['value'] = PRE_ARB
-            elif remaining_payouts[0]['type'] == 'arb':
+            this_year = remaining_payouts[0]
+            if this_year['type'] == 'pre-arb':
+                this_year['value'] = PRE_ARB
+            elif this_year['type'] == 'arb':
                 arb_years_remaining = sum(x['type'] == 'arb' for x in remaining_payouts)
                 remaining_payouts[0]['value'] = max(get_arb_salary(player['player'].get_war(), player['player'].age,
                                                                    arb_years_remaining=arb_years_remaining), PRE_ARB)
-            elif remaining_payouts[0]['type'] == 'vesting option':
+            elif this_year['type'] == 'vesting option':
                 if player['player'].get_war() < VESTING_THRESHOLD:
                     continue
-            elif remaining_payouts[0]['type'] == 'team option':
+            elif this_year['type'] == 'team option':
                 # Uses previous year WAR, not prediction
-                if remaining_payouts[0]['value'] / player['player'].get_war() > DOLLAR_PER_WAR:
+                if this_year['value'] / player['player'].get_war() > DOLLAR_PER_WAR:
                     continue
-            elif remaining_payouts[0]['type'] == 'player option':
+            elif this_year['type'] == 'player option':
                 # Opposite of team option
-                if remaining_payouts[0]['value'] / player['player'].get_war() < DOLLAR_PER_WAR:
+                if this_year['value'] / player['player'].get_war() < DOLLAR_PER_WAR:
                     continue
             elif remaining_payouts[0]['type'] == 'mutual option':
                 continue
@@ -383,7 +382,6 @@ class Team:
         # Values inferred from: https://blogs.fangraphs.com/an-update-to-prospect-valuation/
         # and https://academicworks.cuny.edu/cgi/viewcontent.cgi?article=1759&context=cc_etds_theses
 
-        cdef float most_recent_war
         if len(self.records) == 0:
             # Probably because you're adding fake draft prospects before sim
             most_recent_war = 35  # average team
@@ -391,7 +389,7 @@ class Team:
             most_recent_war = self.records[-1]['Total WAR']
 
         # Note: this line should be replaced with the real win loss if that's calculated in the sim
-        cdef float wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
+        wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
 
         # Based on empirical analysis
         if wl < .395:
@@ -410,9 +408,6 @@ class Team:
         etas_old = np.random.choice(np.arange(1, 7), num_picks, p=[.01, .05, .35, .25, .24, .10])
         positions = np.random.random_sample(num_picks)
 
-        cdef int pick_num
-        cdef int age
-        cdef int eta
         for r in range(starting_round - 1, num_picks + starting_round - 1):
             pick_num = pick * r
             if pick_num <= 2:
