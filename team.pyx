@@ -128,12 +128,14 @@ class Team:
         """
         self.contracts.append({'player': player, 'payouts': payouts})
 
+    # Mostly deprecated
     def age_players(self):
         for player in self.contracts:
             player['player'].progress()
     
     # A version of age players that does not rely on the player.develop() function
     # Speeds up the process by getting WAR for all players on a team at the same time
+    # Leagewide sims run from the league class do NOT use this function
     def age_players_fast(self):
         
         # Add one to all ages before getting WAR
@@ -158,6 +160,7 @@ class Team:
         for player in self.contracts:
             player['player'].add_variance()
 
+    # Mostly deprecated
     def age_prospects(self):
         # Replaces prospect list with new list, excluding new MLB players and dead prospects
         new_prospects = []
@@ -181,6 +184,7 @@ class Team:
                 new_prospects.append(prospect)
         self.prospects = new_prospects
 
+    # Leagewide sims run from the league class do NOT use this function
     def age_prospects_fast(self):
         num_prospects = len(self.prospects)
         # FV Draw
@@ -432,6 +436,7 @@ class Team:
             prospect = Prospect(eta, fv, age, position, name=f"{int(random.random() * 100000)} D{r}")
             self.prospects.append(prospect)
 
+    # Note: for performance reasons, league wide sims should be run using the league run_sim
     def run_year(self):
         self.age_players_fast()  # Ages players by a year, gets new WAR value
         self.age_prospects_fast()  # Ages prospects, develops by a year, adds to MLB if needed
