@@ -50,7 +50,8 @@ def get_war_by_source_by_year(file_data):
         for i in range(years):
             wars[i]['FA'] += team_records[team][i]['FA WAR']
             wars[i]['Prospects'] += team_records[team][i]['Sim Prospect WAR']
-            wars[i]['Contracts'] += team_records[team][i]['Total WAR'] - (team_records[team][i]['Sim Prospect WAR'] + team_records[team][i]['FA WAR'])
+            wars[i]['Contracts'] += team_records[team][i]['Total WAR'] - (team_records[team][i]['Sim Prospect WAR'] +
+                                                                          team_records[team][i]['FA WAR'])
         
     return wars
 

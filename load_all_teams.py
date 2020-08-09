@@ -3,7 +3,6 @@ from team import Team
 from prospect import Prospect
 import pandas as pd
 import csv
-import random
 
 current_year = 2019
 
@@ -60,5 +59,7 @@ def copy_team(team):
         new_team.prospects.append(Prospect(pros.eta, pros.fv, pros.age, pros.pitcher, pros.name))
     for cont in team.contracts:
         play = cont['player']
-        new_team.contracts.append({'player': Player(play.id, play.wars, play.age, play.pitcher, play.start_ratio, play.name, play.sim_grown), 'payouts': cont['payouts']})
+        new_team.contracts.append({'player': Player(play.id, list(play.wars), play.age, play.pitcher,
+                                                    play.start_ratio, play.name, play.sim_grown),
+                                   'payouts': list(cont['payouts'])})
     return new_team

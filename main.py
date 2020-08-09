@@ -1,11 +1,10 @@
 import argparse
-import multiprocessing as mp
 import os
 from load_all_teams import create_team, team_list, copy_team
 import time
 import json
-from copy import deepcopy
-from parse_sims import print_first_year_payrolls, print_average_championships, print_average_sources, print_average_wl, export_championships_per_team_per_year, export_team_values
+from parse_sims import print_first_year_payrolls, print_average_championships, print_average_sources, \
+    print_average_wl, export_championships_per_team_per_year, export_team_values
 from league import League
 
 parser = argparse.ArgumentParser(description='Value franchises by discounting championships')
@@ -72,7 +71,9 @@ def sim_wrapper(func):
 
 # Creates JSON file with records for each year of the sim stored by team
 @sim_wrapper
-def sim_run(filename, teams=DEFAULT_TEAMS):
+def sim_run(filename, teams=None):
+    if teams is None:
+        teams = DEFAULT_TEAMS
     team_records = dict()
 
     teams = [copy_team(team) for team in teams]
@@ -87,6 +88,7 @@ def sim_run(filename, teams=DEFAULT_TEAMS):
 
     with open(f"{args.s}/{filename}", "w") as outfile:
         json.dump({'teams': team_records}, outfile)
+
 
 # If the discount flag is activated, new sims aren't run, but export_team values redos the discount
 if not args.discount:

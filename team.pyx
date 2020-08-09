@@ -104,8 +104,6 @@ class Team:
         # if max_payroll isn't set, it becomes whatever the initial payroll is in the first year - set in run_year()
         self.max_payroll = max_payroll
 
-        self.last_fa_war = 0  # For record keeping
-
     def add_prospect(self, new_prospect):
         self.prospects.append(new_prospect)
 
@@ -203,8 +201,8 @@ class Team:
             
             eta_sums = list()
             prev_sum = 0  # memoization
-            for i in range(8):
-                prev_sum += eta_matrix[pros.eta][i]
+            for k in range(8):
+                prev_sum += eta_matrix[pros.eta][k]
                 eta_sums.append(prev_sum)
 
             if eta_draw < eta_sums[0]:
@@ -256,14 +254,6 @@ class Team:
         fa_std_dev = fa_mu / 1.5  # the constant is arbitrary - goal is to scale with the mu WAR
         # Note: FA standard deviation is a major tool to affect late-sim WS probability while keeping WL% constant
         return np.random.normal(fa_mu, abs(fa_std_dev), 1)[0]
-
-    def get_team_war(self):
-        war = 0
-        for player in self.contracts:
-            war += player['player'].get_war()
-        self.last_fa_war = self.get_fa_war()
-        war += self.last_fa_war
-        return war
     
     # Uses analytical method – not comparison to other teams in the sim
     def get_championship_prob(self, team_war):
@@ -298,14 +288,27 @@ class Team:
         return ws * div_round
 
     def record_year(self):
-        tots = self.get_team_war()
-        cprob = self.get_championship_prob(tots)
+        player_war_dict = dict()
+        war = 0
+        prospect_war = 0
+        for player in self.contracts:
+            play_war = player['player'].get_war()
+            war += play_war
+            if player['player'].sim_grown:
+                prospect_war += play_war
+            player_war_dict[player['player'].name] = play_war
+
+        fa_war = self.get_fa_war()
+        war += fa_war
+
+        prob = self.get_championship_prob(war)
         to_add = {
-            'Total WAR': tots,
-            'FA WAR': self.last_fa_war,
-            'Sim Prospect WAR': sum([(x['player'].wars[-1]) for x in self.contracts if x['player'].sim_grown]),
+            'Total WAR': war,
+            'FA WAR': fa_war,
+            'Sim Prospect WAR': prospect_war,
             'Max Payroll': self.max_payroll,
-            'Championship Probability': cprob
+            'Championship Probability': prob,
+            'Players by WAR': player_war_dict
         }
         self.records.append(to_add)
 
