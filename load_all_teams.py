@@ -52,3 +52,14 @@ team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 
              'rays', 'rangers', 'bluejays', 'nationals']
 
 # team_list = ['dodgers']
+
+# For performance reasons, to replace deep_copy
+# Should be updated if attributes of objects change
+def copy_team(team):
+    new_team = Team(team.name, team.division, team.league, [], [])
+    for pros in team.prospects:
+        new_team.prospects.append(Prospect(pros.eta, pros.fv, pros.age, pros.pitcher, pros.name))
+    for cont in team.contracts:
+        play = cont['player']
+        new_team.contracts.append({'player': Player(play.id, play.wars, play.age, play.pitcher, play.start_ratio, play.name, play.sim_grown), 'payouts': cont['payouts']})
+    return new_team

@@ -1,7 +1,7 @@
 import argparse
 import multiprocessing as mp
 import os
-from load_all_teams import create_team, team_list
+from load_all_teams import create_team, team_list, copy_team
 import time
 import json
 from copy import deepcopy
@@ -74,7 +74,7 @@ def sim_wrapper(func):
 def sim_run(filename, teams=DEFAULT_TEAMS):
     team_records = dict()
 
-    teams = deepcopy(teams)
+    teams = [copy_team(team) for team in teams]
     league = League(teams)
 
     num_years = args.y
