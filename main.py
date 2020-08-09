@@ -62,10 +62,11 @@ if args.s is None:
 
 def sim_wrapper(func):
     def wrapper(filename):
-        tic = time.perf_counter()
         print(f"Running sim for {filename}...")
+        tic = time.perf_counter()
         func(filename)
-        print(f"Sim complete in {time.perf_counter() - tic:0.3f} seconds")
+        tock = time.perf_counter()
+        print(f"Sim complete in {tock - tic:0.3f} seconds")
     return wrapper
 
 

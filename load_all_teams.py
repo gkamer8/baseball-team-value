@@ -51,7 +51,6 @@ team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 
              'yankees', 'athletics', 'phillies', 'pirates', 'padres', 'giants', 'mariners', 'cardinals',
              'rays', 'rangers', 'bluejays', 'nationals']
 
-# team_list = ['dodgers']
 
 # For performance reasons, to replace deep_copy
 # Should be updated if attributes of objects change
