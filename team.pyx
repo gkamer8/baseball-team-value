@@ -372,13 +372,14 @@ class Team:
         positions = np.random.random_sample(num_signings)
         fvs = np.random.choice(np.arange(7, 14), num_signings, p=[.31, .50, 0.10, 0.06, .015, .01, .005])
 
+        y = len(self.records)
         for i in range(num_signings):
             age = ages[i]
             eta = etas_young[i] if age < 20 else etas_old[i]
             position = positions[i] < .5
             # Based on The Board distribution
             fv = 5 * fvs[i]
-            prospect = Prospect(eta, fv, age, position, name=str(random.randint(0, 100000)) + " J2")
+            prospect = Prospect(eta, fv, age, position, name=f'Y{y}J2#{i}')
             self.prospects.append(prospect)
 
     def add_draft_picks(self, num_picks, starting_round=1):
@@ -411,6 +412,7 @@ class Team:
         etas_old = np.random.choice(np.arange(1, 7), num_picks, p=[.01, .05, .35, .25, .24, .10])
         positions = np.random.random_sample(num_picks)
 
+        year = len(self.records)
         for r in range(starting_round - 1, num_picks + starting_round - 1):
             pick_num = pick * r
             if pick_num <= 2:
@@ -431,7 +433,7 @@ class Team:
             age = ages[i]
             # Different ETA rules for college vs. high school
             eta = etas_young[i] if age < 20 else etas_old[i]
-            prospect = Prospect(eta, fv, age, position, name=f"{int(random.random() * 100000)} D{r}")
+            prospect = Prospect(eta, fv, age, position, name=f"Y{year}D{r}")
             self.prospects.append(prospect)
 
     # Note: for performance reasons, league wide sims should be run using the league run_sim

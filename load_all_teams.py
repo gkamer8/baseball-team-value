@@ -13,7 +13,7 @@ def create_team(name):
     team = Team(name, 3, "NL", [], [])  # note: division and leage are currently unused
     for i in range(len(df)):
         srv = df.loc[i, 'SrvTm']
-        if float(srv) >= 0.100:  # Gets rid of AAAA players and some duplicate prospects
+        if float(srv) >= 0.100 and len(team.contracts) < 36:  # Gets rid of AAAA players and some duplicate prospects
             wars = df.loc[i, 'career']
             payouts = df.loc[i, 'contracts']
             player_name = df.loc[i, 'Name'].split("\\")

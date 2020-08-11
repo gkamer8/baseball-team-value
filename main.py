@@ -4,7 +4,7 @@ from load_all_teams import create_team, team_list, copy_team
 import time
 import json
 from parse_sims import print_first_year_payrolls, print_average_championships, print_average_sources, \
-    print_average_wl, export_championships_per_team_per_year, export_team_values
+    print_average_wl, export_championships_per_team_per_year, export_team_values, export_player_table
 from league import League
 
 parser = argparse.ArgumentParser(description='Value franchises by discounting championships')
@@ -41,6 +41,9 @@ parser.add_argument('--payrolls', action='store_true',
 
 parser.add_argument('--champs_table', type=str, nargs='?', const='champs_table.csv',
                     help='export csv of championship probability per team per year')
+
+parser.add_argument('--player_tables', type=str, nargs='?', const='player-war',
+                    help='export csvs of with player WARs for each team per year')
 
 
 args = parser.parse_args()
@@ -111,6 +114,10 @@ if args.payrolls:
 if args.champs_table is not None:
     export_championships_per_team_per_year(fnames, outfile=args.champs_table)
     print(f'Finished exporting championships by year to {args.champs_table}.')
+
+if args.player_tables is not None:
+    export_player_table(fnames, directory=args.player_tables)
+    print(f'Finished exporting player WARs by year to {args.player_tables}.')
 
 export_team_values(fnames, outfile=args.o, discount=args.r)
 print(f'Finished exporting values to {args.o}.')

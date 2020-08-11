@@ -1,5 +1,6 @@
 import json
 from load_all_teams import team_list
+import os
 
 
 def print_first_year_payrolls(fname):
@@ -229,3 +230,52 @@ def print_average_sources(fnames):
     war_sources = average_many_sources([json.load(open(fname)) for fname in fnames])
     for year in war_sources:
         print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
+
+
+def export_player_table(fnames, directory='player-war'):
+
+    if not os.path.exists(directory):
+        try:
+            os.mkdir(directory)
+        except OSError:
+            print("Creation of the player war directory failed")
+
+    fdata = [json.load(open(fname)) for fname in fnames]
+
+    total_dict = dict()  # team --> player
+    for sim in fdata:
+        for team in sim['teams']:
+            if team not in total_dict:
+                total_dict[team] = dict()
+
+            years = sim['teams'][team]
+
+            for y in range(len(years)):
+                for player in years[y]['Players by WAR']:
+                    if player not in total_dict[team]:
+                        total_dict[team][player] = [0 for _ in range(len(years))]
+                        total_dict[team][player][y] = float(years[y]['Players by WAR'][player])
+                    else:
+                        total_dict[team][player][y] += years[y]['Players by WAR'][player]
+    num_sims = len(fdata)
+    # Average out years between sims
+    for team in total_dict:
+        for player in total_dict[team]:
+            for year in range(len(total_dict[team][player])):
+                total_dict[team][player][year] /= num_sims
+
+    for team in total_dict:
+        fhand = open(f'{directory}/{team}.csv', 'w')
+        header = 'Player,'
+        for y in range(len(years)):
+            header += f'Year {y},'
+        header = header[:-1] + '\n'
+        fhand.write(header)
+        for player in total_dict[team]:
+            to_write = f'{player},'
+            for y in range(len(years)):
+                to_write += f'{total_dict[team][player][y]},'
+            to_write = to_write[:-1] + '\n'
+            fhand.write(to_write)
+        fhand.close()
+
