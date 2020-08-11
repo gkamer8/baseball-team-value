@@ -17,8 +17,8 @@ class League:
 
     # Age all players in the league at once - for performance
     def age_players_fast(self):
-        pitcher_args = []
-        batter_args = []
+        cdef list pitcher_args = []
+        cdef list batter_args = []
         for team in self.teams:
             for cont in team.contracts:
                 play = cont['player']
@@ -30,15 +30,16 @@ class League:
 
         all_wars = list(war_predictor_fast(pitcher_args, batter_args))
 
-        all_batters_index = 0
-        all_pitchers_index = 0
+        cdef int all_batters_index = 0
+        cdef int all_pitchers_index = 0
         for team in self.teams:
             for i in range(len(team.contracts)):
-                if team.contracts[i]['player'].pitcher:
-                    team.contracts[i]['player'].wars.append(all_wars[0][all_pitchers_index])
+                play = team.contracts[i]['player']
+                if play.pitcher:
+                    play.wars.append(all_wars[0][all_pitchers_index])
                     all_pitchers_index += 1
                 else:
-                    team.contracts[i]['player'].wars.append(all_wars[1][all_batters_index])
+                    play.wars.append(all_wars[1][all_batters_index])
                     all_batters_index += 1
 
     def age_prospects_fast(self):
@@ -49,7 +50,7 @@ class League:
         # ETA Draw
         eta_draws_total = np.random.random_sample(total_num_prospects)
 
-        prospect_index = 0
+        cdef int prospect_index = 0
         for team in self.teams:
             num_prospects = len(team.prospects)
             for i in range(num_prospects):

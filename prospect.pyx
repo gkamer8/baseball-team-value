@@ -2,7 +2,7 @@ import random
 import numpy as np
 
 #           -2     -1      0      1      2
-fv_walk = [.10,   .30,   .54,   .055,   .005]
+fv_walk = [.10,   .28,   .60,   .015,   .005]
 
 eta_matrix = [[] for _ in range(8)]
 #                MLB     1       2       3       4       5       6       DEAD

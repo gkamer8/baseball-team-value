@@ -59,8 +59,8 @@ BATTER_FV_DICT = {k: v * (1 - nerf) for k, v in BATTER_FV_DICT.items()}
 """
 
 # function based on model from arbitration.r
-def get_arb_salary(war, age, arb_years_remaining=1):
-    new_salary = 16639108  - age * 357730 + war * 1180929
+cdef get_arb_salary(war, age, arb_years_remaining=1):
+    cdef float new_salary = 16639108  - age * 357730 + war * 1180929
 
     if arb_years_remaining == 0:
         new_salary -= 2729314
@@ -180,7 +180,7 @@ class Team:
                 new_prospects.append(prospect)
         self.prospects = new_prospects
 
-    # Leagewide sims run from the league class do NOT use this function
+    # League-wide sims run from the league class do NOT use this function
     def age_prospects_fast(self):
         num_prospects = len(self.prospects)
         # FV Draw
@@ -289,8 +289,8 @@ class Team:
 
     def record_year(self):
         player_war_dict = dict()
-        war = 0
-        prospect_war = 0
+        cdef float war = 0
+        cdef float prospect_war = 0
         for player in self.contracts:
             play_war = player['player'].get_war()
             war += play_war
@@ -298,10 +298,10 @@ class Team:
                 prospect_war += play_war
             player_war_dict[player['player'].name] = play_war
 
-        fa_war = self.get_fa_war()
+        cdef float fa_war = self.get_fa_war()
         war += fa_war
 
-        prob = self.get_championship_prob(war)
+        cdef float prob = self.get_championship_prob(war)
         to_add = {
             'Total WAR': war,
             'FA WAR': fa_war,
@@ -373,6 +373,10 @@ class Team:
         fvs = np.random.choice(np.arange(7, 14), num_signings, p=[.31, .50, 0.10, 0.06, .015, .01, .005])
 
         y = len(self.records)
+        cdef int i
+        cdef int age
+        cdef int eta
+        cdef int position
         for i in range(num_signings):
             age = ages[i]
             eta = etas_young[i] if age < 20 else etas_old[i]
@@ -386,14 +390,15 @@ class Team:
         # Values inferred from: https://blogs.fangraphs.com/an-update-to-prospect-valuation/
         # and https://academicworks.cuny.edu/cgi/viewcontent.cgi?article=1759&context=cc_etds_theses
 
-        if len(self.records) == 0:
+        cdef int num_recs = len(self.records)
+        if num_recs == 0:
             # Probably because you're adding fake draft prospects before sim
             most_recent_war = 35  # average team
         else:
-            most_recent_war = self.records[-1]['Total WAR']
+            most_recent_war = self.records[num_recs - 1]['Total WAR']
 
         # Note: this line should be replaced with the real win loss if that's calculated in the sim
-        wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
+        cdef float wl = ((.294 * 162 + most_recent_war) / 162)  # Replacement level team is .294
 
         # Based on empirical analysis
         if wl < .395:
@@ -412,7 +417,12 @@ class Team:
         etas_old = np.random.choice(np.arange(1, 7), num_picks, p=[.01, .05, .35, .25, .24, .10])
         positions = np.random.random_sample(num_picks)
 
-        year = len(self.records)
+        cdef int year = len(self.records)
+        cdef int r
+        cdef int pick_num
+        cdef int i
+        cdef int position
+        cdef int eta
         for r in range(starting_round - 1, num_picks + starting_round - 1):
             pick_num = pick * r
             if pick_num <= 2:
