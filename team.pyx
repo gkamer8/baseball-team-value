@@ -5,6 +5,7 @@ from player import Player
 from prospect import Prospect, fv_walk, eta_matrix
 from aging_regression import adjust_prospect_war, predict_start_ratio_fast, predict_start_ratio, average, war_predictor_fast
 from scipy import integrate
+import time
 
 PRE_ARB = 563_500  # salary for players in pre-arbitration
 VESTING_THRESHOLD = 0.5  # WAR threshold for vesting contract years
@@ -291,6 +292,7 @@ class Team:
         player_war_dict = dict()
         cdef float war = 0
         cdef float prospect_war = 0
+        cdef float play_war
         for player in self.contracts:
             play_war = player['player'].get_war()
             war += play_war
