@@ -6,6 +6,9 @@ import json
 from parse_sims import print_first_year_payrolls, print_average_championships, print_average_sources, \
     print_average_wl, export_championships_per_team_per_year, export_team_values, export_player_table
 from league import League
+from multiprocessing import *
+from threading import *
+import math
 
 parser = argparse.ArgumentParser(description='Value franchises by discounting championships')
 
@@ -63,20 +66,19 @@ if args.s is None:
 
 
 def sim_wrapper(func):
-    def wrapper(filename):
+    def wrapper(filename, teams):
         print(f"Running sim for {filename}...")
         tic = time.perf_counter()
-        func(filename)
+        func(filename, teams)
         tock = time.perf_counter()
-        print(f"Sim complete in {tock - tic:0.3f} seconds")
+        print(f"Sim for {filename} complete in {tock - tic:0.3f} seconds")
     return wrapper
 
 
 # Creates JSON file with records for each year of the sim stored by team
 @sim_wrapper
-def sim_run(filename, teams=None):
-    if teams is None:
-        teams = DEFAULT_TEAMS
+def sim_run(filename, teams):
+
     team_records = dict()
 
     teams = [copy_team(team) for team in teams]
@@ -95,8 +97,33 @@ def sim_run(filename, teams=None):
 
 # If the discount flag is activated, new sims aren't run, but export_team values redos the discount
 if not args.discount:
-    for i in range(args.n):
-        sim_run(f'run{i}.json')
+
+    total_start = time.perf_counter()
+
+    # Runs sims in batches determined by cpu_count
+    cpus = cpu_count()
+    for c in range(math.ceil(args.n // cpus)):
+        processes = []
+        for i in range(c * cpus, min(args.n, cpus + c * cpus)):
+            p = Process(target=sim_run, args=[f'run{i}.json', DEFAULT_TEAMS])
+            p.start()
+            processes.append(p)
+
+        for p in processes:
+            p.join()
+
+    print(f'{args.n} sims finished in {time.perf_counter() - total_start:0.3} seconds')
+
+# 1: .691
+# 2: .985
+# 3: 1.08
+# 4: 1.217
+# 5: 1.623
+# 6: 1.9
+# 10: 3.2
+# 20: 6.6
+# 40: 13.2
+
 fnames = [f'{args.s}/run{i}.json' for i in range(args.n)]
 
 if args.sources:
