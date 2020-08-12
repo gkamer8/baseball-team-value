@@ -3,6 +3,7 @@ from team import Team
 from prospect import Prospect
 import pandas as pd
 import csv
+import random
 
 current_year = 2019
 
@@ -21,7 +22,7 @@ def create_team(name):
     for i in range(len(df)):
         srv = df.loc[i, 'SrvTm']
 
-        if float(srv) >= 0.100 and len(team.contracts) < 36:  # Gets rid of AAAA players and some duplicate prospects
+        if float(srv) >= 0.150 and len(team.contracts) < 36:  # Gets rid of AAAA players and some duplicate prospects
             wars = df.loc[i, 'career']
             payouts = df.loc[i, 'contracts']
             player_name = df.loc[i, 'Name'].split("\\")
@@ -39,6 +40,11 @@ def create_team(name):
 
         for r in reader:
             fv = int(r[7].replace("+", ""))  # future value
+
+            # The Board FV Nerf
+            if random.random() > .5:
+                fv = max(25, fv - 5)
+
             pitcher = r[2] == "RHP" or r[2] == "LHP"
             eta = int(r[8]) - current_year
 

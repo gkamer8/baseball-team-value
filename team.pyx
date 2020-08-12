@@ -52,12 +52,6 @@ BATTER_FV_DICT = {
     80: 7
 }
 
-# Prospect Nerf
-"""
-nerf = 0.20
-PITCHER_FV_DICT = {k: v * (1 - nerf) for k, v in PITCHER_FV_DICT.items()} 
-BATTER_FV_DICT = {k: v * (1 - nerf) for k, v in BATTER_FV_DICT.items()} 
-"""
 
 # function based on model from arbitration.r
 cdef get_arb_salary(war, age, arb_years_remaining=1):
@@ -293,8 +287,9 @@ class Team:
         cdef float war = 0
         cdef float prospect_war = 0
         cdef float play_war
+        cdef int num_years = len(self.records)
         for player in self.contracts:
-            if len(self.records) == 0 and player['player'].injured_to_start:
+            if num_years == 0 and player['player'].injured_to_start:
                 player['player'].wars[-1] = 0
             play_war = player['player'].get_war()
             war += play_war
