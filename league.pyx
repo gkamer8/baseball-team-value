@@ -4,6 +4,7 @@ from player import Player
 from team import BATTER_FV_DICT, PITCHER_FV_DICT
 from prospect import eta_matrix, fv_walk
 import numpy as np
+import multiprocessing as mp
 
 
 class League:
@@ -127,6 +128,7 @@ class League:
             team.add_draft_picks(DRAFT_PICKS)
             # Based on analysis, draft prospects outnumber J2 signings close to 1.7-1
             team.add_ifas(J2_SIGNINGS)
+
     
     def run_years(self, num_years):
         for _ in range(num_years):
