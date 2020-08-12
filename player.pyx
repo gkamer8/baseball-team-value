@@ -24,8 +24,9 @@ cdef class Player:
     cdef public str name
     cdef public float start_ratio
     cdef public int sim_grown
+    cdef public int injured_to_start
 
-    def __init__(self, id, wars, age, position, start_ratio, name="", sim_grown=False):
+    def __init__(self, id, wars, age, position, start_ratio, name="", sim_grown=False, injured_to_start=False):
         self.wars = wars
         self.age = age
         self.pitcher = position
@@ -34,6 +35,8 @@ cdef class Player:
         self.start_ratio = start_ratio
 
         self.sim_grown = sim_grown  # For record keeping – whether player comes from sim
+
+        self.injured_to_start = injured_to_start  # For players who are injured for the long-term to start the season
 
     # Note: This function does not get called if using age_players_fast
     def progress(self):

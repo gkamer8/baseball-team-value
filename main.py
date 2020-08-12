@@ -7,8 +7,6 @@ from parse_sims import print_first_year_payrolls, print_average_championships, p
     print_average_wl, export_championships_per_team_per_year, export_team_values, export_player_table
 from league import League
 from multiprocessing import *
-import math
-import concurrent.futures
 
 parser = argparse.ArgumentParser(description='Value franchises by discounting championships')
 

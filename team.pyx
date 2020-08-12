@@ -294,6 +294,8 @@ class Team:
         cdef float prospect_war = 0
         cdef float play_war
         for player in self.contracts:
+            if len(self.records) == 0 and player['player'].injured_to_start:
+                player['player'].wars[-1] = 0
             play_war = player['player'].get_war()
             war += play_war
             if player['player'].sim_grown:
@@ -350,11 +352,12 @@ class Team:
                     continue
             elif this_year['type'] == 'team option':
                 # Uses previous year WAR, not prediction
-                if this_year['value'] / player['player'].get_war() > DOLLAR_PER_WAR:
+                # First part is to eliminate divide by zero errors
+                if player['player'].get_war() < .001 or this_year['value'] / player['player'].get_war() > DOLLAR_PER_WAR:
                     continue
             elif this_year['type'] == 'player option':
                 # Opposite of team option
-                if this_year['value'] / player['player'].get_war() < DOLLAR_PER_WAR:
+                if player['player'].get_war() > .001 and this_year['value'] / player['player'].get_war() < DOLLAR_PER_WAR:
                     continue
             elif remaining_payouts[0]['type'] == 'mutual option':
                 continue
@@ -458,6 +461,7 @@ class Team:
             self.max_payroll = self.get_contract_values()
 
         self.record_year()  # Collects WAR for players, prospects, and FA
+
         self.update_contracts()  # Progresses contracts by a year
 
         # Assumes each team picks 5 players - only looking for top prospects here (simulating Fangraphs' The Board)
