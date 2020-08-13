@@ -42,7 +42,7 @@ def create_team(name):
             fv = int(r[7].replace("+", ""))  # future value
 
             # The Board FV Nerf
-            if random.random() > .5:
+            if fv >= 50:
                 fv = max(25, fv - 5)
 
             pitcher = r[2] == "RHP" or r[2] == "LHP"
