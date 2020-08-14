@@ -46,6 +46,8 @@ parser.add_argument('--champs_table', type=str, nargs='?', const='champs_table.c
 parser.add_argument('--player_tables', type=str, nargs='?', const='player-war',
                     help='export csvs of with player WARs for each team per year')
 
+parser.add_argument('--no_multi', action='store_true',
+                    help='disable multiprocessing')
 
 args = parser.parse_args()
 
@@ -90,36 +92,42 @@ def sim_run(filename, teams=None):
 
 fnames = [f'{args.s}/run{i}.json' for i in range(args.n)]
 
-# If the discount flag is activated, new sims aren't run, but export_team values redoes the discount
-if not args.discount:
+if __name__ == '__main__':
 
-    total_start = time.perf_counter()
+    # If the discount flag is activated, new sims aren't run, but export_team values redoes the discount
+    if not args.discount:
 
-    # Runs sims concurrently
-    with Pool(cpu_count()) as pool:
-        pool.map(sim_run, fnames)
+        total_start = time.perf_counter()
 
-    print(f'{args.n} sims finished in {time.perf_counter() - total_start:0.3} seconds')
+        if args.no_multi:
+            for f in fnames:
+                sim_run(f)
+        else:
+            # Runs sims concurrently
+            with Pool(cpu_count()) as pool:
+                pool.map(sim_run, fnames)
 
-if args.sources:
-    print_average_sources(fnames)
+        print(f'{args.n} sims finished in {time.perf_counter() - total_start:0.3} seconds')
 
-if args.winloss:
-    print_average_wl(fnames)
+    if args.sources:
+        print_average_sources(fnames)
 
-if args.champs:
-    print_average_championships(fnames)
+    if args.winloss:
+        print_average_wl(fnames)
 
-if args.payrolls:
-    print_first_year_payrolls(fnames[0])
+    if args.champs:
+        print_average_championships(fnames)
 
-if args.champs_table is not None:
-    export_championships_per_team_per_year(fnames, outfile=args.champs_table)
-    print(f'Finished exporting championships by year to {args.champs_table}.')
+    if args.payrolls:
+        print_first_year_payrolls(fnames[0])
 
-if args.player_tables is not None:
-    export_player_table(fnames, directory=args.player_tables)
-    print(f'Finished exporting player WARs by year to {args.player_tables}.')
+    if args.champs_table is not None:
+        export_championships_per_team_per_year(fnames, outfile=args.champs_table)
+        print(f'Finished exporting championships by year to {args.champs_table}.')
 
-export_team_values(fnames, outfile=args.o, discount=args.r)
-print(f'Finished exporting values to {args.o}.')
+    if args.player_tables is not None:
+        export_player_table(fnames, directory=args.player_tables)
+        print(f'Finished exporting player WARs by year to {args.player_tables}.')
+
+    export_team_values(fnames, outfile=args.o, discount=args.r)
+    print(f'Finished exporting values to {args.o}.')
