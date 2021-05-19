@@ -11,7 +11,7 @@ and top prospects.
 
 The project is designed to be run from the main.py file. Use -h for information on all of the command line arguments.
 
-Before running the simulation, you must compile the Cython files using `python setup.py build_ext --inplace`.
+Before running the simulation, you must compile the Cython files using `python setup.py build_ext --inplace`. Note: Due to the use of fstrings, run using python3.6 or above.
 
 A normal call of main.py will run multiple sims for each team 15 years into the future. 
 After running, the program exports a file called values.csv (or whatever you passed through on the command line) containing the discounted future championship values for each team.

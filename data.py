@@ -148,7 +148,7 @@ def won_division(team_data):
     div = divisions_dict[team_data['name']]
     other_records = []
     for dat in data:
-        if dat['year'] == team_data['year'] and divisions_dict[dat['name']] == div:
+        if dat['year'] == team_data['year'] and divisions_dict[dat['name']] == div and dat['name'] != team_data['name']:
             other_records.append(dat['wl'])
 
     return max(other_records) <= team_data['wl']
@@ -170,4 +170,5 @@ def made_playoffs(team_data):
     for o in other_records:
         if o != max(other_records) and o > second_best:
             second_best = o
+
     return team_data['wl'] >= second_best
