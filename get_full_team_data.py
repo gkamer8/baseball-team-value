@@ -15,8 +15,8 @@ as pitcher for each player under contract
 
 """
 
-driver = webdriver.Chrome("C:\\Users\\jsimp\\Downloads\\chromedriver_win32\\chromedriver.exe")
-
+# driver = webdriver.Chrome("C:\\Users\\jsimp\\Downloads\\chromedriver_win32\\chromedriver.exe")
+driver = webdriver.Chrome("/Users/gkamer/Desktop/Projects/GitRepos/baseball-team-value/chromedriver")
 
 def zip_sum(list1, list2):
     return [x + y for x,y in zip(list1, list2)]

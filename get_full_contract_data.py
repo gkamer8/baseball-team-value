@@ -6,10 +6,12 @@ import selenium
 
 This script scrapes full contract data from baseballreference for all current MLB players
 
+Set driver to driver path on your computer
+
 """
 
-driver = webdriver.Chrome("C:\\Users\\jsimp\\Downloads\\chromedriver_win32\\chromedriver.exe")
-
+# driver = webdriver.Chrome("C:\\Users\\jsimp\\Downloads\\chromedriver_win32\\chromedriver.exe")
+driver = webdriver.Chrome("/Users/gkamer/Desktop/Projects/GitRepos/baseball-team-value/chromedriver")
 
 def format_correctly(lst):
     return [{'type': typ, 'value': sal} for (yr, sal, typ) in lst]

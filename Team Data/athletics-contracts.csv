@@ -1,46 +1,47 @@
-Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2020,2021,2022,2023
-Khris Davis\daviskh01,32,8,Traded,6.104,Octagon,2 yrs/$33.5M (20-21),$16.75M,$16.75M,FA,
-Stephen Piscotty\piscost01,29,6,Traded,4.076,CAA Sports,6 yrs/$33.5M (17-22) & 23 team option,$7.33M,$7.58M,$7.58M,$1M [FA-*]
-Joakim Soria\soriajo01,36,13,Free Agency,13.000,Oscar Suarez,2 yrs/$15M (19-20),$8.5M,FA,,
-Yusmeiro Petit\petityu01,35,13,Free Agency,9.016,Godoy Sports,3 yrs/$14.5M (18-20),$5.5M,FA,,
-Mike Fiers\fiersmi01,35,10,Traded,6.085,RMG Baseball,2 yrs/$14.1M (19-20),$8.1M,FA,,
-Marcus Semien\semiema01,29,8,Traded,5.118,Wasserman,1 yr/$13M (20),$13M,FA,,
-Jake Diekman\diekmja01,33,9,Traded,7.050,Beverly Hills Spo...,2 yrs/$7.5M (20-21) & 22 team option,$2.75M,$4M,$750k [FA-*],FA
-Liam Hendriks\hendrli01,31,10,Traded,5.164,Rep 1 Baseball,1 yr/$5.3M (20),$5.3M,FA,,
-Mark Canha\canhama01,31,6,Traded,4.092,CAA Sports,1 yr/$4.8M (20),$4.8M,Arb,FA,
-Sean Manaea\manaese01,28,5,Traded,3.157,Scott Boras,1 yr/$3.75M (20),$3.75M,Arb,Arb,FA
-Robbie Grossman\grossro01,30,8,Free Agency,5.060,LSW Baseball,1 yr/$3.73M (20),$3.73M,FA,,
-Chris Bassitt\bassich01,31,6,Traded,3.130,Pro Star Manageme...,1 yr/$2.25M (20),$2.25M,Arb,Arb,FA
-Chad Pinder\pindech01,28,5,Amateur Draft,3.047,Icon Sports,1 yr/$2.03M (20),$2.02M,Arb,Arb,FA
-T.J. McFarland\mcfartj01,31,8,Waivers,5.164,Octagon,1 yr/$1.8M (20),$1.8M,FA,,
-Carlos Perez\perezca02,29,4,,2.167,TLA Worldwide,,Arb,,Arb,Arb
-Matt Chapman\chapmma01,27,4,Amateur Draft,2.109,,,,,Arb,Arb
-Matt Olson\olsonma02,26,5,Amateur Draft,2.103,Jet Sports,,,,Arb,Arb
-Tony Kemp\kempto01,28,5,Traded,2.098,,,,,Arb,Arb
-Burch Smith\smithbu03,30,4,Purchased,2.095,The Legacy Agency,,,,Arb,Arb
-Brian Schlitter\schlibr01,34,4,Free Agency,2.092,,,,,Arb,Arb
-Daniel Mengden\mengdda01,27,4,Traded,2.088,,,,,Arb,Arb
-Eric Campbell\campber01,33,3,,2.024,Octagon,,,,Arb,Arb
-Lucas Luetge\luetglu01,33,4,,2.015,Mike McCann,,,,Arb,Arb
-Frankie Montas\montafr02,27,5,Traded,2.015,Republik Sports,,,,Arb,Arb
-Lou Trivino\trivilo01,28,3,Amateur Draft,1.163,,,,,Arb,Arb
-Donnie Hart\hartdo01,29,4,,1.139,,,,,Arb,Arb
-Paul Blackburn\blackpa01,26,3,Traded,1.124,Sosnick Cobbe & K...,,,,Arb,Arb
-Ramon Laureano\laurera01,25,3,Traded,1.059,Pinnacle Sports G...,,,,Arb,Arb
-Dustin Fowler\fowledu01,25,2,Traded,1.039,,,,,Arb,Arb
-Michael Ynoa\ynoami01,28,2,,1.039,,,,,Arb,Arb
-Franklin Barreto\barrefr02,24,4,Traded,1.031,,,,,Arb,Arb
-J.B. Wendelken\wendejb01,27,4,Traded,1.028,,,,,Arb,Arb
-Zac Reininger\reiniza01,27,3,,0.161,,,,,Arb,Arb
-Austin Allen\allenau01,26,2,Traded,0.077,,,,,,Arb
-Jaime Schultz\schulja02,29,2,,0.076,,,,,,Arb
-Tanner Anderson\anderta01,27,2,Traded,0.068,,,,,,Arb
-A.J. Puk\pukaj01,25,1st,Amateur Draft,0.041,,,,,,Arb
-Seth Brown\brownse01,27,1st,Amateur Draft,0.035,,,,,,Arb
-Sheldon Neuse\neusesh01,25,1st,Traded,0.032,,,,,,Arb
-Sean Murphy\murphse01,25,2,Amateur Draft,0.029,,,,,,Arb
-Ryan Court\courtry01,32,1st,,0.027,,,,,,Arb
-Zach Lee\leeza01,28,2,,0.026,,,,,,Arb
-Jesus Luzardo\luzarje01,22,2,Traded,0.021,,,,,,Arb
-Nate Orf\orfna01,30,1st,,0.020,,,,,,Arb
-Skye Bolt\boltsk01,26,1st,Amateur Draft,0.018,,,,,,Arb
+Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2021,2022,2023
+Elvis Andrus\andruel01,32,13,Traded,12.000,Scott Boras,8 yrs/$120M (15-22) & 23 vesting option,$14.25M,$14.25M,$0 [FA-*]
+Stephen Piscotty\piscost01,30,7,Traded,5.076,CAA Sports,6 yrs/$33.5M (17-22) & 23 team option,$7.58M,$7.58M,$1M [FA-*]
+Trevor Rosenthal\rosentr01,31,8,,7.001,Scott Boras,1 yr/$11M (21),$11M,FA,
+Jake Diekman\diekmja01,34,10,Traded,8.050,Beverly Hills Spo...,2 yrs/$7.5M (20-21) & 22 team option,$4M,$750k [FA-*],FA
+Mark Canha\canhama01,32,7,Traded,5.092,CAA Sports,1 yr/$6.92M (21),$6.92M,FA,
+Matt Chapman\chapmma01,28,5,Amateur Draft,3.109,,1 yr/$6.49M (21),$6.49M,Arb,Arb
+Sean Manaea\manaese01,29,6,Traded,4.157,Scott Boras,1 yr/$5.95M (21),$5.95M,Arb,FA
+Matt Olson\olsonma02,27,6,Amateur Draft,3.103,Jet Sports,1 yr/$5M (21),$5M,Arb,Arb
+Chris Bassitt\bassich01,32,7,Traded,4.130,Pro Star Manageme...,1 yr/$4.9M (21),$4.9M,Arb,FA
+Yusmeiro Petit\petityu01,36,14,Free Agency,10.016,Godoy Sports,1 yr/$2.55M (21),$2.55M,FA,
+Chad Pinder\pindech01,29,6,Amateur Draft,4.047,Icon Sports,1 yr/$2.28M (21),$2.27M,Arb,FA
+Sergio Romo\romose01,38,14,Free Agency,12.097,Meister Sports Mg...,1 yr/$2.25M (21),$2.25M,FA,
+Mitch Moreland\morelmi01,35,12,Free Agency,10.067,RMG Baseball,1 yr/$2.25M (21),$2.25M,FA,
+Frankie Montas\montafr02,28,6,Traded,3.015,Republik Sports,1 yr/$1.8M (21),$1.8M,Arb,Arb
+Cam Bedrosian\bedroca01,29,8,Free Agency,5.153,,1 yr/$1.5M (21),$1.5M,FA,
+Tony Kemp\kempto01,29,6,Traded,3.098,,1 yr/$1.05M (21),$1.05M,Arb,Arb
+Lou Trivino\trivilo01,29,4,Amateur Draft,2.163,,1 yr/$912k (21),$912k,Arb,Arb
+Burch Smith\smithbu03,31,5,Purchased,3.095,The Legacy Agency,1 yr/$705k (21),$705k,Arb,Arb
+Jed Lowrie\lowrije01,37,13,Free Agency,12.111,Excel Sports Mana...,1 yr/$100k (21),$100k,FA,
+Carlos Perez\perezca02,30,4,,2.167,TLA Worldwide,1 yr/$100k (21),$100k,Arb,Arb
+Deolis Guerra\guerrde01,32,6,Free Agency,2.071,,1 yr/$100k (21),$100k,Arb,Arb
+Mike Fiers\fiersmi01,36,11,Free Agency,7.085,RMG Baseball,,FA,,
+Adam Kolarek\kolarad01,32,5,Traded,2.111,L. Warner Compani...,,,,Arb
+Pete Kozma\kozmape01,33,7,,3.094,Hendricks Sports,,Arb,,Arb
+A.J. Puk\pukaj01,26,2,Amateur Draft,1.041,,,,,Arb
+Ramon Laureano\laurera01,26,4,Traded,2.059,Pinnacle Sports G...,,,,Arb
+J.B. Wendelken\wendejb01,28,5,Traded,2.028,,,,,Arb
+Francisco Pena\penafr01,31,5,,2.009,Rep 1 Baseball,,,,Arb
+Vimael Machin\machivi01,27,2,Purchased,1.000,,,,,Arb
+Paul Blackburn\blackpa01,27,4,Traded,1.143,Sosnick Cobbe & K...,,,,Arb
+Aramis Garcia\garciar01,28,3,Traded,1.086,,,,,Arb
+Sean Murphy\murphse01,26,3,Amateur Draft,1.029,,,,,Arb
+Jesus Luzardo\luzarje01,23,3,Traded,1.021,MVP Sports Group,,,,Arb
+Brett Graves\gravebr01,28,1st,,1.000,,,,,Arb
+Austin Allen\allenau01,27,3,Traded,0.171,,,,,Arb
+Jordan Weems\weemsjo01,28,2,Free Agency,0.161,,,,,Arb
+Reymin Guduan\guduare01,29,4,Free Agency,0.104,,,,,
+Zac Reininger\reiniza01,28,3,,0.161,,,,,Arb
+Cole Irvin\irvinco01,27,3,Purchased,0.120,,,,,
+Seth Brown\brownse01,28,3,Amateur Draft,0.104,,,,,
+Tanner Anderson\anderta01,28,2,Traded,0.068,,,,,
+James Kaprielian\kaprija01,27,2,Traded,0.031,,,,,
+Montana DuRapau\durapmo01,29,1st,,0.030,,,,,
+Skye Bolt\boltsk01,27,2,Purchased,0.018,,,,,
+Frank Schwindel\schwifr01,29,1st,,0.015,,,,,
+Daulton Jefferies\jeffeda01,25,1st,Amateur Draft,0.003,,,,,

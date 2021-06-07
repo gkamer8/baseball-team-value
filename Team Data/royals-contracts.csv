@@ -1,46 +1,50 @@
-Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2020,2021,2022,2023
-Ian Kennedy\kenneia01,35,14,Free Agency,10.124,Scott Boras,5 yrs/$70M (16-20),$16.5M,FA,,
-Danny Duffy\duffyda01,31,10,Amateur Draft,8.085,ACES (Sam & Seth ...,5 yrs/$65M (17-21),$15.25M,$15.5M,FA,
-Salvador Perez\perezsa02,30,9,Amateur Free Agent,8.050,Beverly Hills Spo...,5 yrs/$52.5M (17-21),$14.2M,$14.2M,FA,
-Whit Merrifield\merriwh01,31,5,Amateur Draft,3.101,The L. Warner Com...,4 yrs/$16.25M (19-22) & 23 team option,$5M,$6.75M,$2.75M,$750k [FA-*]
-Jorge Soler\solerjo01,28,7,Traded,4.143,ACES,1 yr/$7.3M (20),$7.3M,Arb,FA,
-Alex Gordon\gordoal01,36,14,Free Agency,12.092,Casey Close,1 yr/$4M (20),$4M,FA,,
-Mike Montgomery\montgmi01,30,6,Traded,4.089,TWC Sports,1 yr/$3.1M (20),$3.1M,Arb,FA,
-Maikel Franco\francma02,27,7,Free Agency,4.157,Octagon,1 yr/$2.95M (20),$2.95M,Arb,FA,
-Greg Holland\hollagr01,34,10,Free Agency,7.163,Boras Corporation,1 yr/$100k (20),$100k,FA,,
-Trevor Rosenthal\rosentr01,30,8,Free Agency,6.001,Scott Boras,1 yr/$100k (20),$100k,FA,,
-Humberto Arteaga\arteahu01,26,1st,Free Agency,0.102,,1 yr/$100k (20),$100k,Pre-Arb,Pre-Arb,Arb
-Jesse Hahn\hahnje01,30,5,Free Agency,4.067,Excel Sports Mana...,,Arb (~$900k),,FA,
-Kevin McCarthy\mccarke01,28,5,Amateur Draft,2.097,,,,,Arb,Arb
-Adalberto Mondesi\mondera02,24,5,Amateur Free Agent,2.088,ISE Baseball,,,,Arb,Arb
-Jakob Junis\junisja01,27,3,Amateur Draft,2.087,Wasserman,,,,Arb,Arb
-Hunter Dozier\doziehu01,28,3,Amateur Draft,2.060,Frontline,,,,Arb,Arb
-Franchy Cordero\cordefr02,25,4,Traded,2.038,Republik Sports,,,,Arb,Arb
-Glenn Sparkman\sparkgl01,28,4,Rule 5 returned,2.001,,,,,Arb,Arb
-Brad Keller\kellebr01,24,2,Traded,2.000,Sosnick Cobbe & K...,,,,Arb,Arb
-Eric Skoglund\skogler01,27,3,Amateur Draft,1.109,,,,,Arb,Arb
-Cam Gallagher\gallaca01,27,3,Amateur Draft,1.106,,,,,Arb,Arb
-Jorge Lopez\lopezjo02,27,5,Traded,1.102,,,,,Arb,Arb
-Matt Reynolds\reynoma03,29,3,,1.071,,,,,Arb,Arb
-Ryan O'Hearn\ohearry01,26,3,Amateur Draft,1.034,,,,,Arb,Arb
-Scott Barlow\barlosc01,27,3,Free Agency,1.030,,,,,Arb,Arb
-Oscar Hernandez\hernaos01,26,3,Free Agency,1.027,,,,,Arb,Arb
-Randy Rosario\rosarra01,26,3,Waivers,1.020,,,,,Arb,Arb
-Brett Phillips\phillbr02,26,4,Traded,1.013,,,,,Arb,Arb
-Heath Fillmyer\fillmhe01,26,2,Traded,0.155,,,,,Arb,Arb
-Jake Newberry\newbeja01,25,2,Amateur Draft,0.151,,,,,Arb,Arb
-Bubba Starling\starlbu01,27,2,Free Agency,0.147,,,,,,Arb
-Nicky Lopez\lopezni01,25,2,Amateur Draft,0.139,,,,,,Arb
-Braden Shipley\shiplbr01,28,3,,0.128,Roc Nation Sports,,,,,Arb
-Meibrys Viloria\vilorme01,23,2,Amateur Free Agent,0.106,,,,,,Arb
-Chance Adams\adamsch01,25,2,,0.075,,,,,,Arb
-Richard Lovelady\lovelri01,24,2,Amateur Draft,0.075,,,,,,Arb
-Josh Staumont\staumjo01,26,2,Amateur Draft,0.072,,,,,,Arb
-Kyle Zimmer\zimmeky01,28,2,Free Agency,0.064,,,,,,Arb
-Nick Dini\dinini01,26,1st,Amateur Draft,0.053,,,,,,Arb
-Kelvin Gutierrez\gutieke01,25,1st,Traded,0.049,,,,,,Arb
-Andres Machado\machaan02,27,1st,Amateur Free Agent,0.032,,,,,,Arb
-Ronald Bolanos\bolanro01,23,2,Traded,0.028,,,,,,Arb
-Ryan McBroom\mcbrory01,28,2,Purchased,0.027,,,,,,Arb
-Erick Mejia\mejiaer01,25,2,Free Agency,0.027,,,,,,Arb
-Gabe Speier\speiega01,25,2,Traded,0.027,Sosnick Cobbe & K...,,,,,Arb
+Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2021,2022,2023,2024,2025,2026
+Salvador Perez\perezsa02,31,10,Amateur Free Agent,9.050,Beverly Hills Spo...,5 yrs/$52.5M (17-21)4 yrs/$82M (22-25) & 26 team option,$14.2M,$18M,$20M,$20M,$22M,$2M [FA-*]
+Danny Duffy\duffyda01,32,11,Amateur Draft,9.085,ACES (Sam & Seth ...,5 yrs/$65M (17-21),$15.5M,FA,,,,
+Hunter Dozier\doziehu01,29,5,Amateur Draft,3.060,L. Warner Compani...,4 yrs/$25M (21-24) & 25 team option,$2.5M,$4.75M,$7.5M,$9.25M,$1M [FA-*],FA
+Mike Minor\minormi01,33,10,Free Agency,9.138,Jet Sports Manage...,2 yrs/$18M (21-22) & 23 team option,$7M,$10M,$1M [FA-*],FA,,
+Carlos Santana\santaca01,35,12,Free Agency,10.115,Octagon,2 yrs/$17.5M (21-22),$7M,$10.5M,FA,,,
+Whit Merrifield\merriwh01,32,6,Amateur Draft,4.101,The L. Warner Com...,4 yrs/$16.25M (19-22) & 23 team option,$6.75M,$2.75M,$750k [FA-*],FA,,
+Andrew Benintendi\beninan01,26,6,Traded,4.062,Excel Sports Mana...,2 yrs/$10M (20-21),$6.6M,Arb,FA,,,
+Jorge Soler\solerjo01,29,8,Traded,5.143,ACES,1 yr/$8.05M (21),$8.05M,FA,,,,
+Brad Keller\kellebr01,25,4,Traded,3.000,Sosnick Cobbe & K...,1 yr/$3.35M (21),$3.35M,Arb,Arb,FA,,
+Greg Holland\hollagr01,35,11,Free Agency,8.163,Boras Corporation,1 yr/$2.75M (21),$2.75M,FA,,,,
+Adalberto Mondesi\mondera02,25,6,Amateur Free Agent,3.088,ISE Baseball,1 yr/$2.52M (21),$2.52M,Arb,Arb,FA,,
+Michael A. Taylor\taylomi02,30,8,Free Agency,5.129,MVP Sports Group,1 yr/$1.75M (21),$1.75M,FA,,,,
+Jesse Hahn\hahnje01,31,7,Free Agency,5.031,Excel Sports Mana...,1 yr/$1.75M (21),$1.75M,FA,,,,
+Jakob Junis\junisja01,28,5,Amateur Draft,3.082,Wasserman,1 yr/$1.7M (21),$1.7M,Arb,Arb,FA,,
+Hanser Alberto\alberha01,28,6,Free Agency,4.085,ISE Baseball,1 yr/$1.65M (21),$1.65M,Arb,FA,,,
+Jarrod Dyson\dysonja01,36,12,Free Agency,9.088,CSE,1 yr/$1.5M (21),$1.5M,FA,,,,
+Wade Davis\daviswa01,35,13,Free Agency,11.029,Jet Sports Manage...,1 yr/$100k (21),$100k,FA,,,,
+Anthony Swarzak\swarzan01,35,11,,8.024,Jet Sports Manage...,1 yr/$100k (21),$100k,FA,,,,
+Bubba Starling\starlbu01,28,2,Free Agency,1.147,,1 yr/$100k (21),$100k,Pre-Arb,Arb,Arb,Arb,FA
+Ervin Santana\santaer01,38,16,Free Agency,13.123,Jay Alou/Bean Str...,,FA,,,,,
+Alcides Escobar\escobal02,34,11,Free Agency,9.082,The Legacy Agency,,FA,,,,,
+Ryan O'Hearn\ohearry01,27,4,Amateur Draft,2.034,,,,,Arb,Arb,FA,
+Jake Newberry\newbeja01,26,4,Amateur Draft,1.146,,,,,Arb,Arb,Arb,FA
+Eddie Butler\butleed01,30,5,,2.141,Steve Canter,,,,Arb,Arb,FA,
+Cam Gallagher\gallaca01,28,5,Amateur Draft,2.106,,,,,Arb,Arb,FA,
+Scott Barlow\barlosc01,28,4,Free Agency,2.030,L. Warner Compani...,,,,Arb,Arb,FA,
+Ryan McBroom\mcbrory01,29,3,Purchased,1.008,,,,,Arb,Arb,Arb,FA
+Nicky Lopez\lopezni01,26,3,Amateur Draft,1.139,,,,,Arb,Arb,Arb,FA
+Eric Skoglund\skogler01,28,3,Amateur Draft,1.109,,,,,Arb,Arb,Arb,FA
+Josh Staumont\staumjo01,27,3,Amateur Draft,1.072,,,,,Arb,Arb,Arb,FA
+Kyle Zimmer\zimmeky01,29,3,Free Agency,1.064,,,,,Arb,Arb,Arb,FA
+Kelvin Gutierrez\gutieke01,26,3,Traded,1.046,,,,,Arb,Arb,Arb,FA
+Chance Adams\adamsch01,26,3,Traded,1.042,Beverly Hills Spo...,,,,Arb,Arb,Arb,FA
+Meibrys Viloria\vilorme01,24,3,Amateur Free Agent,1.020,,,,,Arb,Arb,Arb,FA
+Foster Griffin\grifffo01,25,1st,Free Agency,1.000,,,,,Arb,Arb,Arb,FA
+Brady Singer\singebr01,24,2,Amateur Draft,1.000,,,,,Arb,Arb,Arb,FA
+Tyler Zuber\zuberty01,26,2,Amateur Draft,1.000,,,,,Arb,Arb,Arb,FA
+Edward Olivares\olivaed02,25,2,Traded,0.147,,,,,,Arb,Arb,Arb
+Richard Lovelady\lovelri01,25,2,Amateur Draft,0.100,,,,,,Arb,Arb,Arb
+Kris Bubic\bubickr01,23,2,Amateur Draft,0.164,,,,,Arb,Arb,Arb,Arb
+Carlos Hernandez\hernaca04,24,2,Amateur Free Agent,0.081,Munger English Sp...,,,,,Arb,Arb,Arb
+Gabe Speier\speiega01,26,2,Traded,0.105,Sosnick Cobbe & K...,,,,,Arb,Arb,Arb
+Domingo Tapia\tapiado01,29,2,,0.047,Optimum Baseball,,,,,Arb,Arb,Arb
+Erick Mejia\mejiaer01,26,2,Free Agency,0.091,Bryan Hamper,,,,,Arb,Arb,Arb
+Mike Shawaryn\shawami01,26,1st,,0.058,,,,,,Arb,Arb,Arb
+Ronald Bolanos\bolanro01,24,3,Traded,0.056,,,,,,Arb,Arb,Arb
+Nick Dini\dinini01,27,1st,Amateur Draft,0.053,,,,,,Arb,Arb,Arb
+Scott Blewett\blewesc01,25,1st,Amateur Draft,0.031,,,,,,Arb,Arb,Arb
+Carlos Sanabria\sanabca01,24,1st,,0.031,,,,,,Arb,Arb,Arb

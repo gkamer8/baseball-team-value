@@ -6,7 +6,7 @@ import selenium
 
 """
 
-This script scrapes data from baseball reference for players active between athletics
+This script scrapes data from baseball reference for players active between
 years 2000 and 2019 on career war by year, career games played by year, position,
 and percent of games started as pitcher for each player under contract
 

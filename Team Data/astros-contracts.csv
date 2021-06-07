@@ -1,36 +1,41 @@
-Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2020,2021,2022,2023,2024
-Zack Greinke\greinza01,36,17,Traded,15.057,Excel Sports Mana...,6 yrs/$206.5M (16-21),$35M,$35M,FA,,
-Jose Altuve\altuvjo01,30,10,Amateur Free Agent,8.072,Scott Boras,7 yrs/$163.5M (18-24),$29M,$29M,$29M,$29M,$29M
-Alex Bregman\bregmal01,26,5,Amateur Draft,3.070,Tidal Sports,5 yrs/$100M (20-24),$13M,$13M,$13M,$30.5M,$30.5M
-Justin Verlander\verlaju01,37,16,Traded,14.002,ISE Baseball,2 yrs/$66M (20-21),$33M,$33M,FA,,
-Josh Reddick\reddijo01,33,12,Free Agency,9.050,ACES (Sam & Seth ...,4 yrs/$52M (17-20),$13M,FA,,,
-Yuli Gurriel\gourryu01,36,5,Amateur Free Agent,3.043,Magnus Sports,5 yrs/$47.5M (16-20),$8.4M,Arb,Arb,FA,
-Michael Brantley\brantmi02,33,12,Free Agency,9.131,Excel Sports Mana...,2 yrs/$32M (19-20),$16M,FA,,,
-George Springer\springe01,30,7,Amateur Draft,5.166,Excel Sports Mana...,1 yr/$21M (20),$21M,FA,,,
-Ryan Pressly\pressry01,31,7,Traded,6.039,Ballengee Group,2 yrs/$17.5M (20-21) & 22 vesting option,$8.75M,$8.75M,$0 [FA-*],FA,
-Roberto Osuna\osunaro01,25,6,Traded,4.097,The Legacy Agency,1 yr/$10M (20),$10M,Arb,FA,,
-Joe Smith\smithjo05,36,13,Free Agency,12.091,Meister Sports Mg...,2 yrs/$8M (20-21),$4M,$4M,FA,,
-Carlos Correa\correca01,25,6,Amateur Draft,4.119,The Legacy Agency,1 yr/$8M (20),$8M,Arb,FA,,
-Martin Maldonado\maldoma01,33,10,Traded,7.156,MVP Sports Group,2 yrs/$7M (20-21),$3.5M,$3.5M,FA,,
-Lance McCullers Jr.\mcculla02,26,5,Amateur Draft,4.140,Scott Boras,1 yr/$4.1M (20),$4.1M,Arb,FA,,
-Brad Peacock\peacobr01,32,8,Traded,5.165,ACES (Sam & Seth ...,1 yr/$3.9M (20),$3.9M,FA,,,
-Aledmys Díaz\diazal02,29,5,Traded,3.100,Jaime Torres,1 yr/$2.6M (20),$2.6M,Arb,Arb,FA,
-Chris Devenski\devench02,29,5,Traded,4.000,MVP Sports Group,1 yr/$2M (20),$2M,Arb,FA,,
-Joe Biagini\biagijo01,30,5,Traded,3.134,,1 yr/$1M (20),$1M,Arb,Arb,FA,
-Dustin Garneau\garnedu01,32,6,Free Agency,1.140,Marc Kligman,1 yr/$650k (20),$650k,Pre-Arb,Arb,Arb,Arb
-Austin Pruitt\pruitau01,30,3,,1.125,,,,,Arb,Arb,Arb
-Josh James\jamesjo02,27,3,Amateur Draft,1.030,,,,,Arb,Arb,Arb
-Framber Valdez\valdefr01,26,2,Amateur Free Agent,0.163,,,,,Arb,Arb,Arb
-Francis Martes\martefr01,24,1st,Traded,0.116,,,,,,Arb,Arb
-Yordan Álvarez\alvaryo01,23,1st,Traded,0.113,MVP Sports Group,,,,,Arb,Arb
-Myles Straw\strawmy01,25,2,Amateur Draft,0.112,,,,,,Arb,Arb
-Cionel Pérez\perezci01,24,2,Amateur Free Agent,0.107,,,,,,Arb,Arb
-Kyle Tucker\tuckeky01,23,3,Amateur Draft,0.079,,,,,,Arb,Arb
-Cy Sneed\sneedcy01,27,2,Traded,0.067,,,,,,Arb,Arb
-Garrett Stubbs\stubbga01,27,2,Amateur Draft,0.060,,,,,,Arb,Arb
-Jose Urquidy\urquijo01,25,1st,Amateur Free Agent,0.049,,,,,,Arb,Arb
-Jack Mayfield\mayfija01,29,1st,Amateur Free Agent,0.044,,,,,,Arb,Arb
-Abraham Toro\toroab01,23,2,Amateur Draft,0.039,,,,,,Arb,Arb
-Dean Deetz\deetzde01,26,1st,Amateur Draft,0.027,,,,,,Arb,Arb
-Bryan Abreu\abreubr01,23,2,Amateur Free Agent,0.025,,,,,,Arb,Arb
-Rogelio Armenteros\armenro01,26,1st,Amateur Free Agent,0.018,,,,,,Arb,Arb
+Name,Age,Yrs,Acquired,SrvTm,Agent,Contract Status,2021,2022,2023,2024,2025,2026
+Zack Greinke\greinza01,37,18,Traded,16.057,Excel Sports Mana...,6 yrs/$206.5M (16-21),$35M,FA,,,,
+Jose Altuve\altuvjo01,31,11,Amateur Free Agent,9.072,Scott Boras,7 yrs/$163.5M (18-24),$29M,$29M,$29M,$29M,FA,
+Alex Bregman\bregmal01,27,6,Amateur Draft,4.070,Tidal Sports,5 yrs/$100M (20-24),$13M,$13M,$30.5M,$30.5M,FA,
+Lance McCullers Jr.\mcculla02,27,6,Amateur Draft,5.140,Scott Boras,1 yr/$6.5M (21)5 yrs/$85M (22-26),$6.5M,$15.95M,$15.95M,$17.7M,$17.7M,$17.7M
+Justin Verlander\verlaju01,38,16,Traded,15.002,ISE Baseball,2 yrs/$66M (20-21),$33M,FA,,,,
+Michael Brantley\brantmi02,34,13,Free Agency,10.131,Excel Sports Mana...,2 yrs/$32M (21-22),$16M,$16M,FA,,,
+Jake Odorizzi\odorija01,31,10,Free Agency,7.042,Excel Sports Mana...,2 yrs/$20.25M (21-22) & 23 player option,$9M,$8M,$3.25M [FA-*],FA,,
+Ryan Pressly\pressry01,32,9,Traded,7.039,Ballengee Group,2 yrs/$17.5M (20-21) & 22 vesting option,$8.75M,$0 [FA-*],FA,,,
+Pedro Baez\baezpe01,33,7,,6.059,Kelvin Nova,2 yrs/$12.5M (21-22) & 23 team option,$4.75M,$5.75M,$2M [FA-*],FA,,
+Carlos Correa\correca01,26,7,Amateur Draft,5.119,Jon Rosen at WME,1 yr/$11.7M (21),$11.7M,FA,,,,
+Joe Smith\smithjo05,37,14,Free Agency,12.091,Meister Sports Mg...,2 yrs/$8M (20-21),$4M,FA,,,,
+Jason Castro\castrja01,34,11,Free Agency,10.104,ISE Baseball,2 yrs/$7M (21-22),$3.5M,$3.5M,FA,,,
+Martin Maldonado\maldoma01,34,11,Traded,8.156,MVP Sports Group,2 yrs/$7M (20-21),$3.5M,FA,,,,
+Yuli Gurriel\gourryu01,37,6,Amateur Free Agent,4.043,Magnus Sports,1 yr/$7M (21) & 22 team option,$6.5M,$500k [Arb-*],FA,,,
+Aledmys Díaz\diazal02,30,6,Traded,4.100,Jaime Torres,1 yr/$3M (21),$3M,Arb,FA,,,
+Brooks Raley\raleybr01,33,4,Traded,1.045,,2 yrs/$3M (20-21),$2M,Pre-Arb,Arb,Arb,Arb,FA
+Ryne Stanek\stanery01,29,5,Free Agency,3.038,MVP Sports Group,1 yr/$1.1M (21),$1.1M,Arb,Arb,FA,,
+Austin Pruitt\pruitau01,31,3,,2.125,,,,,Arb,Arb,FA,
+Yadiel Rivera\riverya01,29,6,,2.097,,,,,Arb,Arb,FA,
+Abraham Toro\toroab01,24,3,Amateur Draft,1.039,,,,,Arb,Arb,Arb,FA
+Josh James\jamesjo02,28,3,Amateur Draft,2.030,,,,,Arb,Arb,FA,
+Hector Velazquez\velazhe01,32,3,,2.017,,,,,Arb,Arb,FA,
+Brandon Bielak\bielabr01,25,2,Amateur Draft,1.000,,,,,Arb,Arb,Arb,FA
+Andre Scrubb\scruban01,26,2,Traded,1.000,,,,,Arb,Arb,Arb,FA
+Framber Valdez\valdefr01,27,4,Amateur Free Agent,1.163,,,,,Arb,Arb,Arb,FA
+Yordan Álvarez\alvaryo01,24,3,Traded,1.113,MVP Sports Group,,,,Arb,Arb,Arb,FA
+Myles Straw\strawmy01,26,4,Amateur Draft,1.112,,,,,Arb,Arb,Arb,FA
+Kyle Tucker\tuckeky01,24,4,Amateur Draft,1.079,,,,,Arb,Arb,Arb,FA
+Jose Urquidy\urquijo01,26,3,Amateur Free Agent,1.049,,,,,Arb,Arb,Arb,FA
+Garrett Stubbs\stubbga01,28,3,Amateur Draft,1.024,,,,,Arb,Arb,Arb,FA
+Cristian Javier\javiecr01,24,2,Amateur Free Agent,1.000,,,,,Arb,Arb,Arb,FA
+Enoli Paredes\pareden01,25,2,Amateur Free Agent,1.000,,,,,Arb,Arb,Arb,FA
+Blake Taylor\taylobl01,25,2,Traded,1.000,,,,,Arb,Arb,Arb,FA
+Francis Martes\martefr01,25,1st,Traded,0.116,,,,,,Arb,Arb,Arb
+Luis Garcia\garcilu05,24,2,Amateur Free Agent,0.083,,,,,,Arb,Arb,Arb
+Bryan Abreu\abreubr01,24,3,Amateur Free Agent,0.064,,,,,,Arb,Arb,Arb
+Robel Garcia\garciro02,28,2,Waivers,0.061,,,,,,Arb,Arb,Arb
+Nivaldo Rodriguez\rodrini01,24,2,Amateur Free Agent,0.056,,,,,,Arb,Arb,Arb
+Ryan Eades\eadesry01,29,1st,,0.043,,,,,,Arb,Arb,Arb
+Taylor Jones\jonesta01,27,2,Amateur Draft,0.042,Beverly Hills Spo...,,,,,Arb,Arb,Arb

@@ -1,5 +1,5 @@
 import json
-from load_all_teams import team_list
+from load_all_teams import team_list, current_year
 import os
 
 
@@ -190,14 +190,14 @@ def print_average_championships(fnames):
     print("\nAverage Total Champs:")
     champs = average_many_total_championships([json.load(open(fname)) for fname in fnames])
     for year in champs:
-        print(f"{year + 2020}: {champs[year]:0.3f}")
+        print(f"{year + current_year + 1}: {champs[year]:0.3f}")
 
 
 def print_average_wl(fnames):
     print("\nAverage WL:")
     all_wls = average_many_wls([json.load(open(fname)) for fname in fnames])
     for year in all_wls:
-        print(f"{year + 2020}: {all_wls[year]:0.3f}")
+        print(f"{year + current_year + 1}: {all_wls[year]:0.3f}")
 
 
 def average_many_sources(file_datas):
@@ -229,7 +229,7 @@ def print_average_sources(fnames):
     print("\nAverage Sources:")
     war_sources = average_many_sources([json.load(open(fname)) for fname in fnames])
     for year in war_sources:
-        print(f"{year + 2020}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
+        print(f"{year + current_year + 1}: FA: {war_sources[year]['FA']:0.3f}, Prospects: {war_sources[year]['Prospects']:0.3f}, Contracts: {war_sources[year]['Contracts']:0.3f}")
 
 
 def export_player_table(fnames, directory='player-war'):

@@ -5,8 +5,9 @@ import pandas as pd
 import csv
 import random
 
-current_year = 2019
+current_year = 2021
 
+"""
 injured_list = pd.read_csv('injured-july22-august12.csv')
 # Clean
 for i in range(len(injured_list)):
@@ -14,20 +15,23 @@ for i in range(len(injured_list)):
         injured_list['Name'][i] = injured_list['Name'][i][:injured_list['Name'][i].index('\\')]
     except ValueError:
         pass
+"""
 
 # Creates a team and fills it with players and prospects
 def create_team(name):
     df = pd.read_csv("Full Team Data & Contracts/" + name + "_data.csv", converters={'career': eval, 'contracts': eval})
-    team = Team(name, 3, "NL", [], [])  # note: division and leage are currently unused
+    team = Team(name, 3, "NL", [], [])  # note: division and league are currently unused
     for i in range(len(df)):
         srv = df.loc[i, 'SrvTm']
 
         if float(srv) >= 0.150 and len(team.contracts) < 36:  # Gets rid of AAAA players and some duplicate prospects
             wars = df.loc[i, 'career']
+
             payouts = df.loc[i, 'contracts']
             player_name = df.loc[i, 'Name'].split("\\")
 
-            injured_to_start = player_name[0] in list(injured_list['Name'])
+            # injured_to_start = player_name[0] in list(injured_list['Name'])
+            injured_to_start = False
 
             age = df.loc[i, 'Age']
             position = df.loc[i, 'pitcher']
@@ -53,7 +57,7 @@ def create_team(name):
             team.contracts = list(filter(lambda cont: cont['player'].name != pros.name, team.contracts))
             team.add_prospect(pros)
 
-        # Add 2020 july 2nd signings
+        # Add 2021 july 2nd signings
         team.add_ifas(3)
 
     return team
