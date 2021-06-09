@@ -301,19 +301,19 @@ if __name__ == "__main__":
 
     pickle.dump(start_model, open(st_model, 'wb'))
     pickle.dump(start_scaler, open(st_scaler, 'wb'))
+else:
+    bat_model = pickle.load(open(b_model, 'rb'))
+    pitch_model = pickle.load(open(p_model, 'rb'))
+    scb = pickle.load(open(b_sc, 'rb'))
+    scp = pickle.load(open(p_sc, 'rb'))
+    residualsb = pickle.load(open(b_resid, 'rb'))
+    residualsp = pickle.load(open(p_resid, 'rb'))
 
-bat_model = pickle.load(open(b_model, 'rb'))
-pitch_model = pickle.load(open(p_model, 'rb'))
-scb = pickle.load(open(b_sc, 'rb'))
-scp = pickle.load(open(p_sc, 'rb'))
-residualsb = pickle.load(open(b_resid, 'rb'))
-residualsp = pickle.load(open(p_resid, 'rb'))
+    adjust_batters = pickle.load(open(b_prospect_adjust, 'rb'))
+    adjust_pitchers = pickle.load(open(p_prospect_adjust, 'rb'))
 
-adjust_batters = pickle.load(open(b_prospect_adjust, 'rb'))
-adjust_pitchers = pickle.load(open(p_prospect_adjust, 'rb'))
-
-start_model = pickle.load(open(st_model, 'rb'))
-start_scaler = pickle.load(open(st_scaler, 'rb'))
+    start_model = pickle.load(open(st_model, 'rb'))
+    start_scaler = pickle.load(open(st_scaler, 'rb'))
 
 
 # Note: war_predictor_fast exists
@@ -332,7 +332,7 @@ def error_predictor(pitcher, war):
     war = war_mapper(war)
     if pitcher:
         return random.choice(residualsp[war])
-    return random.choice(residualsb[war])    
+    return random.choice(residualsb[war])
 
 
 def adjust_prospect_war(war, age, pitcher):
@@ -349,4 +349,3 @@ def predict_start_ratio(average_war):
 
 def predict_start_ratio_fast(average_wars):
     return start_model.predict(start_scaler.transform(average_wars))
-
