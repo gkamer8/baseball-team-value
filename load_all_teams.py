@@ -19,7 +19,7 @@ for i in range(len(injured_list)):
 
 # Creates a team and fills it with players and prospects
 def create_team(name):
-    df = pd.read_csv("Full Team Data & Contracts/" + name + "_data.csv", converters={'career': eval, 'contracts': eval})
+    df = pd.read_csv("Adjusted Team Data & Contracts/" + name + "_data.csv", converters={'career': eval, 'contracts': eval})
     team = Team(name, 3, "NL", [], [])  # note: division and league are currently unused
     for i in range(len(df)):
         srv = df.loc[i, 'SrvTm']

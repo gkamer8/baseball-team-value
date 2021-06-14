@@ -220,6 +220,7 @@ def data_scraper(name):
 def construct_data(team):
     df = pd.read_csv('Team Data/' + team + '-contracts.csv', converters={'career': eval})
     career_wars = []
+    adjusted_wars = []
     positions = []
     games = []
     ratios = []
@@ -227,8 +228,7 @@ def construct_data(team):
     contracts = []
     for i in range(0, len(df)):
         name = df.loc[i, 'Name'].split('\\')[1]
-        wars_list, games_list, pitcher, start_ratio, contract_years, sal_yrs, salaries, notes = data_scraper(name)
-        print(name, pitcher, start_ratio, wars_list, contract_years)
+        wars_list, games_list, pitcher, start_ratio, career_years, sal_yrs, salaries, notes = data_scraper(name)
         career_wars.append(wars_list)
         positions.append(pitcher)
         ratios.append(start_ratio)
@@ -237,7 +237,8 @@ def construct_data(team):
         sals = delete_dups(merge_lsts(sal_yrs, salaries, change_contract_names(notes)))
         sals = format_correctly(append_contracts(sals, srvtm))
         contracts.append(sals)
-        years.append(contract_years)
+        years.append(career_years)
+        adjusted_wars.append(adjust_career(career_years, wars_list))
     df['career'] = pd.Series(career_wars)
     df['games'] = pd.Series(games)
     df['contracts'] = pd.Series(contracts)
@@ -246,6 +247,12 @@ def construct_data(team):
     df['start_ratio'] = pd.Series(ratios)
 
     df.to_csv("Full Team Data & Contracts/" + team + "_data.csv")
+    print(team)
+    df.drop(columns=['years'])
+    df['career'] = pd.Series(adjusted_wars)
+    df.to_csv("Adjusted Team Data & Contracts/" + team + "_data.csv")
+
+
 
 
 team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 'reds', 'indians', 'rockies',
@@ -253,7 +260,22 @@ team_list = ['diamondbacks', 'braves', 'orioles', 'redsox', 'cubs', 'whitesox', 
              'yankees', 'athletics', 'phillies', 'pirates', 'padres', 'giants', 'mariners', 'cardinals',
              'rays', 'rangers', 'bluejays', 'nationals']
 
+def adjust_career(years, wars):
+    pairs = zip(years, wars)
+    pairs = [(x,y) for x,y in pairs if x < start_year]
+    pairs = [(x,y) if x != 2020 else (x, (y * 162 / 60)) for x,y in pairs]
+    return [y for x,y in pairs]
+
+
+
+
+# def adjust_data(df):
+#     df['career'] = adjust_career(df['career'], df['years'])
+#
+#     return df
+
+
 
 if __name__ == "__main__":
-    for team in team_list:
+    for team in team_list[16:]:
         construct_data(team)
