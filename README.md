@@ -7,6 +7,8 @@ prospect information from every team in the league and runs simulations to deter
 years into the future. The simulation is also capable of determining the expected WAR contributions of all MLB players 
 and top prospects.
 
+![image](/baseball.png)
+
 ## Usage
 
 The project is designed to be run from the main.py file. Use -h for information on all of the command line arguments.
